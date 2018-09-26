@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+	<title th:text="${name_bib}"></title>
+	
+	<link rel="stylesheet" href="#" />
+</head>
+<body>
+	
+	<nav th:replace="fragmentos/plantilla :: navbar-user"></nav> <!-- usuario ya loguiado -->
+<!-- 	<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav> -->
+
+	<br />
+	<div class="container">
+		<p>Bienvenido/a a la biblioteca: <span th:text="${name_bib}"></span></p>
+	</div>
+	
+	
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
+</html>

@@ -11,8 +11,15 @@ import com.bib404.system_bib404.constant.Template;
 @RequestMapping("/")
 public class IndexBib404Controller {
 	
+//	@GetMapping("/")
+//	public String paginaInicioSistema(Model model) {
+//		return Template.INDEX_BIB_X;
+//	}
+	
+	
 	@GetMapping("/")
-	public String paginaInicioSistema(Model model) {
-		return Template.INDEX_BIB404;
+	public String redirecionar() {
+		return "redirect:/bib_example";
 	}
+	
 }
