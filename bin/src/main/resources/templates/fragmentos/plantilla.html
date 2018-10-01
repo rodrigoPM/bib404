@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title, links)">
+	<meta charset="UTF-8" />
+	<title th:replace="${title}"></title>
+	<link rel="stylesheet" href="#" th:href="@{/css/bootstrap.min.css}" />
+	<link rel="stylesheet" href="#" th:href="@{/css/fontawesome.min.css}" />
+	<link rel="stylesheet" href="#" th:href="@{/css/regular.min.css}" />
+	<link rel="stylesheet" href="#" th:href="@{/css/solid.min.css}" />
+	<link rel="stylesheet" href="#" th:href="@{/css/bib404/plantilla.css}" />
+	
+	<th:block th:replace="${links}" />
+	
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
+		th:fragment="navbar-anonimo">
+		<div class="container">
+			<a class="navbar-brand" href="#"><span th:text="${name_bib}"></span> <i class="fas fa-book-reader"></i></a>
+			<button class="navbar-toggler collapsed" type="button"
+				data-toggle="collapse" data-target="#navbarsBib404"
+				aria-controls="navbarsBib404" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="navbar-collapse collapse" id="navbarsBib404" style="">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="#">Login <i class="fas fa-door-open"></i>
+					</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Registrarse <i class="fas fa-user-plus"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
+		th:fragment="navbar-user">
+		<div class="container">
+			<a class="navbar-brand text-bold" href="#"><span th:text="${name_bib}"></span> <i class="fas fa-book-reader"></i></a>
+			<button class="navbar-toggler collapsed" type="button"
+				data-toggle="collapse" data-target="#navbarsBib404"
+				aria-controls="navbarsBib404" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="navbar-collapse collapse" id="navbarsBib404" style="">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link text-bold" href="#">DashBoard <i class="fas fa-toolbox"></i>
+					</a></li>
+					<li class="nav-item"><a class="nav-link text-bold" href="#">Administrar Prestamos <i class="fas fa-book"></i></a></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle text-bold" href="#"
+						id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">User <i class="fas fa-user"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownUser">
+							<a class="dropdown-item" href="#">Perfil</a> <a
+								class="dropdown-item" href="#">Mis Digitales</a> <a
+								class="dropdown-item" href="#">Cerrar Sesión</a>
+						</div></li>
+    
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div th:fragment="scripts">
+		<script src="#" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+		<script src="#" th:src="@{/js/bootstrap.min.js}"></script>
+		<script src="#" th:src="@{/js/fontawesome.min.js}"></script>
+		<script src="#" th:src="@{/js/regular.min.js}"></script>
+		<script src="#" th:src="@{/js/solid.min.js}"></script>
+	</div>
+</body>
+</html>
