@@ -47,7 +47,7 @@ public class IndexBib404Controller {
 	public ModelAndView redireccion(@Valid @ModelAttribute("usuario") Usuario usuario, BindingResult bind ) {
 		ModelAndView mav = new ModelAndView();
 		if (bind.hasErrors()) {
-			mav.addObject("titulo",usuario.getNombre());
+			mav.addObject("titulo","BIB404-registrarse");
 			mav.setViewName(Template.REGISTRAR);
 		}else {
 			mav.setViewName(Template.INDEX_USER);

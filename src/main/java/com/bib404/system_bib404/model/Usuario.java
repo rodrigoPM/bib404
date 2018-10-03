@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 
 public class Usuario {
@@ -25,6 +27,7 @@ public class Usuario {
 	@NotNull
 	private String email;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull
 	private Date fechaNacimiento;
 
@@ -42,6 +45,7 @@ public class Usuario {
 		this.esSuperuser = esSuperuser;
 	}
 	public Usuario(){
+		this.esSuperuser=false;
 	}
 
 	public String getUsername() {
