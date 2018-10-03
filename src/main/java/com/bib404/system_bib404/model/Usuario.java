@@ -2,35 +2,53 @@ package com.bib404.system_bib404.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 
-
+@Entity
+@Table(name="usuario")
 public class Usuario {
+	@Id
+	@GeneratedValue
+	@Column(name="id")
+	private int id;
+	
 	@NotNull
 	@Size(min=4, max=60)
+	@Column(name="username")
 	private String username;
 	
 	@NotNull
 	@Size(min=3, max=60)
+	@Column(name="password")
 	private String password;
 
 	@NotNull
+	@Column(name="nombre")
 	private String nombre;
 
 	@NotNull
+	@Column(name="apellido")
 	private String apellido;
 
 	@NotNull
+	@Column(name="email")
 	private String email;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull
+	@Column(name="fechanacimiento")
 	private Date fechaNacimiento;
 
+	@Column(name="essuperuser")
 	private boolean esSuperuser;
 
 	public Usuario(String username, String password, String nombre, String apellido, String email,
