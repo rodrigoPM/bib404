@@ -36,26 +36,14 @@ public class IndexBib404Controller {
 		return mav;
 	}
 	
-	@GetMapping("/registrarse")
-	public String registrarse(Model model) {
-		model.addAttribute("titulo","BIB404-registrarse");
-		model.addAttribute("usuario", new Usuario());
-		return Template.REGISTRAR;
-	}
-	
-	@PostMapping("/addUser")
-	public ModelAndView redireccion(@Valid @ModelAttribute("usuario") Usuario usuario, BindingResult bind ) {
-		ModelAndView mav = new ModelAndView();
-		if (bind.hasErrors()) {
-			mav.addObject("titulo","BIB404-registrarse");
-			mav.setViewName(Template.REGISTRAR);
-		}else {
-			mav.setViewName(Template.INDEX_USER);
-			mav.addObject("usuario",usuario);
-			mav.addObject("titulo","BIB404");
-		}
+	@GetMapping("/index")
+	public ModelAndView indexUsuario() {
+		ModelAndView mav = new ModelAndView(Template.INDEX_USER);
+		mav.addObject("titulo","BIB404");
+		
 		return mav;
 	}
+	
 	
 	
 	

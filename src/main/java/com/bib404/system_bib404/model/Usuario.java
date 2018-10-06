@@ -10,49 +10,49 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
-@Table(name="usuario")
+@Table(name="USUARIO")
 public class Usuario {
 	@Id
 	@GeneratedValue
-	@Column(name="id")
+	@Column(name="ID")
 	private int id;
 	
 	@NotNull
 	@Size(min=4, max=60)
-	@Column(name="username")
+	@Column(name="USERNAME")
 	private String username;
 	
 	@NotNull
 	@Size(min=3, max=60)
-	@Column(name="password")
+	@Column(name="PASSWORD")
 	private String password;
 
 	@NotNull
-	@Column(name="nombre")
+	@Column(name="NOMBRE")
 	private String nombre;
 
 	@NotNull
-	@Column(name="apellido")
+	@Column(name="APELLIDO")
 	private String apellido;
 
 	@NotNull
-	@Column(name="email")
+	@Column(name="EMAIL")
 	private String email;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull
-	@Column(name="fechanacimiento")
-	private Date fechaNacimiento;
+	@Column(name="FECHANACIMIENTO")
+	private String fechaNacimiento;
 
-	@Column(name="essuperuser")
+	@Column(name="ESSUPERUSER")
 	private boolean esSuperuser;
 
 	public Usuario(String username, String password, String nombre, String apellido, String email,
-			Date fechaNacimiento, boolean esSuperuser) {
+			String fechaNacimiento, boolean esSuperuser) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -62,6 +62,7 @@ public class Usuario {
 		this.fechaNacimiento = fechaNacimiento;
 		this.esSuperuser = esSuperuser;
 	}
+	
 	public Usuario(){
 		this.esSuperuser=false;
 	}
@@ -106,11 +107,11 @@ public class Usuario {
 		this.email = email;
 	}
 
-	public Date getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 

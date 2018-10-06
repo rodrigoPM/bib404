@@ -12,7 +12,29 @@
 
 	<br />
 	<div class="container">
-		<p>Bienvenido/a a BIB404: <span th:text="${nombre}"></span></p>
+
+
+	<table>
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>username</th>
+				<th>password</th>
+				<th>nombre</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="usuario : ${usuarios}">
+				<th> <span th:text="${usuario.id}"> </span> </th>
+				<th><span th:text="${usuario.username}"> </span></th>
+				<th><span th:text="${usuario.password}"> </span></th>
+				<th><span th:text="${usuario.nombre}"> </span></th>
+			</tr>
+		</tbody>
+	</table>
+
+
+
 	</div>
 	
 	
