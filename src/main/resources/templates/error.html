@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+	<title th:text="${titulo}"></title>	
+	<link rel="stylesheet" href="#" />
+</head>
+<body>
+	<div th:if="${authT}">
+		 <nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
+	</div>
+	<div th:if="${authF}">
+		<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
+	</div>
+	<br />
+	<div class="container">
+	<div th:if="${E404}">
+		<div>
+		  <div class="container text-center">
+		  <img th:src="@{/imgs/E404.jpg}">
+		    <h1>Error...</h1>
+		    <p>Parece que estas perdido :v</p>
+		  </div>
+		</div>
+	</div>
+	<div th:if="${E500}">
+		<div>
+		  <div class="container text-center">
+		  <img th:src="@{/imgs/E500.jpg}">
+		    <h1>Error...</h1>
+		    <p>Parece que estas perdido :v</p>
+		  </div>
+		</div>
+	</div>
+	</div>
+	<div th:replace="fragmentos/plantilla :: login"></div>
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
+</html>
