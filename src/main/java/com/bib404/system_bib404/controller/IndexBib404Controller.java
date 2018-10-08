@@ -1,5 +1,10 @@
 package com.bib404.system_bib404.controller;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -30,18 +35,29 @@ public class IndexBib404Controller {
 //	}
 	
 	@GetMapping("/")
-	public ModelAndView indexAnonimo() {
-		ModelAndView mav = new ModelAndView(Template.INDEX_ANONIMO);
-		mav.addObject("titulo","BIB404");
-		return mav;
+	public String indexAnonimo(HttpServletRequest request, Model model)  throws ServletException, IOException  {
+		HttpSession sesion = request.getSession();
+		model.addAttribute("titulo","BIB404");
+		
+		if(sesion.getAttribute(Template.USER)==null) {
+			return Template.INDEX_ANONIMO;
+		}else {
+			return "redirect:/index";
+		}
+
 	}
 	
 	@GetMapping("/index")
-	public ModelAndView indexUsuario() {
-		ModelAndView mav = new ModelAndView(Template.INDEX_USER);
-		mav.addObject("titulo","BIB404");
-		
-		return mav;
+	public String indexUsuario(HttpServletRequest request, Model model)  throws ServletException, IOException  {
+		HttpSession sesion = request.getSession();
+		model.addAttribute("titulo","BIB404");		
+		if(sesion.getAttribute(Template.USER)==null) {
+			return "redirect:/";
+		}else {
+			model.addAttribute("user", sesion.getAttribute(Template.USER));
+			return Template.INDEX_USER;
+		}
+
 	}
 	
 	

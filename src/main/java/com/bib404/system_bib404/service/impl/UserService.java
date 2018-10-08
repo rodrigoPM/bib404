@@ -7,24 +7,18 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.bib404.system_bib404.Repository.UsuarioRepository;
 import com.bib404.system_bib404.model.Usuario;
 
 @Service("userService")
-public class UserService implements UserDetailsService{
+public class UserService {
 	@Autowired
 	@Qualifier("usuarioServiceImpl")
 	private UsuarioServiceImpl usImpl;
 	
-
+/*
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Usuario user = usImpl.findBy(username);
@@ -45,6 +39,6 @@ public class UserService implements UserDetailsService{
 		}
 		return new ArrayList<GrantedAuthority>(auts);
 	}
-	
+	*/
 	
 }

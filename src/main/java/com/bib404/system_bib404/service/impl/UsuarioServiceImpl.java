@@ -1,6 +1,7 @@
 package com.bib404.system_bib404.service.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -66,9 +67,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 		Usuario us = null;
 		int v=0;
 		try {
+			//TO_TIMESTAMP('1996-07-24 21:27:34.149409100', 'YYYY-MM-DD HH24:MI:SS.FF')
 			List<Usuario> usuarios = listUsuario();
 			int id = usuarios.size() + 1;
-			String sql = "INSERT INTO USUARIO (ID,APELLIDO, EMAIL, ENABLE, FECHANACIMIENTO, NOMBRE, PASSWORD, ROL, USERNAME) VALUES ("+id+", \'"+usuario.getApellido()+"\', \'"+usuario.getEmail()+"\', "+1+", \'"+usuario.getFechaNacimiento()+"\', \'"+usuario.getNombre()+"\', \'"+usuario.getPassword()+"\', \'"+ usuario.getRol()+"\', \'" +usuario.getUsername()+ "\')";
+			java.util.Date f =usuario.getFechaNacimiento();
+			String fecha = "TO_TIMESTAMP(\'"+f.getYear()+"-"+f.getMonth()+"-"+f.getDay()+" "+f.getHours()+":"+f.getMinutes()+":34.149409100', 'YYYY-MM-DD HH24:MI:SS.FF')";
+			String sql = "INSERT INTO USUARIO (ID,APELLIDO, EMAIL, ENABLE, FECHANACIMIENTO, NOMBRE, PASSWORD, ROL, USERNAME) VALUES ("+id+", \'"+usuario.getApellido()+"\', \'"+usuario.getEmail()+"\', "+1+", "+fecha+", \'"+usuario.getNombre()+"\', \'"+usuario.getPassword()+"\', \'"+ usuario.getRol()+"\', \'" +usuario.getUsername()+ "\')";
 			Statement sentencia;
 			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			v = sentencia.executeUpdate(sql);
@@ -108,7 +112,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			resultado= sentencia.executeQuery(sql);
 			while (resultado.next()) {
-				us = new Usuario(resultado.getString("USERNAME"), resultado.getString("PASSWORD"), resultado.getString("NOMBRE"), resultado.getString("APELLIDO"), resultado.getString("EMAIL"), resultado.getString("FECHANACIMIENTO"));
+				us = new Usuario(resultado.getString("USERNAME"), resultado.getString("PASSWORD"), resultado.getString("NOMBRE"), resultado.getString("APELLIDO"), resultado.getString("EMAIL"), resultado.getDate("FECHANACIMIENTO"));
 			}
 			getConexion().commit();
 			sentencia.close();
@@ -127,6 +131,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 
 }

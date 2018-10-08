@@ -56,7 +56,8 @@ public class Usuario implements Serializable{
 
 	@NotNull
 	@Column(name="FECHANACIMIENTO", nullable=false)
-	private String fechaNacimiento;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date fechaNacimiento;
 	
 	@NotNull
 	@Column(name="ENABLE", nullable=false)
@@ -69,7 +70,7 @@ public class Usuario implements Serializable{
 	
 
 	public Usuario(String username, String password, String nombre, String apellido, String email,
-			String fechaNacimiento, boolean enable) {
+			Date fechaNacimiento, boolean enable) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -81,7 +82,7 @@ public class Usuario implements Serializable{
 	}
 	
 	public Usuario(String username, String password, String nombre, String apellido, String email,
-			String fechaNacimiento) {
+			Date fechaNacimiento) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -93,7 +94,7 @@ public class Usuario implements Serializable{
 	}
 
 	public Usuario(String username, String password, String nombre, String apellido, String email,
-			String fechaNacimiento, boolean enable, String rol) {
+			Date fechaNacimiento, boolean enable, String rol) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -106,7 +107,7 @@ public class Usuario implements Serializable{
 	}
 
 	public Usuario(String username, String password, String nombre, String apellido, String email,
-			String fechaNacimiento, String rol) {
+			Date fechaNacimiento, String rol) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -162,11 +163,11 @@ public class Usuario implements Serializable{
 		this.email = email;
 	}
 
-	public String getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
