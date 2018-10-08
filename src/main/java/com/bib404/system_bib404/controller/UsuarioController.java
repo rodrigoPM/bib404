@@ -80,7 +80,9 @@ public class UsuarioController extends HttpServlet{
 		usuario.setPassword(pass);
 		int val = 0;
 		String direccion = "redirect:/usuarios/registrarse?error=user";
-		if(usuario.getFechaNacimiento().getYear()<2013) {
+		
+		if(usuario.getFechaNacimiento().getYear()>113) {
+			System.out.println(""+usuario.getFechaNacimiento().getYear());
 			return "redirect:/usuarios/registrarse?error=fecha";
 		}else {
 			val = usuarioImp.addUser(usuario);
