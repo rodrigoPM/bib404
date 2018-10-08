@@ -10,4 +10,5 @@ import com.bib404.system_bib404.model.Usuario;
 @Repository("usuarioRepository")
 public interface UsuarioRepository extends JpaRepository<Usuario, Serializable>{
 	
+	
 }

@@ -13,10 +13,12 @@ public interface UsuarioService {
 	
 	public abstract List<Usuario> listUsuario();
 	
-	public abstract Usuario addUser(Usuario usuario);
+	public abstract int addUser(Usuario usuario);
 	
 	public abstract void removeUser(Usuario usuario);
 	
 	public abstract Usuario updateUser(Usuario usuario);
+	
+	public abstract Usuario findBy(String username);
 	
 }

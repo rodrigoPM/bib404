@@ -1,58 +1,75 @@
 package com.bib404.system_bib404.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.bib404.system_bib404.service.impl.EncriptadoImp;
 
 
 @Entity
-@Table(name="USUARIO")
-public class Usuario {
+@Table(name="USUARIO", schema="BIB404")
+public class Usuario implements Serializable{
+	private static final long serialVersionUID = -1280037900360314186L;
+	
 	@Id
-	@GeneratedValue
-	@Column(name="ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="id_secuencia")
+	@SequenceGenerator(name="id_secuencia",allocationSize=1)
+	@Column(name="ID", unique=true, nullable=false)
 	private int id;
 	
 	@NotNull
 	@Size(min=4, max=60)
-	@Column(name="USERNAME")
+	@Column(name="USERNAME",unique=true ,nullable=false)
 	private String username;
 	
 	@NotNull
 	@Size(min=3, max=60)
-	@Column(name="PASSWORD")
+	@Column(name="PASSWORD", nullable=false)
 	private String password;
 
 	@NotNull
-	@Column(name="NOMBRE")
+	@Column(name="NOMBRE", nullable=false)
 	private String nombre;
 
 	@NotNull
-	@Column(name="APELLIDO")
+	@Column(name="APELLIDO", nullable=false)
 	private String apellido;
 
 	@NotNull
-	@Column(name="EMAIL")
+	@Column(name="EMAIL", nullable=false)
 	private String email;
 
 	@NotNull
-	@Column(name="FECHANACIMIENTO")
+	@Column(name="FECHANACIMIENTO", nullable=false)
 	private String fechaNacimiento;
-
-	@Column(name="ESSUPERUSER")
-	private boolean esSuperuser;
+	
+	@NotNull
+	@Column(name="ENABLE", nullable=false)
+	private boolean enable;
+	
+	@NotNull
+	@Column(name="ROL", nullable=false)
+	private String rol;
+	
+	
 
 	public Usuario(String username, String password, String nombre, String apellido, String email,
-			String fechaNacimiento, boolean esSuperuser) {
+			String fechaNacimiento, boolean enable) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -60,11 +77,49 @@ public class Usuario {
 		this.apellido = apellido;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
-		this.esSuperuser = esSuperuser;
+		this.enable= enable;
+	}
+	
+	public Usuario(String username, String password, String nombre, String apellido, String email,
+			String fechaNacimiento) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.fechaNacimiento = fechaNacimiento;
+		this.enable= true;
+	}
+
+	public Usuario(String username, String password, String nombre, String apellido, String email,
+			String fechaNacimiento, boolean enable, String rol) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.fechaNacimiento = fechaNacimiento;
+		this.enable= enable;
+		this.rol=rol;
+	}
+
+	public Usuario(String username, String password, String nombre, String apellido, String email,
+			String fechaNacimiento, String rol) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.fechaNacimiento = fechaNacimiento;
+		this.enable= true;
+		this.rol=rol;
 	}
 	
 	public Usuario(){
-		this.esSuperuser=false;
+		this.enable=true;
 	}
 
 	public String getUsername() {
@@ -115,12 +170,28 @@ public class Usuario {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public boolean isEsSuperuser() {
-		return esSuperuser;
+	public boolean isEnable() {
+		return enable;
 	}
 
-	public void setEsSuperuser(boolean esSuperuser) {
-		this.esSuperuser = esSuperuser;
+	public void setEnable(boolean enable) {
+		this.enable= enable;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
 	}
 	
 	

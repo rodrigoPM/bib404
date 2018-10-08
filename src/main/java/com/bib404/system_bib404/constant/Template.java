@@ -7,6 +7,7 @@ public class Template {
 	public static final String REGISTRAR = "registrase";
 	public static final String INDEX_USER = "index_usuario";
 	public static final String USUARIOS = "usuarios";
+	public static final String USUARIO_SIMPLE ="USER_ROLE";
 	
 	
 	

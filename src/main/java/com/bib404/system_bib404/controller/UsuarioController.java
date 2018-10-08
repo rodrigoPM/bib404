@@ -32,7 +32,7 @@ public class UsuarioController {
 	
 	@Autowired
 	@Qualifier("encriptadoPass")
-	private EncriptadoPass encriptado;
+	private EncriptadoPass encriptado;	
 	
 	@RequestMapping("/listUser")
 	public ModelAndView getAllUser() {
@@ -44,18 +44,28 @@ public class UsuarioController {
 	@GetMapping("/registrarse")
 	public String registrarse(Model model) {
 		model.addAttribute("titulo","BIB404-registrarse");
+		Usuario user = new Usuario();
+		user.setEnable(true);
+		user.setRol(Template.USUARIO_SIMPLE);
+		model.addAttribute("usuario", user);
 		return Template.REGISTRAR;
 	}
 	
 	@PostMapping("/addUser")
-	public String redireccion(@Valid @ModelAttribute("password") String password) {
+	public String redireccion(@Valid @ModelAttribute("usuario") Usuario usuario) {
 		Log log = LogFactory.getLog(UsuarioController.class);
-		log.info(password); //contraseña sin encriptar
-		String pass = encriptado.Encriptar(password);
+		log.info(usuario.getPassword()); //contraseña sin encriptar
+		String pass = encriptado.Encriptar(usuario.getPassword());
 		log.info(pass); //contraseña encriptada
 		String passDe = encriptado.Desencriptar(pass);
-		log.info(passDe);
-		return "redirect:/index";
+		usuario.setPassword(pass);
+		int val = usuarioImp.addUser(usuario);
+		log.info(passDe+ "  id: "+ usuario.getId()+"ingresado: " + val );
+		if (val==1) {
+			return "redirect:/index";
+		}else {
+			return "redirect:/registrarse?error";
+		}
 	}
 	
 	

@@ -15,3 +15,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.Oracle10gDialect
+        
+        
+logging:
+    level:
+        org:
+            hibernate:
+                SQL: debug
