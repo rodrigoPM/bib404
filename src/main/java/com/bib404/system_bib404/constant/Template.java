@@ -9,6 +9,7 @@ public class Template {
 	public static final String USUARIOS = "usuarios";
 	public static final String USUARIO_SIMPLE ="USER_ROLE";
 	public static final String USER ="usuario";
+	public static final String AUTORIZAR ="autorizar";
 	
 	
 }

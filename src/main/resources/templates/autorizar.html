@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+	<title th:text="${titulo}"></title>
+	
+	<link rel="stylesheet" href="#" />
+</head>
+<body>
+	
+	<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
+
+	<br />
+	<div class="container">
+	<h1>AUTORIZAR PRESTAMO</h1>
+
+
+	<table class="table" border="2">
+		<thead>
+			<tr>
+				<th>Usuario</th>
+				<th>Libro</th>
+				<th>Fecha de prestamo</th>
+				<th>Fecha de entrega</th>
+				<th>Datos del libro</th>
+				<th>Accion</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><img th:src="@{/imgs/user.jpg}" width=75 length=75></td>
+				<td><img th:src="@{/imgs/libro.jpg}" width=50 length=50></td>
+				<td><span>24/09/18</span></td>
+				<td><span>30/09/18</span></td>
+				<td> <span>codigo: 123 </span>
+					<p><span>Autor: Disney </span></p> </td>
+				<td> <input type="button" value=Autorizar >
+					<p><input type="button" value="Denegar"></p> </td>
+			</tr>
+		</tbody>
+	</table>
+
+
+
+	</div>
+	
+	
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
+</html>
