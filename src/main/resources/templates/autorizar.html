@@ -5,17 +5,42 @@
 	
 	<link rel="stylesheet" href="#" />
 </head>
+<Style type="text/css">
+  .boton {
+  margin-top: 50px;
+  margin-bottom: 10px;
+  }
+  .boton2 {
+  margin-top: 50px;
+  padding: 10px;
+  }
+  .boton3 {
+  margin-bottom: 10px;
+  }
+  .buscador{
+   float: right;
+   margin-bottom: 10px;
+  }
+ </Style>
 <body>
 	
 	<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
 
 	<br />
 	<div class="container">
-	<h1>AUTORIZAR PRESTAMO</h1>
-
+	<h2>AUTORIZAR PRESTAMO Y RECIBIR PRESTAMOS</h2>
+		<div class="buscador">
+        		<form class="form-inline" method="GET" action="" id="busqueda">
+                	<input class="buscador" name="consulta" id='consulta' type="text" placeholder="Buscar" value="">
+                    <input type="submit" value="Buscar" id="buscar" class="btn btn-success buscador">
+                </form>
+         </div>
+	<a class="btn btn-primary boton2" href="#">Autorizar Prestamos</a>
+	<a class="btn btn-primary boton" th:href="@{/usuarios/logout}">Recibir Prestamos</a>
+	<a class="btn btn-primary boton" th:href="@{/usuarios/logout}">Prestamos con Mora</a>
 
 	<table class="table" border="2">
-		<thead>
+		<thead class="thead">
 			<tr>
 				<th>Usuario</th>
 				<th>Libro</th>
@@ -33,8 +58,8 @@
 				<td><span>30/09/18</span></td>
 				<td> <span>codigo: 123 </span>
 					<p><span>Autor: Disney </span></p> </td>
-				<td> <input type="button" value=Autorizar >
-					<p><input type="button" value="Denegar"></p> </td>
+				<td> <button type="button" class="btn btn-success boton3">Autorizar</button>
+					<p><button type="button" class="btn btn-danger">Denegar</button></p> </td>
 			</tr>
 		</tbody>
 	</table>
