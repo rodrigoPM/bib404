@@ -6,6 +6,9 @@
 	<link rel="stylesheet" href="#" />
 </head>
 <Style type="text/css">
+  .ocultar{
+  display: none
+  }
   .boton {
   margin-top: 50px;
   margin-bottom: 10px;
@@ -22,6 +25,23 @@
    margin-bottom: 10px;
   }
  </Style>
+ <script type="text/JavaScript">
+ function mostrar(){
+	 document.getElementById("tabla1").style.display="block";
+	 document.getElementById("tabla2").style.display="none";
+	 document.getElementById("tabla3").style.display="none";
+ }
+ function mostrar2(){
+	 document.getElementById("tabla2").style.display="block";
+	 document.getElementById("tabla1").style.display="none";
+	 document.getElementById("tabla3").style.display="none";
+ }
+ function mostrar3(){
+	 document.getElementById("tabla3").style.display="block";
+	 document.getElementById("tabla1").style.display="none";
+	 document.getElementById("tabla2").style.display="none";
+ }
+  </script>
 <body>
 	
 	<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
@@ -35,10 +55,11 @@
                     <input type="submit" value="Buscar" id="buscar" class="btn btn-success buscador">
                 </form>
          </div>
-	<a class="btn btn-primary boton2" href="#">Autorizar Prestamos</a>
-	<a class="btn btn-primary boton" th:href="@{/usuarios/logout}">Recibir Prestamos</a>
-	<a class="btn btn-primary boton" th:href="@{/usuarios/logout}">Prestamos con Mora</a>
+    <input class="btn btn-primary boton" type=submit value="Autorizar Prestamos" onclick="mostrar()"/>
+    <input class="btn btn-primary boton" type=submit value="Recibir Prestamos" onclick="mostrar2()"/>
+    <input class="btn btn-primary boton" type=submit value="Prestamos con Mora" onclick="mostrar3()"/>
 
+<section id="tabla1">
 	<table class="table" border="2">
 		<thead class="thead">
 			<tr>
@@ -63,9 +84,59 @@
 			</tr>
 		</tbody>
 	</table>
-
-
-
+</section>
+<section id="tabla2" class="ocultar">
+	<table class="table" border="2">
+		<thead class="thead">
+			<tr>
+				<th>Usuario</th>
+				<th>Libro</th>
+				<th>Fecha de prestamo</th>
+				<th>Fecha de entrega</th>
+				<th>Datos del libro</th>
+				<th>Accion</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><img th:src="@{/imgs/user.jpg}" width=75 length=75></td>
+				<td><img th:src="@{/imgs/libro.jpg}" width=50 length=50></td>
+				<td><span>24/09/18</span></td>
+				<td><span>30/09/18</span></td>
+				<td> <span>codigo: 123 </span>
+					<p><span>Autor: Disney </span></p> </td>
+				<td> <button type="button" class="btn btn-success boton3">Recibir</button></td>
+			</tr>
+		</tbody>
+	</table>
+</section>
+<section id="tabla3" class="ocultar">
+	<table class="table" border="2">
+		<thead class="thead">
+			<tr>
+				<th>Usuario</th>
+				<th>Libro</th>
+				<th>Fecha de prestamo</th>
+				<th>Fecha de entrega</th>
+				<th>Dias de atraso</th>
+				<th>Datos del libro</th>
+				<th>Accion</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><img th:src="@{/imgs/user.jpg}" width=75 length=75></td>
+				<td><img th:src="@{/imgs/libro.jpg}" width=50 length=50></td>
+				<td><span>24/09/18</span></td>
+				<td><span>30/09/18</span></td>
+				<td><span>5 Dias</span></td>
+				<td> <span>codigo: 123 </span>
+					<p><span>Autor: Disney </span></p> </td>
+				<td> <button type="button" class="btn btn-success boton3">Recibir</button></td>
+			</tr>
+		</tbody>
+	</table>
+</section>
 	</div>
 	
 	

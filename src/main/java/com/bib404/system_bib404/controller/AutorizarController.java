@@ -21,7 +21,7 @@ public class AutorizarController {
 	@Qualifier("usuarioServiceImpl")
 	private UsuarioServiceImpl usuarioImp;
 	
-	@RequestMapping("/listUser")
+	@RequestMapping("/listPrestamos")
 	public ModelAndView getAllUser(HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("usuarios", usuarioImp.listUsuario());
