@@ -38,5 +38,9 @@ public interface UsuarioService {
 	List<Biblioteca> listBibliotecas();
 
 	int addUser(Usuario usuario, int id_numicipio, int id_b);
+
+	Biblioteca findBibBy(int id);
+
+	Municipio findMunBy(int id);
 	
 }

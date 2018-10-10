@@ -212,9 +212,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			r= sentencia.executeQuery(sql);
 			while (r.next()) {
-				Municipio municipio=null;
-				Biblioteca biblioteca=null;
-//				us = new Usuario(r.getInt("ID"), r.getString("USERANAME"), r.getString("PASSWORD"), r.getString("NOMBRE"), r.getString("APELLIDO"), r.getDate("fecha_nacimiento"), r.getString("nombre_padre"), r.getString("nombre_madre"), r.getString("numero_telefono"), r.getString("lugar_estudio"), r.getString("genero"), r.getString("ocupacion"), r.getString("email"), r.getDate("fecha_registro"), r.getString("foto_perfil"), true, municipio, biblioteca);
+				Municipio municipio=findMunBy(r.getInt("municipio_id"));
+				Biblioteca biblioteca=findBibBy(r.getInt("biblioteca_id"));
+				us= new Usuario(r.getInt("id"), r.getString("username"), r.getString("password"), r.getString("nombre"), r.getString("apellido"), r.getDate("fecha_nacimiento"), r.getString("nombre_padre"), r.getString("nombre_madre"), r.getString("numero_telefono"), r.getString("lugar_estudio"), r.getString("genero"), r.getString("ocupacion"), r.getString("email"), r.getDate("fecha_registro"), r.getString("foto_perfil"), r.getBoolean("enable"), r.getString("rol"), municipio, biblioteca);
 			}
 			getConexion().commit();
 			sentencia.close();
@@ -224,6 +224,58 @@ public class UsuarioServiceImpl implements UsuarioService{
 		cerrar();
 		return us;
 	}	
+	
+	@Override
+	public Biblioteca findBibBy(int id) {
+		conectar();
+		ResultSet r = null;
+		Biblioteca us = null;
+		try {
+			String sql = "SELECT * FROM BIBLIOTECA WHERE ID =" + id;
+			Statement sentencia;
+			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			r= sentencia.executeQuery(sql);
+			while (r.next()) {
+				us= new Biblioteca();
+				us.setCodigo_biblioteca(r.getString("codigo_biblioteca"));
+				us.setNombre_biblioteca(r.getString("nombre_biblioteca"));
+				us.setMunicipio(findMunBy(r.getInt("municipio_id")));
+				us.setId(id);
+			}
+			getConexion().commit();
+			sentencia.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cerrar();
+		return us;
+	}	
+	
+	@Override
+	public Municipio findMunBy(int id) {
+		conectar();
+		ResultSet r = null;
+		Municipio us = null;
+		try {
+			String sql = "SELECT * FROM MUNICIPIO WHERE ID =" + id;
+			Statement sentencia;
+			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			r= sentencia.executeQuery(sql);
+			while (r.next()) {
+				us= new Municipio();
+				us.setNombre_municipio(r.getString("nombre_municipio"));
+				us.setId(id);
+				
+			}
+			getConexion().commit();
+			sentencia.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cerrar();
+		return us;
+	}	
+	
 	
 	private void cerrar() {
 		try {

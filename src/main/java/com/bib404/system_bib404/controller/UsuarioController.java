@@ -118,7 +118,7 @@ public class UsuarioController extends HttpServlet{
 				sesion.setAttribute("usuario", user);
 				return "redirect:/index";
 			}else {
-				return "redirect:/usuarios/registrarse?error=";
+				return "redirect:/?error=user";
 			}
 		}
 	}
