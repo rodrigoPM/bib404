@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bib404.system_bib404.constant.Template;
-import com.bib404.system_bib404.model.Usuario;
+import com.bib404.system_bib404.model.UsuarioModel;
 
 @Controller
 @RequestMapping("/")

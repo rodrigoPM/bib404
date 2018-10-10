@@ -17,15 +17,15 @@ import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 @Controller
 @RequestMapping("/autorizar")
 public class AutorizarController {
-	@Autowired
-	@Qualifier("usuarioServiceImpl")
-	private UsuarioServiceImpl usuarioImp;
-	
-	@RequestMapping("/listUser")
-	public ModelAndView getAllUser(HttpServletRequest request)  throws ServletException, IOException  {
-		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
-		mav.addObject("usuarios", usuarioImp.listUsuario());
-		return mav;
-	}
+//	@Autowired
+//	@Qualifier("usuarioServiceImpl")
+//	private UsuarioServiceImpl usuarioImp;
+//	
+//	@RequestMapping("/listUser")
+//	public ModelAndView getAllUser(HttpServletRequest request)  throws ServletException, IOException  {
+//		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
+//		//mav.addObject("usuarios", usuarioImp.listUsuario());
+//		return mav;
+//	}
 
 }

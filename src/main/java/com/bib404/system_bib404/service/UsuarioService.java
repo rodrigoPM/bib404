@@ -4,21 +4,21 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.bib404.system_bib404.model.Usuario;
+import com.bib404.system_bib404.model.UsuarioModel;
 
 
 public interface UsuarioService {
 	
-	public abstract Usuario getUserId(long id);
+	public abstract UsuarioModel getUserId(long id);
 	
-	public abstract List<Usuario> listUsuario();
+	public abstract List<UsuarioModel> listUsuario();
 	
-	public abstract int addUser(Usuario usuario);
+	public abstract int addUser(UsuarioModel usuario);
 	
-	public abstract void removeUser(Usuario usuario);
+	public abstract void removeUser(UsuarioModel usuario);
 	
-	public abstract Usuario updateUser(Usuario usuario);
+	public abstract UsuarioModel updateUser(UsuarioModel usuario);
 	
-	public abstract Usuario findBy(String username);
+	public abstract UsuarioModel findBy(String username);
 	
 }
