@@ -19,6 +19,28 @@
 		<h1>Registrarse</h1>
 		<div class="col-sm-10">
 			<form action="#" th:action="@{/usuarios/addUser}" th:objects="*{usuario}" th:method="post" >
+			
+			<div class="form-group row">
+			  	<div class="col-xs-6">
+			  		<label for="inputState">Municipios</label>
+			      <select id="mun" name="mun"  class="form-control" required="true">
+			        <option th:each="muni : ${municipios}" 
+			        	th:value="${muni.id}"
+			        	th:text="${muni.nombre_municipio}"
+			        ></option>
+			      </select>
+			  	</div>
+			  	<div class="col-xs-6">
+			  		<label for="inputState">Biblioteca</label>
+			      <select id="bib" name="bib"  class="form-control" required="true">
+			        <option th:each="bib : ${bibliotecas}" 
+			        	th:value="${bib.id}"
+			        	th:text="${bib.nombre_biblioteca}"
+			        ></option>
+			      </select>
+			  	</div>
+			</div>
+			
 			  <div class="form-group row">
 			    <label for="user" class="col-sm-2 col-form-label">Usuario:</label>
 			    <div class="col-sm-8">
@@ -44,17 +66,56 @@
 			    </div>
 			  </div>
 			  <div class="form-group row">
+			    <label for="fechaNacimiento" class="col-sm-2 col-form-label">fechaNacimiento</label>
+			    <div class="col-sm-8">
+			      <input type="date" class="form-control" th:fields="*{fecha_nacimiento}" id="fecha_nacimiento" name="fecha_nacimiento" placeholder="fecha_nacimiento" required="true">
+			    </div>
+			  </div>
+			  
+			  <div class="form-group row">
+			    <label for="nombre" class="col-sm-2 col-form-label">nombre del padre</label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control" th:fields="*{nombre_padre}" id="nombre_padre" name="nombre_padre" placeholder="nombre del padre" required="true">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="nombre" class="col-sm-2 col-form-label">nombre de la madre</label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control" th:fields="*{nombre_madre}" id="nombre_madre" name="nombre_madre" placeholder="nombre de la madre" required="true">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="nombre" class="col-sm-2 col-form-label">numero del telefono</label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control" th:fields="*{numero_telefono}" id="numero_telefono" name="numero_telefono" placeholder="numero de telefono" required="true">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="nombre" class="col-sm-2 col-form-label">lugar de estudio</label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control" th:fields="*{lugar_estudio}" id="lugar_estudio" name="lugar_estudio" placeholder="lugar de estudio" required="true">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="nombre" class="col-sm-2 col-form-label">genero</label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control" th:fields="*{genero}" id="genero" name="genero" placeholder="genero" required="true">
+			    </div>
+			  </div>
+			  <div class="form-group row">
+			    <label for="nombre" class="col-sm-2 col-form-label">ocupacion</label>
+			    <div class="col-sm-8">
+			      <input type="text" class="form-control" th:fields="*{ocupacion}" id="ocupacion" name="ocupacion" placeholder="ocupacion" required="true">
+			    </div>
+			  </div>
+			  <div class="form-group row">
 			    <label for="email" class="col-sm-2 col-form-label">email</label>
 			    <div class="col-sm-8">
 			      <input type="email" class="form-control" th:fields="*{email}" id="email" name="email" placeholder="email" required="true">
 			    </div>
-			  </div>
-			  <div class="form-group row">
-			    <label for="fechaNacimiento" class="col-sm-2 col-form-label">fechaNacimiento</label>
-			    <div class="col-sm-8">
-			      <input type="date" class="form-control" th:fields="*{fechaNacimiento}" id="fechaNacimiento" name="fechaNacimiento" placeholder="fechaNacimiento" required="true">
-			    </div>
-			  </div>
+			  </div>			  
+			  
+			  
 			<div class="form-check">
 			    <input type="checkbox" class="form-check-input" id="enable" name="enable" th:fields="*{enable}" hidden="true">			    
 			    <input type="text" class="form-check-input" id="rol" name="rol" th:fields="*{rol}" hidden="true" value="USER_ROL">

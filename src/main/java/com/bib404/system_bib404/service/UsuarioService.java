@@ -4,21 +4,39 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.bib404.system_bib404.model.UsuarioModel;
+import com.bib404.system_bib404.entity.Biblioteca;
+import com.bib404.system_bib404.entity.Departamento;
+import com.bib404.system_bib404.entity.Municipio;
+import com.bib404.system_bib404.entity.Usuario;
+
 
 
 public interface UsuarioService {
 	
-	public abstract UsuarioModel getUserId(long id);
+	public abstract Usuario getUserId(long id);
 	
-	public abstract List<UsuarioModel> listUsuario();
+	public abstract List<Usuario> listUsuario();
 	
-	public abstract int addUser(UsuarioModel usuario);
+	public abstract void removeUser(Usuario usuario);
 	
-	public abstract void removeUser(UsuarioModel usuario);
+	public abstract Usuario updateUser(Usuario usuario);
 	
-	public abstract UsuarioModel updateUser(UsuarioModel usuario);
-	
-	public abstract UsuarioModel findBy(String username);
+	public abstract Usuario findBy(String username);
+
+	int addDpto(Departamento depto);
+
+	List<Departamento> listDpto();
+
+	int addMunicipio(Municipio municipio);
+
+	List<Municipio> listMunicipios();
+
+	int addMunicipio(Municipio municipio, int id_departamento);
+
+	int addBiblio(Biblioteca bib, int id_municipio);
+
+	List<Biblioteca> listBibliotecas();
+
+	int addUser(Usuario usuario, int id_numicipio, int id_b);
 	
 }

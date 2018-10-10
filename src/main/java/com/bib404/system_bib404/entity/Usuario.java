@@ -22,12 +22,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "usuario")
 public class Usuario {
-
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_secuencia")
-//	@SequenceGenerator(name = "id_secuencia", allocationSize = 1)
-//	@Column(name = "id", unique = true, nullable = false)
-//	private int id;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -46,11 +40,10 @@ public class Usuario {
 	@Column(name = "apellido")
 	private String apellido;
 
-//	@Column(name = "fecha_nacimiento", nullable = false)
-//	@DateTimeFormat(pattern = "yyyy-MM-dd")
-//	private Date fecha_nacimiento;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "fecha_nacimiento")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecha_nacimiento;
 
 	@Column(name = "nombre_padre")
@@ -83,6 +76,9 @@ public class Usuario {
 
 	@Column(name = "enable", nullable = false)
 	private boolean enable;
+	
+	@Column(name = "rol", nullable = false)
+	private String rol;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "municipio_id", nullable = false)
@@ -240,7 +236,7 @@ public class Usuario {
 
 	public Usuario(int id, String username, String password, String nombre, String apellido, Date fecha_nacimiento,
 			String nombre_padre, String nombre_madre, String numero_telefono, String lugar_estudio, String genero,
-			String ocupacion, String email, Date fecha_registro, String foto_perfil, boolean enable,
+			String ocupacion, String email, Date fecha_registro, String foto_perfil, boolean enable,String rol,
 			Municipio municipio, Biblioteca biblioteca) {
 		super();
 		this.id = id;
@@ -261,6 +257,17 @@ public class Usuario {
 		this.enable = enable;
 		this.municipio = municipio;
 		this.biblioteca = biblioteca;
+		this.rol=rol;
+	}
+	
+	
+
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
 	}
 
 	public Usuario() {

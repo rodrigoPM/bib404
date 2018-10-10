@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.bib404.system_bib404.Repository.UsuarioRepository;
-import com.bib404.system_bib404.model.UsuarioModel;
+
 
 @Service("userService")
 public class UserService {

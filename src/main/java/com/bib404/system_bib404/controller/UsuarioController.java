@@ -2,6 +2,7 @@ package com.bib404.system_bib404.controller;
 
 import java.io.IOException;
 import java.lang.ProcessBuilder.Redirect;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,107 +26,113 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.bib404.system_bib404.constant.Template;
-import com.bib404.system_bib404.model.UsuarioModel;
+import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.service.EncriptadoPass;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 
 @Controller
 @RequestMapping("/usuarios")
 public class UsuarioController extends HttpServlet{
-//	@Autowired
-//	@Qualifier("usuarioServiceImpl")
-//	private UsuarioServiceImpl usuarioImp;
-//	
-//	@Autowired
-//	@Qualifier("encriptadoPass")
-//	private EncriptadoPass encriptado;	
+	@Autowired
+	@Qualifier("usuarioServiceImpl")
+	private UsuarioServiceImpl usuarioImp;
 	
-//	@RequestMapping("/listUser")
-//	public ModelAndView getAllUser(HttpServletRequest request)  throws ServletException, IOException  {
-//		ModelAndView mav = new ModelAndView(Template.USUARIOS);
-//		mav.addObject("usuarios", usuarioImp.listUsuario());
-//		return mav;
-//	}
+	@Autowired
+	@Qualifier("encriptadoPass")
+	private EncriptadoPass encriptado;	
 	
-//	@GetMapping("/registrarse")
-//	public String registrarse(@RequestParam(name="error", required=false, defaultValue="NULL") String nm, Model model,HttpServletRequest request)  throws ServletException, IOException  {
-//		model.addAttribute("titulo","BIB404-registrarse");
-//		HttpSession session = request.getSession();
-//		if(session.getAttribute(Template.USER)==null) {
-//			if(nm.compareToIgnoreCase("user")==0) {
-//				model.addAttribute("valor","Error username, ocupado");
-//				model.addAttribute("error",1);
-//				
-//			}else {
-//				if(nm.compareToIgnoreCase("fecha")==0) {
-//					model.addAttribute("valor","Error fecha, eres demasiado joven :v");
-//					model.addAttribute("error",1);
-//				}else
-//				model.addAttribute("error",false);
-//			}
-//			model.addAttribute("usuario", new UsuarioModel());
-//			return Template.REGISTRAR;
-//		}else {
-//			return "redirect:/index";
-//		}
-//	}
+	@RequestMapping("/listUser")
+	public ModelAndView getAllUser(HttpServletRequest request)  throws ServletException, IOException  {
+		ModelAndView mav = new ModelAndView(Template.USUARIOS);
+		mav.addObject("usuarios", usuarioImp.listUsuario());
+		return mav;
+	}
 	
-//	@PostMapping("/addUser")
-//	public String redireccion(@Valid @ModelAttribute("usuario") UsuarioModel usuario,HttpServletRequest request)  throws ServletException, IOException {
-//		Log log = LogFactory.getLog(UsuarioController.class);
-//		log.info(usuario.getPassword()); //contraseña sin encriptar
-//		String pass = encriptado.Encriptar(usuario.getPassword());
-//		log.info(pass); //contraseña encriptada
-//		String passDe = encriptado.Desencriptar(pass);
-//		usuario.setPassword(pass);
-//		int val = 0;
-//		String direccion = "redirect:/usuarios/registrarse?error=user";
-//		
-//		if(usuario.getFechaNacimiento().getYear()>113) {
-//			System.out.println(""+usuario.getFechaNacimiento().getYear());
-//			return "redirect:/usuarios/registrarse?error=fecha";
-//		}else {
-//			//val = usuarioImp.addUser(usuario);
-//		}
-//		
-//		log.info(passDe+ "  id: "+ usuario.getId()+"ingresado: " + val );
-//		if (val==1) {
-//			HttpSession sesion = request.getSession();
-//			sesion.setAttribute("usuario", usuario);
-//			return "redirect:/index";
-//		}else {
-//			return "redirect:/usuarios/registrarse?error=user";
-//		}
-//	}
+	@GetMapping("/registrarse")
+	public String registrarse(@RequestParam(name="error", required=false, defaultValue="NULL") String nm, Model model,HttpServletRequest request)  throws ServletException, IOException  {
+		model.addAttribute("titulo","BIB404-registrarse");
+		HttpSession session = request.getSession();
+		if(session.getAttribute(Template.USER)==null) {
+			if(nm.compareToIgnoreCase("user")==0) {
+				model.addAttribute("valor","Error username, ocupado");
+				model.addAttribute("error",1);
+				
+			}else {
+				if(nm.compareToIgnoreCase("fecha")==0) {
+					model.addAttribute("valor","Error fecha, eres demasiado joven :v");
+					model.addAttribute("error",1);
+				}else
+				model.addAttribute("error",false);
+			}
+			model.addAttribute("usuario", new Usuario());
+			model.addAttribute("bibliotecas", usuarioImp.listBibliotecas());
+			model.addAttribute("municipios", usuarioImp.listMunicipios());
+			return Template.REGISTRAR;
+		}else {
+			return "redirect:/index";
+		}
+	}
 	
-//	@PostMapping("/logcheck")
-//	public String loginCheck(@ModelAttribute("username") String username,@ModelAttribute("password") String password, HttpServletRequest request)  throws ServletException, IOException {
-//		//UsuarioModel user = usuarioImp.findBy(username);
-//		UsuarioModel user=new UsuarioModel();
-//		if(user==null) {
-//			return "redirect:/?error=user";
-//		}else {
-//			HttpSession sesion = request.getSession();
-//			System.out.println("username= " +username+"=="+user.getUsername()+" password= " +password+"=="+encriptado.Desencriptar(user.getPassword()));
-//			if (username.compareToIgnoreCase(user.getUsername()) == 0 && password.compareToIgnoreCase(encriptado.Desencriptar(user.getPassword()))==0 && sesion.getAttribute("usuario")==null) {
-//				sesion.setAttribute("usuario", user);
-//				return "redirect:/index";
-//			}else {
-//				return "redirect:/usuarios/registrarse?error=";
-//			}
-//		}
-//	}
+	@PostMapping("/addUser")
+	public String redireccion(@Valid @ModelAttribute("usuario") Usuario usuario,@ModelAttribute("bib") String bib ,@ModelAttribute("mun") String mun,HttpServletRequest request)  throws ServletException, IOException {
+		Log log = LogFactory.getLog(UsuarioController.class);
+		log.info(usuario.getPassword()); //contraseña sin encriptar
+		String pass = encriptado.Encriptar(usuario.getPassword());
+		log.info(pass); //contraseña encriptada
+		String passDe = encriptado.Desencriptar(pass);
+		usuario.setPassword(pass);
+		usuario.setFecha_registro(new Date());
+		usuario.setRol(Template.USUARIO_SIMPLE);
+		int id_numicipio = Integer.parseInt(mun);
+		int id_biblioteca = Integer.parseInt(bib);
+		
+		int val = 0;
+		String direccion = "redirect:/usuarios/registrarse?error=user";
+		
+		if(usuario.getFecha_nacimiento().getYear()>113) {
+			System.out.println(""+usuario.getFecha_nacimiento().getYear());
+			return "redirect:/usuarios/registrarse?error=fecha";
+		}else {
+			val = usuarioImp.addUser(usuario, id_numicipio, id_biblioteca);
+		}
+		
+		log.info(passDe+ "  id: "+ usuario.getId()+"ingresado: " + val );
+		if (val==1) {
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("usuario", usuario);
+			return "redirect:/index";
+		}else {
+			return "redirect:/usuarios/registrarse?error=user";
+		}
+	}
 	
-//	@GetMapping("/logout")
-//	public String logout(@RequestParam(name="error", required=false, defaultValue="NULL") String name, Model model,HttpServletRequest request)  throws ServletException, IOException  {
-//		model.addAttribute("titulo","BIB404-registrarse");
-//		HttpSession session = request.getSession();
-//		if(session.getAttribute(Template.USER)!=null) {
-//			session.setAttribute(Template.USER, null);
-//			session.invalidate();
-//		}
-//		return "redirect:/";
-//	}
+	@PostMapping("/logcheck")
+	public String loginCheck(@ModelAttribute("username") String username,@ModelAttribute("password") String password, HttpServletRequest request)  throws ServletException, IOException {
+		Usuario user = usuarioImp.findBy(username);
+		if(user==null) {
+			return "redirect:/?error=user";
+		}else {
+			HttpSession sesion = request.getSession();
+			System.out.println("username= " +username+"=="+user.getUsername()+" password= " +password+"=="+encriptado.Desencriptar(user.getPassword()));
+			if (username.compareToIgnoreCase(user.getUsername()) == 0 && password.compareToIgnoreCase(encriptado.Desencriptar(user.getPassword()))==0 && sesion.getAttribute("usuario")==null) {
+				sesion.setAttribute("usuario", user);
+				return "redirect:/index";
+			}else {
+				return "redirect:/usuarios/registrarse?error=";
+			}
+		}
+	}
+	
+	@GetMapping("/logout")
+	public String logout(@RequestParam(name="error", required=false, defaultValue="NULL") String name, Model model,HttpServletRequest request)  throws ServletException, IOException  {
+		model.addAttribute("titulo","BIB404-registrarse");
+		HttpSession session = request.getSession();
+		if(session.getAttribute(Template.USER)!=null) {
+			session.setAttribute(Template.USER, null);
+			session.invalidate();
+		}
+		return "redirect:/";
+	}
 	
 	
 }
