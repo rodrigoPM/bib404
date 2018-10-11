@@ -2,6 +2,8 @@
 <html>
 <head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
 	<title th:text="${titulo}"></title>
+	<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.min.js}" />
+	<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.css}" />
 	
 	<link rel="stylesheet" href="#" />
 </head>
@@ -55,6 +57,7 @@
                     <input type="submit" value="Buscar" id="buscar" class="btn btn-success buscador">
                 </form>
          </div>
+          
     <input class="btn btn-primary boton" type=submit value="Autorizar Prestamos" onclick="mostrar()"/>
     <input class="btn btn-primary boton" type=submit value="Recibir Prestamos" onclick="mostrar2()"/>
     <input class="btn btn-primary boton" type=submit value="Prestamos con Mora" onclick="mostrar3()"/>
