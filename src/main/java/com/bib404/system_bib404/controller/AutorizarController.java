@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,9 +25,27 @@ public class AutorizarController {
 	private UsuarioServiceImpl usuarioImp;
 	
 	@RequestMapping("/listPrestamos")
-	public ModelAndView getAllUser(HttpServletRequest request)  throws ServletException, IOException  {
+	public ModelAndView getAllPrestamos(HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 //		mav.addObject("usuarios", usuarioImp.listUsuario());
 		return mav;
+	}
+	@GetMapping("/autorizado")
+	public String autorizado(Model model) {
+		model.addAttribute("mensaje", 0);
+		return Template.AUTORIZAR;
+		
+	}
+	@GetMapping("/denegado")
+	public String denegado(Model model) {
+		model.addAttribute("mensaje", 1);
+		return Template.AUTORIZAR;
+		
+	}
+	@GetMapping("/recibido")
+	public String recibido(Model model) {
+		model.addAttribute("mensaje", 2);
+		return Template.AUTORIZAR;
+		
 	}
 }
