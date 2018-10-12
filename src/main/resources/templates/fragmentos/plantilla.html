@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="#" th:href="@{/css/regular.min.css}" />
 	<link rel="stylesheet" href="#" th:href="@{/css/solid.min.css}" />
 	<link rel="stylesheet" href="#" th:href="@{/css/bib404/plantilla.css}" />
-	
+	<script src="js/deshabilitar.js"></script>
 	<th:block th:replace="${links}" />
 	
 </head>
@@ -54,7 +54,7 @@
 						id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false">User <i class="fas fa-user"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownUser">
-							<a class="dropdown-item" href="#">Perfil</a> <a
+							<a class="dropdown-item" th:href="@{/perfil}" >Perfil</a> <a
 								class="dropdown-item" href="#">Mis Digitales</a> <a
 								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar Sesión</a>
 						</div></li>
