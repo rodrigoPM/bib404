@@ -45,17 +45,16 @@ public class IndexBib404Controller {
 	
 	@GetMapping("/")
 	public String indexAnonimo(HttpServletRequest request, Model model)  throws ServletException, IOException  {
-		HttpSession sesion = request.getSession();
+//		HttpSession sesion = request.getSession();
 		model.addAttribute("titulo","BIB404");
-		
-		if(sesion.getAttribute(Template.USER)==null) {
-			return Template.INDEX_ANONIMO;
-		}else {
-			return "redirect:/index";
-		}
+		return Template.INDEX_BIB404;
+//		if(sesion.getAttribute(Template.USER)==null) {
+//			return Template.INDEX_ANONIMO;
+//		}else {
+//			return "redirect:/index";
+//		}
 
 	}
-	
 	@GetMapping("/index")
 	public String indexUsuario(HttpServletRequest request, Model model)  throws ServletException, IOException  {
 		HttpSession sesion = request.getSession();
