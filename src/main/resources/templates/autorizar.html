@@ -62,16 +62,16 @@
     <input class="btn btn-primary boton" type=submit value="Recibir Prestamos" onclick="mostrar2()"/>
     <input class="btn btn-primary boton" type=submit value="Prestamos con Mora" onclick="mostrar3()"/>
 
-<div th:if="${mensaje==0}" class="alert alert-success">
-<strong>Prestamo Autorizado</strong> 
-</div>
-<div th:if="${mensaje==1}" class="alert alert-danger">
-  <strong>Prestamo Denegado</strong>
-</div>
 <div th:if="${mensaje==2}" class="alert alert-info">
-  <strong>Prestamo Recibido</strong>
+  	<strong>Prestamo Recibido</strong>
 </div>
 <section id="tabla1">
+	<div th:if="${mensaje==0}" class="alert alert-success">
+		<strong>Prestamo Autorizado</strong> 
+	</div>
+	<div th:if="${mensaje==1}" class="alert alert-danger">
+  		<strong>Prestamo Denegado</strong>
+	</div>
 	<table class="table" border="2">
 		<thead class="thead">
 			<tr>
@@ -84,6 +84,18 @@
 			</tr>
 		</thead>
 		<tbody>
+		<tr th:each="prestamo: ${prestamos}">
+				<th> <span th:text="${prestamo.usuario.nombre}"> </span> </th>
+				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
+				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
+				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
+				<th><span>codigo: 123 </span>
+					<p><span>Autor: Disney </span></p></th>
+				<td> <a href="#" th:href="@{/autorizar/autorizado}">
+				<button type="button" class="btn btn-success boton3">Autorizar</button></a>
+				<p><a href="#" th:href="@{/autorizar/denegado}">
+				<button type="button" class="btn btn-danger">Denegar</button></a></p> </td>
+			</tr>
 			<tr>
 				<td><img th:src="@{/imgs/user.jpg}" width=75 length=75></td>
 				<td><img th:src="@{/imgs/libro.jpg}" width=50 length=50></td>
@@ -108,18 +120,20 @@
 				<th>Libro</th>
 				<th>Fecha de prestamo</th>
 				<th>Fecha de entrega</th>
+				<th>Fecha de devolucion</th>
 				<th>Datos del libro</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><img th:src="@{/imgs/user.jpg}" width=75 length=75></td>
-				<td><img th:src="@{/imgs/libro.jpg}" width=50 length=50></td>
-				<td><span>24/09/18</span></td>
-				<td><span>30/09/18</span></td>
-				<td> <span>codigo: 123 </span>
-					<p><span>Autor: Disney </span></p> </td>
+			<tr th:each="prestamo: ${prestamos}">
+				<th> <span th:text="${prestamo.usuario.nombre}"> </span> </th>
+				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
+				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
+				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
+				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
+				<th><span>codigo: 123 </span>
+					<p><span>Autor: Disney </span></p></th>
 				<td> <a href="#" th:href="@{/autorizar/recibido}">
 				<button type="button" class="btn btn-success boton3">Recibir</button></a></td>
 			</tr>
@@ -134,20 +148,22 @@
 				<th>Libro</th>
 				<th>Fecha de prestamo</th>
 				<th>Fecha de entrega</th>
-				<th>Dias de atraso</th>
+				<th>Fecha de devolucion</th>
+				<th>Mora</th>
 				<th>Datos del libro</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><img th:src="@{/imgs/user.jpg}" width=75 length=75></td>
-				<td><img th:src="@{/imgs/libro.jpg}" width=50 length=50></td>
-				<td><span>24/09/18</span></td>
-				<td><span>30/09/18</span></td>
-				<td><span>5 Dias</span></td>
-				<td> <span>codigo: 123 </span>
-					<p><span>Autor: Disney </span></p> </td>
+			<tr th:each="prestamo: ${prestamos}">
+				<th> <span th:text="${prestamo.usuario.nombre}"> </span> </th>
+				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
+				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
+				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
+				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
+				<th><span th:text="${prestamo.mora}"> </span></th>
+				<th><span>codigo: 123 </span>
+					<p><span>Autor: Disney </span></p></th>
 				<td> <a href="#" th:href="@{/autorizar/recibido}">
 				<button type="button" class="btn btn-success boton3">Recibir</button></a></td>
 			</tr>
