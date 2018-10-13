@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bib404.system_bib404.constant.Template;
 
 @Controller
-//@RequestMapping("/{name_bib}")
 public class bibliotecaController {
 	
 //	@GetMapping("/")

@@ -16,7 +16,7 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
 		th:fragment="navbar-anonimo">
 		<div class="container">
-			<a class="navbar-brand" href="#"><span th:text="${name_bib}"></span> <i class="fas fa-book-reader"></i></a>
+			<a class="navbar-brand" th:href="@{/}"><span th:text="${name_bib}"></span> <i class="fas fa-book-reader"></i></a>
 			<button class="navbar-toggler collapsed" type="button"
 				data-toggle="collapse" data-target="#navbarsBib404"
 				aria-controls="navbarsBib404" aria-expanded="false"
@@ -36,7 +36,7 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
 		th:fragment="navbar-user">
 		<div class="container">
-			<a class="navbar-brand text-bold" href="#"><span th:text="${name_bib}"></span> <i class="fas fa-book-reader"></i></a>
+			<a class="navbar-brand text-bold" th:href="@{/}"><span th:text="${name_bib}"></span> <i class="fas fa-book-reader"></i></a>
 			<button class="navbar-toggler collapsed" type="button"
 				data-toggle="collapse" data-target="#navbarsBib404"
 				aria-controls="navbarsBib404" aria-expanded="false"
@@ -59,6 +59,25 @@
 								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar Sesión</a>
 						</div></li>
     
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
+		th:fragment="navbar-bib">
+		<div class="container">
+			<a class="navbar-brand text-bold" th:href="@{/}">BIB404 <i class="fas fa-book-reader"></i></a>
+			<button class="navbar-toggler collapsed" type="button"
+				data-toggle="collapse" data-target="#navbarsBib404"
+				aria-controls="navbarsBib404" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="navbar-collapse collapse" id="navbarsBib404" style="">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link text-bold" th:href="@{/biblioteca}">Crear Biblioteca</a></li>
 				</ul>
 			</div>
 		</div>
