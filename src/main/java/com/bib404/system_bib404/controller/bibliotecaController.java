@@ -30,7 +30,7 @@ public class bibliotecaController {
 		if(sesion.getAttribute(Template.USER)!=null) {
 			mav.setViewName(Template.INDEX_BIB_X);
 		}else {
-			mav.setViewName(Template.INDEX_ANONIMO);
+			mav.setViewName(Template.INDEX_BIB404);
 		}
 		return mav;
 	}

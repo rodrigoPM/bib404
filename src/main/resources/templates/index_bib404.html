@@ -6,8 +6,12 @@
 <link rel="stylesheet" href="#" />
 </head>
 <body>
-
-	<nav th:replace="fragmentos/plantilla :: navbar-bib"></nav>
+	<div th:if="${anonimo}">
+		<nav th:replace="fragmentos/plantilla :: navbar-bib"></nav>
+	</div>
+	<div th:if="${user}">
+		<nav th:replace="fragmentos/plantilla :: navbar-bib"></nav>
+	</div>
 
 	<br />
 	<div class="container">
@@ -44,6 +48,7 @@
 
 	</div>
 
+	<div th:replace="fragmentos/plantilla :: login"></div>
 	<div th:replace="fragmentos/plantilla :: scripts"></div>
 </body>
 </html>

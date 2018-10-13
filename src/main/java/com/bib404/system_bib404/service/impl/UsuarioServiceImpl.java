@@ -110,7 +110,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			v = sentencia.executeUpdate(sql);
 			getConexion().commit();
 			sentencia.close();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("Ocurrio un error al escribir en DB");
 			e.printStackTrace();
 		}

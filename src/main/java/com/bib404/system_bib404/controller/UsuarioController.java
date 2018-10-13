@@ -2,6 +2,7 @@ package com.bib404.system_bib404.controller;
 
 import java.io.IOException;
 import java.lang.ProcessBuilder.Redirect;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.websocket.Session;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -56,7 +59,6 @@ public class UsuarioController extends HttpServlet{
 			if(nm.compareToIgnoreCase("user")==0) {
 				model.addAttribute("valor","Error username, ocupado");
 				model.addAttribute("error",1);
-				
 			}else {
 				if(nm.compareToIgnoreCase("fecha")==0) {
 					model.addAttribute("valor","Error fecha, eres demasiado joven :v");
@@ -66,6 +68,13 @@ public class UsuarioController extends HttpServlet{
 			}
 			model.addAttribute("usuario", new Usuario());
 			model.addAttribute("bibliotecas", usuarioImp.listBibliotecas());
+			Date fecha = new Date();
+			int anio = fecha.getYear() - 4 ;
+			fecha.setYear(anio);
+			SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+			String fecha_actual = formateador.format(fecha);
+			System.out.println(fecha_actual);
+			model.addAttribute("fecha_actual", fecha_actual);
 			model.addAttribute("municipios", usuarioImp.listMunicipios());
 			return Template.REGISTRAR;
 		}else {
@@ -75,28 +84,22 @@ public class UsuarioController extends HttpServlet{
 	
 	@PostMapping("/addUser")
 	public String redireccion(@Valid @ModelAttribute("usuario") Usuario usuario,@ModelAttribute("bib") String bib ,@ModelAttribute("mun") String mun,HttpServletRequest request)  throws ServletException, IOException {
-		Log log = LogFactory.getLog(UsuarioController.class);
-		log.info(usuario.getPassword()); //contraseña sin encriptar
 		String pass = encriptado.Encriptar(usuario.getPassword());
-		log.info(pass); //contraseña encriptada
-		String passDe = encriptado.Desencriptar(pass);
 		usuario.setPassword(pass);
 		usuario.setFecha_registro(new Date());
 		usuario.setRol(Template.USUARIO_SIMPLE);
 		int id_numicipio = Integer.parseInt(mun);
 		int id_biblioteca = Integer.parseInt(bib);
-		
 		int val = 0;
-		String direccion = "redirect:/usuarios/registrarse?error=user";
-		
-		if(usuario.getFecha_nacimiento().getYear()>113) {
+		Date fech = new Date();
+		int anio = fech.getYear() - 4;
+		if(usuario.getFecha_nacimiento().getYear()>anio) {
 			System.out.println(""+usuario.getFecha_nacimiento().getYear());
 			return "redirect:/usuarios/registrarse?error=fecha";
 		}else {
 			val = usuarioImp.addUser(usuario, id_numicipio, id_biblioteca);
 		}
 		
-		log.info(passDe+ "  id: "+ usuario.getId()+"ingresado: " + val );
 		if (val==1) {
 			HttpSession sesion = request.getSession();
 			sesion.setAttribute("usuario", usuario);
