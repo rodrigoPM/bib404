@@ -59,12 +59,12 @@
 	</div>
 	<div class="container">
 	<div th:each="rb:${rbs}">
-		<div class="card text-white bg-dark mb-3 d-inline-block"
-			style="max-width: 20rem;">
-			<div class="card-header" >Titulo del RB</div>
+		<div class="card text-white bg-success mb-3 d-inline-block"
+			style="width: 25rem;">
+			<div class="card-header" th:text="${rb.nombre_recurso_bib}"></div>
 			<div class="card-body">
-				<h4 class="card-title">tipo de formato</h4>
-				<p class="card-text">descripsion.</p>
+				<h4 class="card-title">Descripcion:</h4>
+				<p class="card-text" th:text="${rb.descripcion_recurso_bib}"></p>
 			</div>
 		</div>
 		</div>

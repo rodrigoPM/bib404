@@ -43,6 +43,7 @@ public class bibliotecaController {
 			return mav;
 		}
 		mav.addObject("name_bib", bibliotecaService.findById(id_bib).getNombre_biblioteca());
+		mav.addObject("urlHome", "/bib404/"+bibliotecaService.findById(id_bib).getId());
 		HttpSession sesion = request.getSession();
 		if(sesion.getAttribute(Template.USER)!=null) {
 			mav.addObject("isUser", true);
