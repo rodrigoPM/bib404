@@ -1,28 +1,17 @@
-package com.bib404.system_bib404.entity;
+package com.bib404.system_bib404.model;
 
 import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.bib404.system_bib404.entity.RecursoEspecifico;
 
-@Entity
-@Table(name = "editorial")
-public class Editorial {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "id", unique = true, nullable = false)
+public class EditorialModel {
 	private int id;
 
 	@Column(name = "nombre_editorial")
@@ -67,14 +56,14 @@ public class Editorial {
 		this.recurso_especifico = recurso_especifico;
 	}
 
-	public Editorial(int id, String nombre_editorial, Date anio_publicacion) {
+	public EditorialModel(int id, String nombre_editorial, Date anio_publicacion) {
 		super();
 		this.id = id;
 		this.nombre_editorial = nombre_editorial;
 		this.anio_publicacion = anio_publicacion;
 	}
 
-	public Editorial() {
+	public EditorialModel() {
 		super();
 	}
 

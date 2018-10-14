@@ -1,22 +1,13 @@
-package com.bib404.system_bib404.entity;
+package com.bib404.system_bib404.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "formato_recurso")
-public class FormatoRecurso {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "id", unique = true, nullable = false)
+import com.bib404.system_bib404.entity.RecursoEspecifico;
+
+public class FormatoRecursoModel {
 	private int id;
 
 	@Column(name = "nombre_formato")
@@ -49,14 +40,15 @@ public class FormatoRecurso {
 		this.recurso_especifico = recurso_especifico;
 	}
 
-	public FormatoRecurso(int id, String nombre_formato) {
+	public FormatoRecursoModel(int id, String nombre_formato) {
 		super();
 		this.id = id;
 		this.nombre_formato = nombre_formato;
 	}
 
-	public FormatoRecurso() {
+	public FormatoRecursoModel() {
 		super();
 	}
 
 }
+

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+    <meta charset="utf-8"/>
+
+    <title>Recurso especifico</title>
+
+ 	<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.min.js}" />
+	<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.css}" />
+	
+	<link rel="stylesheet" href="#" />
+ 	
+  </head>
+<Style type="text/css">
+  .ocultar{
+  display: none
+  }
+  .boton {
+  margin-top: 50px;
+  margin-bottom: 10px;
+  }
+  .boton2 {
+  margin-top: 50px;
+  padding: 10px;
+  }
+  .boton3 {
+  margin-bottom: 10px;
+  }
+  .buscador{
+   float: right;
+   margin-bottom: 10px;
+  }
+ </Style>
+  <body>
+	<nav th:replace="fragmentos/plantilla :: navbar-user"></nav> 
+	<div class="container">	
+		<h1>Recurso especifico</h1>
+		<br/>
+		<div th:each="recursoEspecifico : ${recursosEspecificos}">
+			<table class="table" border="2">
+				<thead class="thead">
+					<tr>
+						<th>Imagen</th>
+						<th>Descripcion del recurso</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr >
+                        <td th:text="${recursoEspecifico.detalle_recurso.recurso_bib.imagen_recurso_bibl}"></td>
+						<td th:text="${recursoEspecifico.detalle_recurso.recurso_bib.descripcion_recurso_bib}"></td>
+					</tr>												
+				</tbody>
+			</table>
+            <p>
+                <strong>Editorial: </strong>
+                <span th:text="${recursoEspecifico.editorial.nombre_editorial} "></span>
+                <span th:text="${recursoEspecifico.editorial.anio_publicacion}"></span>
+            </p>
+			<table class="table" border="2">
+				<thead class="thead">
+					<tr>
+						<th>Formato</th>
+						<th>Codigo</th>
+						<th>Edicion</th>
+						<th>Volumen</th>
+						<th>Consulta</th>
+						<th>Estado</th>
+						<th>Accion</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+                        <td th:text="${recursoEspecifico.formato_recurso.nombre_formato}"></td>
+						<td th:text="${recursoEspecifico.codigo_rec_esp}"></td>
+						<td th:text="${recursoEspecifico.edicion_recurso}"></td>
+						<td th:text="${recursoEspecifico.volumen_recurso}"></td>
+						<td th:text="${recursoEspecifico.consulta_interna}==true ? 'interna' : 'externa'"></td>		
+						<td th:text="${recursoEspecifico.prestado}==true ? 'no disponible' : 'disponible'"></td>														
+						<td>
+						    <a>
+						        <button type="button" class="btn btn-success boton3">PRESTAR</button>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
+</html>
