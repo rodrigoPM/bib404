@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +63,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 				System.out.println("Conexion fallida!");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -102,8 +102,13 @@ public class UsuarioServiceImpl implements UsuarioService{
 			int id = usuarios.size() + 1;
 			java.util.Date f =usuario.getFecha_nacimiento();
 			java.util.Date f2 =usuario.getFecha_registro();
-			String fecha_nacimiento = "TO_TIMESTAMP(\'"+f.getYear()+"-"+f.getMonth()+"-"+f.getDay()+" "+f.getHours()+":"+f.getMinutes()+":34.149409100', 'YYYY-MM-DD HH24:MI:SS.FF')";			
-			String fecha_registro = "TO_TIMESTAMP(\'"+f2.getYear()+"-"+f2.getMonth()+"-"+f2.getDay()+" "+f2.getHours()+":"+f2.getMinutes()+":34.149409100', 'YYYY-MM-DD HH24:MI:SS.FF')";			
+			SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+
+			String f3 = formateador.format(f);
+			String f4 = formateador.format(f2);
+			String fecha_nacimiento = "TO_TIMESTAMP(\'"+f3+" "+f.getHours()+":"+f.getMinutes()+":34.149409100', 'YYYY-MM-DD HH24:MI:SS.FF')";			
+			String fecha_registro = "TO_TIMESTAMP(\'"+f4+" "+f2.getHours()+":"+f2.getMinutes()+":34.149409100', 'YYYY-MM-DD HH24:MI:SS.FF')";		
+			System.out.println(fecha_registro+"  fecha de nacimiento: "+fecha_nacimiento);
 			String sql = "INSERT INTO USUARIO(ID, APELLIDO, EMAIL, ENABLE, FECHA_NACIMIENTO, FECHA_REGISTRO, FOTO_PERFIL, GENERO, LUGAR_ESTUDIO, NOMBRE, NOMBRE_MADRE, NOMBRE_PADRE, NUMERO_TELEFONO, OCUPACION, PASSWORD, ROL, USERNAME, BIBLIOTECA_ID, MUNICIPIO_ID) VALUES ("+id+", \'"+usuario.getApellido()+"\', \'"+usuario.getEmail()+"\', "+1+", "+fecha_nacimiento+", "+fecha_registro+", \'none\', \'"+usuario.getGenero()+"\', \'"+usuario.getLugar_estudio()+"\', \'"+usuario.getNombre()+"\', \'"+usuario.getNombre_madre()+"\', \'"+usuario.getNombre_padre()+"\', \'"+usuario.getNumero_telefono()+"\', \'"+usuario.getOcupacion()+"\', \'"+usuario.getPassword()+"\', \'"+usuario.getRol()+"\', \'"+usuario.getUsername()+"\', "+id_biblioteca+", "+id_numicipio+")";
 			Statement sentencia;
 			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
@@ -111,8 +116,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			getConexion().commit();
 			sentencia.close();
 		} catch (Exception e) {
-			System.out.println("Ocurrio un error al escribir en DB");
-			e.printStackTrace();
+			System.out.println("DB");
 		}
 		cerrar();
 		return v;		
@@ -154,8 +158,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			getConexion().commit();
 			sentencia.close();
 		} catch (SQLException e) {
-			System.out.println("Ocurrio un error al escribir en DB");
-			e.printStackTrace();
+			System.out.println("DB");
 		}
 		cerrar();
 		return v;		
@@ -173,11 +176,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 			Statement sentencia;
 			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			v = sentencia.executeUpdate(sql);
-			getConexion().commit();
 			sentencia.close();
+			getConexion().commit();
 		} catch (SQLException e) {
-			System.out.println("Ocurrio un error al escribir en DB");
-			e.printStackTrace();
+			System.out.println("DB");
 		}
 		cerrar();
 		return v;		
@@ -281,8 +283,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		try {
 			conexion.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 	}
 
