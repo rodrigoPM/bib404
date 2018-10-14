@@ -62,7 +62,7 @@ public class IndexBib404Controller {
 	@GetMapping("/biblioteca")
 	public String biblioteca(HttpServletRequest request, Model model)  throws ServletException, IOException  {
 		String bib ="biblioteca";
-		List<Municipio> municipios = usuarioImp.listMunicipios();
+		List<Municipio> municipios = usuarioImp.listMunicipiosOrderByNombre();
 		model.addAttribute("biblioteca",new Biblioteca());
 		model.addAttribute("municipios",municipios);
 		return bib;

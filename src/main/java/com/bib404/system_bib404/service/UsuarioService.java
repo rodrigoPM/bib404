@@ -42,5 +42,9 @@ public interface UsuarioService {
 	Biblioteca findBibBy(int id);
 
 	Municipio findMunBy(int id);
+
+	List<Municipio> listMunicipiosOrderByNombre();
+
+	Departamento findDepBy(int id);
 	
 }

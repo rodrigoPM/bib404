@@ -85,11 +85,38 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public List<Municipio> listMunicipios() {
 		return munRep.findAll();
 	}
+	
+	@Override
+	public List<Municipio> listMunicipiosOrderByNombre() {
+		List<Municipio> mun = new ArrayList<Municipio>();
+		ResultSet r = null;
+		conectar();
+		try {
+			String sql = "select * from MUNICIPIO order by NOMBRE_MUNICIPIO";
+			Statement sentencia;
+			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			r= sentencia.executeQuery(sql);
+			while (r.next()) {
+				Municipio m = new Municipio();
+				m.setId(r.getInt("id"));
+				m.setNombre_municipio(r.getString("NOMBRE_MUNICIPIO"));
+				mun.add(m);
+			}
+			getConexion().commit();
+			sentencia.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		cerrar();
+		return mun;
+	}
 
 	@Override
 	public List<Biblioteca> listBibliotecas() {
 		return bibRep.findAll();
 	}
+	
+	
 
 	
 	@Override
@@ -117,6 +144,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			sentencia.close();
 		} catch (Exception e) {
 			System.out.println("DB");
+			
 		}
 		cerrar();
 		return v;		
@@ -267,6 +295,32 @@ public class UsuarioServiceImpl implements UsuarioService{
 				us= new Municipio();
 				us.setNombre_municipio(r.getString("nombre_municipio"));
 				us.setId(id);
+				
+			}
+			getConexion().commit();
+			sentencia.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cerrar();
+		return us;
+	}	
+	
+	@Override
+	public Departamento findDepBy(int id) {
+		conectar();
+		ResultSet r = null;
+		Departamento us = null;
+		try {
+			String sql = "SELECT * FROM DEPARTAMENTO WHERE ID =" + id;
+			Statement sentencia;
+			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			r= sentencia.executeQuery(sql);
+			while (r.next()) {
+				us= new Departamento();
+				us.setNombre_departamento(r.getString("nombre_departamento"));
+				us.setId(id);
+				us.setZona_geografica(r.getString("zona_geografica"));
 				
 			}
 			getConexion().commit();
