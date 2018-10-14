@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,6 +44,7 @@ public class IndexBib404Controller {
 	public ModelAndView indexAnonimo(HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.INDEX_BIB404);
 		mav.addObject("titulo", "System BIB404");
+		mav.addObject("urlBase", "/bib404/");
 		if(bibliotecaService.listAllBibs().size() >0) {
 			mav.addObject("bib", true);
 			mav.addObject("bibliotecas", bibliotecaService.listAllBibs());
@@ -50,6 +53,14 @@ public class IndexBib404Controller {
 		}
 		return mav;
 	}
+	
+	@GetMapping("{id_bib}")
+	public String redirectBib(@PathVariable("id_bib") String id_bib) {
+		return "redirect:/bib404/"+id_bib;
+	}
+	
+	
+	
 	@GetMapping("/index")
 	public String indexUsuario(HttpServletRequest request, Model model)  throws ServletException, IOException  {
 		HttpSession sesion = request.getSession();
@@ -58,7 +69,7 @@ public class IndexBib404Controller {
 			return "redirect:/";
 		}else {
 			model.addAttribute("user", sesion.getAttribute(Template.USER));
-			return Template.INDEX_USER;
+			return "redirect:/";
 		}
 
 	}
@@ -66,7 +77,13 @@ public class IndexBib404Controller {
 	@GetMapping("/biblioteca")
 	public String biblioteca(HttpServletRequest request, Model model)  throws ServletException, IOException  {
 		String bib ="biblioteca";
-		List<Municipio> municipios = usuarioImp.listMunicipios();
+		HttpSession sesion = request.getSession();
+		if(sesion.getAttribute(Template.USER)==null) {
+			model.addAttribute("anonimo", true);
+		}else {
+			model.addAttribute("user", true);
+		}
+		List<Municipio> municipios = usuarioImp.listMunicipiosOrderByNombre();
 		model.addAttribute("biblioteca",new Biblioteca());
 		model.addAttribute("municipios",municipios);
 		return bib;

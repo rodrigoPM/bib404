@@ -29,15 +29,15 @@ public class bibliotecaController {
 	private BibliotecaServiceImpl bibliotecaService;
 
 	@RequestMapping("/{id}")
-//	@ResponseBody
 	public ModelAndView inicioBibX(@PathVariable("id") int id_bib, HttpServletRequest request, Model model)  throws ServletException, IOException {
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView(Template.INDEX_BIB_X);
 		mav.addObject("biblioteca",bibliotecaService.findById(id_bib));
+		mav.addObject("name_bib", bibliotecaService.findById(id_bib).getNombre_biblioteca());
 		HttpSession sesion = request.getSession();
 		if(sesion.getAttribute(Template.USER)!=null) {
-			mav.setViewName(Template.INDEX_USER);
+			mav.addObject("isUser", true);
 		}else {
-			mav.setViewName(Template.INDEX_ANONIMO);
+			mav.addObject("isNoUser", true);
 		}
 		return mav;
 	}

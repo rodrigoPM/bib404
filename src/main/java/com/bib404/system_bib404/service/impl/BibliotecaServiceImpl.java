@@ -33,7 +33,7 @@ public class BibliotecaServiceImpl implements BibliotecaService{
 		List<BibliotecaModel> bibliotecasModel = new ArrayList<BibliotecaModel>();
 		for (Biblioteca biblioteca : bibliotecas) {
 			bibliotecasModel.add(bibliotecaConverter.convertBiblioteca2BibliotecaModel(biblioteca));
-			System.out.println(bibliotecaConverter.convertBiblioteca2BibliotecaModel(biblioteca).getNombre_biblioteca()+" nombre");
+			System.out.println(bibliotecaConverter.convertBiblioteca2BibliotecaModel(biblioteca).getId()+" id de la biblioteca");
 		}
 		return bibliotecasModel;
 	}

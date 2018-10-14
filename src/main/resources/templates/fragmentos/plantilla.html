@@ -102,6 +102,7 @@
 		</div>
 	</nav>
 
+
 	<div th:fragment="login">
 		<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -128,11 +129,12 @@
 									class="form-control" id="password" name="password"
 									placeholder="Password">
 							</div>
-							<button type="submit" class="btn btn-primary">Entrar</button>
+							<button type="submit" class="btn btn-fill btn-info btn-wd btn-sm">Entrar</button>
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
+						<button type="button"
+							class="btn btn-fill btn-danger btn-wd btn-sm"
 							data-dismiss="modal">Cerrar</button>
 					</div>
 				</div>
@@ -140,8 +142,8 @@
 		</div>
 	</div>
 
-	<footer class="bg-primary p-4" th:fragment="footer">
-		<p class="text-center m-0">BIB404 2018</p>
+	<footer class="bg-dark p-4" th:fragment="footer">
+		<p class="text-center m-0 text-bold text-white">BIB404 2018</p>
 	</footer>
 
 	<div th:fragment="scripts">
