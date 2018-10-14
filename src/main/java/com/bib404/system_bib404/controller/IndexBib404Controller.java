@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Biblioteca;
 import com.bib404.system_bib404.entity.Municipio;
+import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 
 @Controller
@@ -31,29 +34,17 @@ public class IndexBib404Controller {
 	@Qualifier("usuarioServiceImpl")
 	private UsuarioServiceImpl usuarioImp;
 	
-	
-//	@GetMapping("/")
-//	public String paginaInicioSistema(Model model) {
-//		return Template.INDEX_BIB_X;
-//	}
-	
-	
-//	@GetMapping("/")
-//	public String redirecionar() {
-//		return "redirect:/bib_example";
-//	}
+	@Autowired
+	@Qualifier("bibliotecaServiceImpl")
+	private BibliotecaServiceImpl bibliotecaService;
 	
 	@GetMapping("/")
-	public String indexAnonimo(HttpServletRequest request, Model model)  throws ServletException, IOException  {
-//		HttpSession sesion = request.getSession();
-		model.addAttribute("titulo","BIB404");
-		return Template.INDEX_BIB404;
-//		if(sesion.getAttribute(Template.USER)==null) {
-//			return Template.INDEX_ANONIMO;
-//		}else {
-//			return "redirect:/index";
-//		}
-
+	public ModelAndView indexAnonimo(HttpServletRequest request)  throws ServletException, IOException  {
+		ModelAndView mav = new ModelAndView(Template.INDEX_BIB404);
+		mav.addObject("titulo", "System BIB404");
+		mav.addObject("bibliotecas", bibliotecaService.listAllBibs());
+		System.out.println("numero de elementos: "+bibliotecaService.listAllBibs().size());
+		return mav;
 	}
 	@GetMapping("/index")
 	public String indexUsuario(HttpServletRequest request, Model model)  throws ServletException, IOException  {

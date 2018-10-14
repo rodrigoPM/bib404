@@ -58,14 +58,14 @@
                 </form>
          </div>
           
-    <input class="btn btn-primary boton" type=submit value="Autorizar Prestamos" onclick="mostrar()"/>
-    <input class="btn btn-primary boton" type=submit value="Recibir Prestamos" onclick="mostrar2()"/>
-    <input class="btn btn-primary boton" type=submit value="Prestamos con Mora" onclick="mostrar3()"/>
+    <a href="#" th:href="@{/autorizar/listPrestamos}"><button class="btn btn-primary boton" type=button onclick="mostrar()">Autorizar Prestamos</button></a>
+    <a href="#" th:href="@{/autorizar/listPrestados}"><button class="btn btn-primary boton" type=button onclick="mostrar2()">Recibir Prestamos</button></a>
+    <a href="#" th:href="@{/autorizar/listPrestadosMora}"><button class="btn btn-primary boton" type=button onclick="mostrar3()">Prestamos con Mora</button></a>
 
 <div th:if="${mensaje==2}" class="alert alert-info">
   	<strong>Prestamo Recibido</strong>
 </div>
-<section id="tabla1">
+<section th:if="${prestado==1}">
 	<div th:if="${mensaje==0}" class="alert alert-success">
 		<strong>Prestamo Autorizado</strong> 
 	</div>
@@ -96,23 +96,10 @@
 				<p><a href="#" th:href="@{/autorizar/denegado}">
 				<button type="button" class="btn btn-danger">Denegar</button></a></p> </td>
 			</tr>
-			<tr>
-				<td><img th:src="@{/imgs/user.jpg}" width=75 length=75></td>
-				<td><img th:src="@{/imgs/libro.jpg}" width=50 length=50></td>
-				<td><span>24/09/18</span></td>
-				<td><span>30/09/18</span></td>
-				<td> <span>codigo: 123 </span>
-					<p><span>Autor: Disney </span></p> </td>
-					
-				<td> <a href="#" th:href="@{/autorizar/autorizado}">
-				<button type="button" class="btn btn-success boton3">Autorizar</button></a>
-				<p><a href="#" th:href="@{/autorizar/denegado}">
-				<button type="button" class="btn btn-danger">Denegar</button></a></p> </td>
-			</tr>
 		</tbody>
 	</table>
 </section>
-<section id="tabla2" class="ocultar">
+<section th:if="${prestado==2}">
 	<table class="table" border="2">
 		<thead class="thead">
 			<tr>
@@ -140,7 +127,7 @@
 		</tbody>
 	</table>
 </section>
-<section id="tabla3" class="ocultar">
+<section th:if="${prestado==3}">
 	<table class="table" border="2">
 		<thead class="thead">
 			<tr>
@@ -164,7 +151,7 @@
 				<th><span th:text="${prestamo.mora}"> </span></th>
 				<th><span>codigo: 123 </span>
 					<p><span>Autor: Disney </span></p></th>
-				<td> <a href="#" th:href="@{/autorizar/recibido}">
+				<td> <a href="#" th:href="@{/autorizar/recibidoMora}">
 				<button type="button" class="btn btn-success boton3">Recibir</button></a></td>
 			</tr>
 		</tbody>

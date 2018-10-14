@@ -21,6 +21,13 @@
 				<th>username</th>
 				<th>password</th>
 				<th>nombre</th>
+				<th>fecha de nacimiento</th>
+				<th>foto de perfil</th>
+				<th>email</th>
+				<th>ocupacion</th>
+				<th>genero</th>
+				<th>municipio</th>
+				<th>departamento</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,6 +36,13 @@
 				<th><span th:text="${usuario.username}"> </span></th>
 				<th><span th:text="${usuario.password}"> </span></th>
 				<th><span th:text="${usuario.nombre}"> </span></th>
+				<th><span th:text="${usuario.fecha_nacimiento}"> </span></th>
+				<th><span th:text="${usuario.foto_perfil}"> </span></th>
+				<th><span th:text="${usuario.email}"> </span></th>
+				<th><span th:text="${usuario.ocupacion}"> </span></th>
+				<th><span th:text="${usuario.genero}"> </span></th>
+				<th><span th:text="${usuario.municipio.nombre_municipio}"> </span></th>
+				<th><span th:text="${usuario.biblioteca.nombre_biblioteca}"> </span></th>
 			</tr>
 		</tbody>
 	</table>
