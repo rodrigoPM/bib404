@@ -2,6 +2,7 @@ package com.bib404.system_bib404.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,8 +34,18 @@ public class PrestamoServiceImpl implements PrestamoService{
 	@Override
 	public List<PrestamoModel> listPrestamos() {
 		List<Prestamo> prestamos=prestamoRepository.findAll();
+		List<Prestamo> valprestamos= prestamos.stream().filter(x -> x.getEstado()==1).collect(Collectors.toList());
 		List<PrestamoModel> prestamoModels=new ArrayList<PrestamoModel>();
-		for(Prestamo prestamo:prestamos) {
+		for(Prestamo prestamo:valprestamos) {
+			prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
+		}
+		return prestamoModels;
+	}
+	public List<PrestamoModel> listPrestados() {
+		List<Prestamo> prestamos=prestamoRepository.findAll();
+		List<Prestamo> valprestamos= prestamos.stream().filter(x -> x.getEstado()==2).collect(Collectors.toList());
+		List<PrestamoModel> prestamoModels=new ArrayList<PrestamoModel>();
+		for(Prestamo prestamo:valprestamos) {
 			prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
 		}
 		return prestamoModels;
