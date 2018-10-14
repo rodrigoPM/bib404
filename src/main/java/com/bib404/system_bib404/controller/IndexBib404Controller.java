@@ -42,8 +42,12 @@ public class IndexBib404Controller {
 	public ModelAndView indexAnonimo(HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.INDEX_BIB404);
 		mav.addObject("titulo", "System BIB404");
-		mav.addObject("bibliotecas", bibliotecaService.listAllBibs());
-		System.out.println("numero de elementos: "+bibliotecaService.listAllBibs().size());
+		if(bibliotecaService.listAllBibs().size() >0) {
+			mav.addObject("bib", true);
+			mav.addObject("bibliotecas", bibliotecaService.listAllBibs());
+		}else {
+			mav.addObject("bib", false);
+		}
 		return mav;
 	}
 	@GetMapping("/index")

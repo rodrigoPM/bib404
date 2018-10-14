@@ -10,6 +10,7 @@ public class BibliotecaConverter {
 
 	public Biblioteca convertBibliotecaModel2Biblioteca(BibliotecaModel bibliotecaModel) {
 		Biblioteca biblioteca= new Biblioteca();
+		biblioteca.setId(bibliotecaModel.getId());
 		biblioteca.setNombre_biblioteca(bibliotecaModel.getNombre_biblioteca());
 		biblioteca.setCodigo_biblioteca(bibliotecaModel.getCodigo_biblioteca());
 		biblioteca.setMunicipio(bibliotecaModel.getMunicipio());
@@ -19,6 +20,7 @@ public class BibliotecaConverter {
 	
 	public BibliotecaModel convertBiblioteca2BibliotecaModel(Biblioteca biblioteca) {
 		BibliotecaModel bibliotecaModel = new BibliotecaModel();
+		bibliotecaModel.setId(biblioteca.getId());
 		bibliotecaModel.setNombre_biblioteca(biblioteca.getNombre_biblioteca());
 		bibliotecaModel.setCodigo_biblioteca(biblioteca.getCodigo_biblioteca());
 		bibliotecaModel.setMunicipio(biblioteca.getMunicipio());

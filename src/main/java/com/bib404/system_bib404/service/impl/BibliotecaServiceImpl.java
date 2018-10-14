@@ -2,6 +2,7 @@ package com.bib404.system_bib404.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,8 +33,17 @@ public class BibliotecaServiceImpl implements BibliotecaService{
 		List<BibliotecaModel> bibliotecasModel = new ArrayList<BibliotecaModel>();
 		for (Biblioteca biblioteca : bibliotecas) {
 			bibliotecasModel.add(bibliotecaConverter.convertBiblioteca2BibliotecaModel(biblioteca));
+			System.out.println(bibliotecaConverter.convertBiblioteca2BibliotecaModel(biblioteca).getNombre_biblioteca()+" nombre");
 		}
 		return bibliotecasModel;
+	}
+
+	@Override
+	public BibliotecaModel findById(int id) {
+		// TODO Auto-generated method stub
+		Optional<Biblioteca> biblioteca =bibliotecaRepository.findById(id);
+		BibliotecaModel bibliotecaModel=bibliotecaConverter.convertBiblioteca2BibliotecaModel(biblioteca.get());
+		return bibliotecaModel;
 	}
 
 }
