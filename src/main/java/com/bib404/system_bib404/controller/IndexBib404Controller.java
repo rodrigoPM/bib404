@@ -54,7 +54,7 @@ public class IndexBib404Controller {
 			return "redirect:/";
 		}else {
 			model.addAttribute("user", sesion.getAttribute(Template.USER));
-			return Template.INDEX_USER;
+			return "redirect:/";
 		}
 
 	}
@@ -62,6 +62,12 @@ public class IndexBib404Controller {
 	@GetMapping("/biblioteca")
 	public String biblioteca(HttpServletRequest request, Model model)  throws ServletException, IOException  {
 		String bib ="biblioteca";
+		HttpSession sesion = request.getSession();
+		if(sesion.getAttribute(Template.USER)==null) {
+			model.addAttribute("anonimo", true);
+		}else {
+			model.addAttribute("user", true);
+		}
 		List<Municipio> municipios = usuarioImp.listMunicipiosOrderByNombre();
 		model.addAttribute("biblioteca",new Biblioteca());
 		model.addAttribute("municipios",municipios);

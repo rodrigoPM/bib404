@@ -7,13 +7,13 @@
 </head>
 <body>
 	<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
-	
 	<div class="image-container set-full-height">
 	<div th:if="${error}">
 			<div class="alert alert-danger" role="alert">
 			  <strong th:text="*{valor}" ></strong> 
 			</div>
 		</div>
+		
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-8 col-sm-offset-2" style="margin-left: 225px;" >

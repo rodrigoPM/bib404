@@ -7,7 +7,12 @@
 	th:href="@{/css/gsdk-bootstrap-wizard.css}" />
 </head>
 <body>
-	<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
+	<div th:if="${user}">
+		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
+	</div>
+	<div th:if="${anonimo}">
+		<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
+	</div>
 	<br />
 	<div class="container">
 		<div class="row">
