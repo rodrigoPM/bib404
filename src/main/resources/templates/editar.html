@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+<!DOCTYPE html>
+<html>
 <head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
 	<title th:text="${titulo}"></title>
 	
@@ -8,81 +10,78 @@
 </head>
 <body>
 	
-
-<nav th:replace="fragmentos/plantilla :: navbar-user"></nav> 
-
-
-<h1 class="text-center" >Perfil    <span th:text="${user.username}"></span></h1>
+<nav th:replace="fragmentos/plantilla :: navbar-user"></nav> 	
+<h1 class="text-center" >Editar </h1>
 
 	<div class="container">
 		<div th:if="${error}">
 			<div class="alert alert-danger" role="alert">
 			  <strong th:text="*{valor}" ></strong> 
 			</div>
-		</div>
+			</div>
 		
-			<form action="#" th:action="@{/perfil/editar}" th:object="${user}" method="post"  >
+			<form action="#" th:action="@{/addPerfil}" th:object="${perfilModel}" th:method="post" >
 			<div class="form-group row">
 			    <label for="user" class="col-sm-2 col-form-label">Usuario:</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="username" name="username" th:field="*{username}" th:value="${username}" placeholder="username" required="true" disabled >
+			      <input type="text" class="form-control" id="username" name="username" th:field="*{username}" th:value="${username}" placeholder="username" required="true"  >
 			    </div>
 			    
 			  </div>
 			  <div class="form-group row">
 			    <label for="nombre" class="col-sm-2 col-form-label">nombre</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" th:field="*{nombre}" id="nombre" name="nombre" placeholder="nombre" required="true" disabled>
+			      <input type="text" class="form-control" th:field="*{nombre}" id="nombre" name="nombre" placeholder="nombre" required="true" >
 			    </div>
 			    <label for="apellido" class="col-sm-2 col-form-label">apellido</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" th:field="*{apellido}" id="apellido" name="apellido" placeholder="apellido" required="true" disabled>
+			      <input type="text" class="form-control" th:field="*{apellido}" id="apellido" name="apellido" placeholder="apellido" required="true" >
 			    </div>
 			    <div class="col-sm-4">
 			      <input type="hidden" th:field="*{id}">
 			    </div>  
 			  </div>
-			  <div class="form-group row">
+			 <!--   <div class="form-group row">
 			    <label for="fechaNacimiento" class="col-sm-2 col-form-label">fechaNacimiento</label>
 			    <div class="col-sm-4">
-			      <input type="date" class="form-control" th:field="*{fecha_nacimiento}" id="fecha_nacimiento" name="fecha_nacimiento" placeholder="fecha_nacimiento" required="true" disabled>
+			      <input type="date" class="form-control" th:field="*{fecha_nacimiento}" id="fecha_nacimiento" name="fecha_nacimiento" placeholder="fecha_nacimiento" required="true" >
 			    </div>
 			  </div>
-			  
+			  -->
 			  <div class="form-group row">
 			    <label for="nombre" class="col-sm-2 col-form-label">nombre del padre</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" th:field="*{nombre_padre}" id="nombre_padre" name="nombre_padre" placeholder="nombre del padre" required="true" disabled>
+			      <input type="text" class="form-control" th:field="*{nombre_padre}" id="nombre_padre" name="nombre_padre" placeholder="nombre del padre" required="true" >
 			    </div>
 			    <label for="nombre" class="col-sm-2 col-form-label">nombre de la madre</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" th:field="*{nombre_madre}" id="nombre_madre" name="nombre_madre" placeholder="nombre de la madre" required="true" disabled>
+			      <input type="text" class="form-control" th:field="*{nombre_madre}" id="nombre_madre" name="nombre_madre" placeholder="nombre de la madre" required="true" >
 			    </div>
 			  </div>
 			  <div class="form-group row">
 			    <label for="nombre" class="col-sm-2 col-form-label">numero del telefono</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" th:field="*{numero_telefono}" id="numero_telefono" name="numero_telefono" placeholder="numero de telefono" required="true" disabled>
+			      <input type="text" class="form-control" th:field="*{numero_telefono}" id="numero_telefono" name="numero_telefono" placeholder="numero de telefono" required="true" >
 			    </div>
 			    <label for="nombre" class="col-sm-2 col-form-label">lugar de estudio</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" th:field="*{lugar_estudio}" id="lugar_estudio" name="lugar_estudio" placeholder="lugar de estudio" required="true" disabled>
+			      <input type="text" class="form-control" th:field="*{lugar_estudio}" id="lugar_estudio" name="lugar_estudio" placeholder="lugar de estudio" required="true" >
 			    </div>
 			  </div>
 			  <div class="form-group row">
 			    <label for="email" class="col-sm-2 col-form-label">email</label>
 			    <div class="col-sm-4">
-			      <input type="email" class="form-control" th:field="*{email}" id="email" name="email" placeholder="email" required="true" disabled>
+			      <input type="email" class="form-control" th:field="*{email}" id="email" name="email" placeholder="email" required="true" >
 			    </div>
 			    <label for="nombre" class="col-sm-2 col-form-label">ocupacion</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" th:field="*{ocupacion}" id="ocupacion" name="ocupacion" placeholder="ocupacion" required="true" disabled>
+			      <input type="text" class="form-control" th:field="*{ocupacion}" id="ocupacion" name="ocupacion" placeholder="ocupacion" required="true" >
 			    </div>  
 			  </div>
 			  <div class="form-group row">
 			    <label for="nombre" class="col-sm-2 col-form-label">genero</label>
 			    <div class="col-sm-4">
-			    <select class="form-control" required="true" id="genero" name="genero" disabled>
+			    <select class="form-control" required="true" id="genero" name="genero" >
 			        <option value="masculino">masculino</option>
 					<option value="femenino">femenino</option>
 			      </select>
@@ -91,7 +90,7 @@
 			  <div class="form-group row">
 			    <label for="inputState" class="col-sm-2 col-form-label">Municipios</label>
 			  	<div class="col-sm-4">
-			      <select id="mun" name="mun"  class="form-control" required="true" disabled>
+			      <select id="mun" name="mun"  class="form-control" required="true" >
 			        <option th:each="muni : ${municipios}" 
 			        	th:value="${muni.id}"
 			        	th:text="${muni.nombre_municipio}"
@@ -100,14 +99,14 @@
 			  	</div>
 			  	<label for="inputState" class="col-sm-2 col-form-label">Biblioteca</label>
 			  	<div class="col-sm-4">
-			      <select id="bib" name="bib"  class="form-control" required="true" disabled>
+			      <select id="bib" name="bib"  class="form-control" required="true" >
 			        <option th:each="bib : ${bibliotecas}" 
 			        	th:value="${bib.id}"
 			        	th:text="${bib.nombre_biblioteca}"
 			        ></option>
 			      </select>
 			  	</div>
-			  </div>-->
+			  </div>
 			<div class="form-check">
 			    <input type="checkbox" class="form-check-input" id="enable" name="enable" th:fields="*{enable}" hidden="true">			    
 			    <input type="text" class="form-check-input" id="rol" name="rol" th:fields="*{rol}" hidden="true" value="USER_ROL">
@@ -118,16 +117,10 @@
 				<div class="col-sm-4">
 	
 				</div>
+			</div>			
+					 	<button type="submit" class="btn btn-primary center" id="editar"   >Guardar cambio</button>
+			</form>
 			</div>
-						
-				</form>
-				<a href="#" th:href="@{/editar?id=__${user.id}__}">
-				
-								<button type="submit" class="btn btn-primary center" id="editar"   >Editar</button>
-				</a>
-									
-		</div>
-	
 	<div th:replace="fragmentos/plantilla :: login"></div>
 	<div th:replace="fragmentos/plantilla :: scripts"></div>
 </body>
