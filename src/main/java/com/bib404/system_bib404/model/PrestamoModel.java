@@ -13,6 +13,7 @@ public class PrestamoModel {
 	private Date fecha_entrega;
 	private int cantidad_recurso_bib;
 	private boolean mora;
+	private int estado;
 	private Date fecha_devolucion;
 	private Usuario usuario;
 	private Set<RecursoEspecifico> recurso_especifico;
@@ -46,6 +47,12 @@ public class PrestamoModel {
 	public void setMora(boolean mora) {
 		this.mora = mora;
 	}
+	public int getEstado() {
+		return estado;
+	}
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
 	public Date getFecha_devolucion() {
 		return fecha_devolucion;
 	}
@@ -65,13 +72,14 @@ public class PrestamoModel {
 		this.recurso_especifico = recurso_especifico;
 	}
 	public PrestamoModel(int id, Date fecha_prestamo, Date fecha_entrega, int cantidad_recurso_bib, boolean mora,
-			Date fecha_devolucion, Usuario usuario, Set<RecursoEspecifico> recurso_especifico) {
+			int estado, Date fecha_devolucion, Usuario usuario, Set<RecursoEspecifico> recurso_especifico) {
 		super();
 		this.id = id;
 		this.fecha_prestamo = fecha_prestamo;
 		this.fecha_entrega = fecha_entrega;
 		this.cantidad_recurso_bib = cantidad_recurso_bib;
 		this.mora = mora;
+		this.estado = estado;
 		this.fecha_devolucion = fecha_devolucion;
 		this.usuario = usuario;
 		this.recurso_especifico = recurso_especifico;

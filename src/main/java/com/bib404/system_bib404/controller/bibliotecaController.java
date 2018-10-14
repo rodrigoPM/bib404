@@ -28,9 +28,9 @@ public class bibliotecaController {
 		mav.addObject("name_bib",name_bib);
 		HttpSession sesion = request.getSession();
 		if(sesion.getAttribute(Template.USER)!=null) {
-			mav.setViewName(Template.INDEX_BIB_X);
+			mav.setViewName(Template.INDEX_USER);
 		}else {
-			mav.setViewName(Template.INDEX_BIB404);
+			mav.setViewName(Template.INDEX_ANONIMO);
 		}
 		return mav;
 	}

@@ -33,16 +33,37 @@ public class AutorizarController {
 	private PrestamoServiceImpl prestamoServiceImpl;
 	
 	@RequestMapping("/listPrestamos")
-	public ModelAndView listPrestamos(HttpServletRequest request)  throws ServletException, IOException  {
+	public ModelAndView listPrestamos(Model model, HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
+		model.addAttribute("prestado", 1);
+		
+		return mav;
+	}
+	@RequestMapping("/listPrestados")
+	public ModelAndView listPrestados(Model model, HttpServletRequest request)  throws ServletException, IOException  {
+		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
+		mav.addObject("prestamos", prestamoServiceImpl.listPrestados());
+		model.addAttribute("prestado", 2);
+		
+		return mav;
+	}
+	@RequestMapping("/listPrestadosMora")
+	public ModelAndView listPrestadosMora(Model model, HttpServletRequest request)  throws ServletException, IOException  {
+		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
+		mav.addObject("prestamos", prestamoServiceImpl.listPrestados());
+		model.addAttribute("prestado", 3);
+		
 		return mav;
 	}
 	@GetMapping("/autorizado")
-	public ModelAndView autorizado(HttpServletRequest request, Model model) throws ServletException, IOException  {
+	public ModelAndView autorizado(@ModelAttribute PrestamoModel prestamo, HttpServletRequest request, Model model) throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
 		model.addAttribute("mensaje", 0);
+		model.addAttribute("prestado", 1);
+		//prestamo.setCantidad_recurso_bib(5);
+		//prestamoServiceImpl.addPrestamo(prestamo);
 		return mav;
 		
 	}
@@ -51,14 +72,25 @@ public class AutorizarController {
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
 		model.addAttribute("mensaje", 1);
+		model.addAttribute("prestado", 1);
 		return mav;
 		
 	}
 	@GetMapping("/recibido")
 	public ModelAndView recibido(HttpServletRequest request, Model model) throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
-		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
+		mav.addObject("prestamos", prestamoServiceImpl.listPrestados());
 		model.addAttribute("mensaje", 2);
+		model.addAttribute("prestado", 2);
+		return mav;
+		
+	}
+	@GetMapping("/recibidoMora")
+	public ModelAndView recibidoMora(HttpServletRequest request, Model model) throws ServletException, IOException  {
+		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
+		mav.addObject("prestamos", prestamoServiceImpl.listPrestados());
+		model.addAttribute("mensaje", 2);
+		model.addAttribute("prestado", 3);
 		return mav;
 		
 	}

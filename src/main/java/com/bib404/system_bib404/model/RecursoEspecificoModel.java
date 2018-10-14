@@ -1,64 +1,25 @@
-package com.bib404.system_bib404.entity;
+package com.bib404.system_bib404.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import com.bib404.system_bib404.entity.Autor;
+import com.bib404.system_bib404.entity.DetalleRecurso;
+import com.bib404.system_bib404.entity.Editorial;
+import com.bib404.system_bib404.entity.FormatoRecurso;
+import com.bib404.system_bib404.entity.Prestamo;
 
-@Entity
-@Table(name = "recurso_esp")
-public class RecursoEspecifico {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "id", unique = true, nullable = false)
+public class RecursoEspecificoModel {
 	private int id;
-
-	@Column(name = "consulta_interna")
 	private boolean consulta_interna;
-
-	@Column(name = "volumen_recurso")
 	private int volumen_recurso;
-
-	@Column(name = "edicion_recurso")
 	private int edicion_recurso;
-
-	@Column(name = "prestado")
 	private boolean prestado;
-
-	@Column(name = "codigo_rec_esp")
 	private String codigo_rec_esp;
-	
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "formato_recurso_id", nullable = false)
 	private FormatoRecurso formato_recurso;
-
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "editorial_id", nullable = false)
 	private Editorial editorial;
-	
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "detalle_recurso_id", nullable = false)
 	private DetalleRecurso detalle_recurso;
-
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "prestamo_recurso_esp", joinColumns = {
-			@JoinColumn(name = "prestamo_id") }, inverseJoinColumns = { @JoinColumn(name = "recurso_esp_id") })
 	private Set<Prestamo> prestamo = new HashSet<>();
-
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "recurso_esp_autor", joinColumns = {
-			@JoinColumn(name = "recurso_esp_id") }, inverseJoinColumns = { @JoinColumn(name = "autor_id") })
 	private Set<Autor> autor = new HashSet<>();
 
 	public int getId() {
@@ -149,7 +110,7 @@ public class RecursoEspecifico {
 		this.autor = autor;
 	}
 
-	public RecursoEspecifico(int id, boolean consulta_interna, int volumen_recurso, int edicion_recurso,
+	public RecursoEspecificoModel(int id, boolean consulta_interna, int volumen_recurso, int edicion_recurso,
 			boolean prestado, String codigo_rec_esp, FormatoRecurso formato_recurso, Editorial editorial,
 			DetalleRecurso detalle_recurso, Set<Prestamo> prestamo, Set<Autor> autor) {
 		super();
@@ -166,8 +127,9 @@ public class RecursoEspecifico {
 		this.autor = autor;
 	}
 
-	public RecursoEspecifico() {
+	public RecursoEspecificoModel() {
 		
 	}
 
 }
+
