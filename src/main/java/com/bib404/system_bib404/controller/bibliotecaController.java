@@ -37,7 +37,7 @@ public class bibliotecaController {
 	public ModelAndView inicioBibX(@PathVariable("id") int id_bib, HttpServletRequest request, Model model)  throws ServletException, IOException {
 		ModelAndView mav = new ModelAndView(Template.INDEX_BIB_X);
 		mav.addObject("biblioteca",bibliotecaService.findById(id_bib));
-		if(bibliotecaService.findById(id_bib)==null) {
+		if(bibliotecaService.findById(id_bib).getId()<1) {
 			System.out.println("No se encontro biblioteca");
 			mav.setViewName(Template.INDEX_BIB404);
 			return mav;

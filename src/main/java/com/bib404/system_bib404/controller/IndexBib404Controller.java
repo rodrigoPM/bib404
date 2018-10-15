@@ -55,7 +55,7 @@ public class IndexBib404Controller {
 	}
 	
 	@GetMapping("{id_bib}")
-	public String redirectBib(@PathVariable("id_bib") String id_bib) {
+	public String redirectBib(@PathVariable("id_bib") int id_bib) {
 		return "redirect:/bib404/"+id_bib;
 	}
 	
