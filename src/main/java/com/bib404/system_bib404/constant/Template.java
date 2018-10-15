@@ -12,5 +12,5 @@ public class Template {
 	public static final String USER ="usuario";
 	public static final String AUTORIZAR ="autorizar";
 	public static final String PERFIL ="perfil";
-	
+	public static final String RECURSOSESPECIFICOS = "recursosespecificos";
 }

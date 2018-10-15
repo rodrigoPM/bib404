@@ -75,7 +75,7 @@ public class UsuarioController extends HttpServlet{
 			String fecha_actual = formateador.format(fecha);
 			System.out.println(fecha_actual);
 			model.addAttribute("fecha_actual", fecha_actual);
-			model.addAttribute("municipios", usuarioImp.listMunicipios());
+			model.addAttribute("municipios", usuarioImp.listMunicipiosOrderByNombre());
 			return Template.REGISTRAR;
 		}else {
 			return "redirect:/index";

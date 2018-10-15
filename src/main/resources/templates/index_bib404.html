@@ -15,7 +15,7 @@
 
 	<nav th:replace="fragmentos/plantilla :: navbar-bib"></nav>
 
-	<div class="container-fluid">
+	<div class="">
 		<div id="carouselBIB404" class="carousel slide" data-ride="carousel">
 			<ol class="carousel-indicators">
 				<li data-target="#carouselBIB404" data-slide-to="0" class="active"></li>
@@ -46,24 +46,45 @@
 		</div>
 
 	</div>
+	<br />
+	<div class="container-fluid">
+		<h1>BIBLIOTECAS</h1>
+	</div>
 
+	<hr>
 
-	<div class="container">
-		<div th:each="biblioteca:${bibliotecas}">
-			<div class="card">
-				<img class="card-img-top"
-					th:src="@{/imgs/biblioteca/biblioteca.jpg}" alt="biblioteca imagen">
-				<div class="card-body">
-					<h4 class="card-title" th:text="${biblioteca.nombre_biblioteca}"></h4>
-					<p class="card-text">
-					<p><b>Codigo: </b><span th:text="${biblioteca.codigo_biblioteca}"></span></p>
-					<!--  <p><b>Municipio: </b><span th:text="${biblioteca.municipio"></span></p>-->
-					<!--<p><b>Descripcion: </b><span th:text="${}">Proximamente...</span></p>
-					</p>-->
+	<div class="container my-4">
+		<div th:if="${bib}">
+			<div th:each="biblioteca:${bibliotecas}">
+				<div class="card my-4">
+					<img class="card-img-top"
+						th:src="@{/imgs/bibliotecas/biblioteca.jpg}"
+						alt="biblioteca imagen" style="object-fit: cover; height: 150px">
+					<div class="card-body">
+						<h4 class="card-title">
+							<a th:text="${biblioteca.nombre_biblioteca}"
+								th:href="${biblioteca.id}"></a>
+						</h4>
+						<p class="card-text">
+						<p>
+							<b>Codigo: </b><span th:text="${biblioteca.codigo_biblioteca}"></span>
+						</p>
+						<!-- 					<p> -->
+						<!-- 						<b>Municipio: </b><span th:text="${biblioteca.getNombreMunicipio()"></span> -->
+						<!-- 					</p> -->
+						<p>
+							<b>Descripcion: </b><span>Proximamente...</span>
+						</p>
+						<p></p>
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
+		<div th:unless="${bib}"><h3>No hay ninguna biblioteca en el sistema.</h3></div>
 	</div>
+
+	<footer th:replace="fragmentos/plantilla :: footer"></footer>
 
 	<div th:replace="fragmentos/plantilla :: login"></div>
 	<div th:replace="fragmentos/plantilla :: scripts"></div>
