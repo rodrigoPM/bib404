@@ -82,10 +82,32 @@ return Template.EDITAR;
 }
 		
 @PostMapping("/addPerfil")
-public String addperfil(@ModelAttribute(name="perfilModel")PerfilModel perfilModel) {
-
-	perfilRepository.actualizar(perfilModel.getNombre(), perfilModel.getId());
+public String addperfil(@ModelAttribute(name="perfilModel")PerfilModel perfilModel,HttpServletRequest request,@ModelAttribute("bib") String bib ,@ModelAttribute("mun") String mun) {
+Usuario usuario= perfilconverter.convertPerfilModel2Perfil(perfilModel);
+	perfilRepository.actualizarNombre(perfilModel.getNombre(), perfilModel.getId());
+	perfilRepository.actualizarApellido(perfilModel.getApellido(), perfilModel.getId());
+	perfilRepository.actualizarEmail(perfilModel.getEmail(), perfilModel.getId());
+	perfilRepository.actualizarGenero(perfilModel.getGenero(), perfilModel.getId());
+	int id_numicipio = Integer.parseInt(mun);
+	int id_biblioteca = Integer.parseInt(bib);
 	
+	perfilRepository.actualizarMunicipio(id_numicipio,perfilModel.getId());
+	
+	perfilRepository.actualizarBiblioteca(id_biblioteca,perfilModel.getId());
+	
+	perfilRepository.actualizarPadre(perfilModel.getNombre_padre(), perfilModel.getId());
+	
+	perfilRepository.actualizarMadre(perfilModel.getNombre_madre(), perfilModel.getId());
+	
+	
+	perfilRepository.actualizarNumero(perfilModel.getNumero_telefono(), perfilModel.getId());
+	
+	perfilRepository.actualizarUsername(perfilModel.getUsername(), perfilModel.getId());
+	
+	HttpSession sesion = request.getSession();
+	
+	sesion.setAttribute("usuario", usuario);
+	sesion.setAttribute("usuario.genero",usuario.getGenero());
 	
 return "redirect:/index";
 }

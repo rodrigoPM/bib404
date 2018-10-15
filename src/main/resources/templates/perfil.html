@@ -82,7 +82,7 @@
 			  <div class="form-group row">
 			    <label for="nombre" class="col-sm-2 col-form-label">genero</label>
 			    <div class="col-sm-4">
-			    <select class="form-control" required="true" id="genero" name="genero" disabled>
+			    <select class="form-control" required="true" id="genero" name="genero" th:field="*{genero}" th:value="${genero}"disabled>
 			        <option value="masculino">masculino</option>
 					<option value="femenino">femenino</option>
 			      </select>
