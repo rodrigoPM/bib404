@@ -76,10 +76,9 @@
 		<thead class="thead">
 			<tr>
 				<th>Usuario</th>
-				<th>Libro</th>
+				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
 				<th>Fecha de entrega</th>
-				<th>Datos del libro</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
@@ -89,11 +88,11 @@
 				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
 				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
 				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
-				<th><span>codigo: 123 </span>
-					<p><span>Autor: Disney </span></p></th>
-				<td> <a href="#" th:href="@{/autorizar/autorizado}">
+				
+				<td> <a href="#" th:href="@{/autorizar/autorizado?id=__${prestamo.id}__}">
 				<button type="button" class="btn btn-success boton3">Autorizar</button></a>
-				<p><a href="#" th:href="@{/autorizar/denegado}">
+				
+				<p><a href="#" th:href="@{/autorizar/denegado?id=__${prestamo.id}__}">
 				<button type="button" class="btn btn-danger">Denegar</button></a></p> </td>
 			</tr>
 		</tbody>
@@ -104,11 +103,10 @@
 		<thead class="thead">
 			<tr>
 				<th>Usuario</th>
-				<th>Libro</th>
+				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
 				<th>Fecha de entrega</th>
 				<th>Fecha de devolucion</th>
-				<th>Datos del libro</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
@@ -119,9 +117,8 @@
 				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
 				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
 				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
-				<th><span>codigo: 123 </span>
-					<p><span>Autor: Disney </span></p></th>
-				<td> <a href="#" th:href="@{/autorizar/recibido}">
+
+				<td> <a href="#" th:href="@{/autorizar/recibido?id=__${prestamo.id}__}">
 				<button type="button" class="btn btn-success boton3">Recibir</button></a></td>
 			</tr>
 		</tbody>
@@ -132,12 +129,11 @@
 		<thead class="thead">
 			<tr>
 				<th>Usuario</th>
-				<th>Libro</th>
+				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
 				<th>Fecha de entrega</th>
 				<th>Fecha de devolucion</th>
 				<th>Mora</th>
-				<th>Datos del libro</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
@@ -149,9 +145,8 @@
 				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
 				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
 				<th><span th:text="${prestamo.mora}"> </span></th>
-				<th><span>codigo: 123 </span>
-					<p><span>Autor: Disney </span></p></th>
-				<td> <a href="#" th:href="@{/autorizar/recibidoMora}">
+
+				<td> <a href="#" th:href="@{/autorizar/recibidoMora?id=__${prestamo.id}__}">
 				<button type="button" class="btn btn-success boton3">Recibir</button></a></td>
 			</tr>
 		</tbody>

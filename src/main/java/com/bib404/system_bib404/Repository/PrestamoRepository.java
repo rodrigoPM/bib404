@@ -9,5 +9,6 @@ import com.bib404.system_bib404.entity.Prestamo;
 
 @Repository("prestamoRepository")
 public interface PrestamoRepository extends JpaRepository<Prestamo, Serializable>{
+	public abstract Prestamo findById(int id);
 
 }

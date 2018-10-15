@@ -15,6 +15,7 @@ public class PrestamoConverter {
 		prestamo.setFecha_entrega(prestamoModel.getFecha_entrega());
 		prestamo.setFecha_prestamo(prestamoModel.getFecha_prestamo());
 		prestamo.setMora(prestamoModel.isMora());
+		prestamo.setEstado(prestamoModel.getEstado());
 		prestamo.setUsuario(prestamoModel.getUsuario());
 		prestamo.setId(prestamoModel.getId());
 		
@@ -27,6 +28,7 @@ public class PrestamoConverter {
 		prestamoModel.setFecha_entrega(prestamo.getFecha_entrega());
 		prestamoModel.setFecha_prestamo(prestamo.getFecha_prestamo());
 		prestamoModel.setMora(prestamo.isMora());
+		prestamoModel.setEstado(prestamo.getEstado());
 		prestamoModel.setUsuario(prestamo.getUsuario());
 		prestamoModel.setId(prestamo.getId());
 		

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bib404.system_bib404.constant.Template;
@@ -57,45 +58,98 @@ public class AutorizarController {
 		return mav;
 	}
 	@GetMapping("/autorizado")
-	public ModelAndView autorizado(@ModelAttribute PrestamoModel prestamo, HttpServletRequest request, Model model) throws ServletException, IOException  {
+	public ModelAndView autorizado(@RequestParam(name="id", required=false)int id, Model model,
+			@ModelAttribute(name="prestamoModel") PrestamoModel prestamoModel, HttpServletRequest request) throws ServletException, IOException  {
+		PrestamoModel prestamo=new PrestamoModel();
+		int val=2;
+		if(id!=0) {
+			prestamo=prestamoServiceImpl.findPrestamoByIdModel(id);
+			prestamo.setEstado(val);
+			prestamoServiceImpl.addPrestamo(prestamo);
+			model.addAttribute("mensaje", 0);
+			model.addAttribute("prestado", 1);
+			ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
+			mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
+		}
+		prestamo.setEstado(val);
+		model.addAttribute("prestamoModel", prestamo);
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
-		model.addAttribute("mensaje", 0);
-		model.addAttribute("prestado", 1);
-		//prestamo.setCantidad_recurso_bib(5);
-		//prestamoServiceImpl.addPrestamo(prestamo);
+
 		return mav;
 		
 	}
 	@GetMapping("/denegado")
-	public ModelAndView denegado(HttpServletRequest request, Model model) throws ServletException, IOException  {
+	public ModelAndView denegado(@RequestParam(name="id", required=false)int id, Model model,
+			@ModelAttribute(name="prestamoModel") PrestamoModel prestamoModel, HttpServletRequest request) throws ServletException, IOException  {
+		PrestamoModel prestamo=new PrestamoModel();
+		int val=0;
+		if(id!=0) {
+			prestamo=prestamoServiceImpl.findPrestamoByIdModel(id);
+			prestamo.setEstado(val);
+			prestamoServiceImpl.addPrestamo(prestamo);
+			model.addAttribute("mensaje", 1);
+			model.addAttribute("prestado", 1);
+			ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
+			mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
+		}
+		prestamo.setEstado(val);
+		model.addAttribute("prestamoModel", prestamo);
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
-		model.addAttribute("mensaje", 1);
-		model.addAttribute("prestado", 1);
+
 		return mav;
 		
 	}
 	@GetMapping("/recibido")
-	public ModelAndView recibido(HttpServletRequest request, Model model) throws ServletException, IOException  {
+	public ModelAndView recibido(@RequestParam(name="id", required=false)int id, Model model,
+			@ModelAttribute(name="prestamoModel") PrestamoModel prestamoModel, HttpServletRequest request) throws ServletException, IOException  {
+		PrestamoModel prestamo=new PrestamoModel();
+		int val=3;
+		if(id!=0) {
+			prestamo=prestamoServiceImpl.findPrestamoByIdModel(id);
+			prestamo.setEstado(val);
+			prestamoServiceImpl.addPrestamo(prestamo);
+			model.addAttribute("mensaje", 2);
+			model.addAttribute("prestado", 2);
+
+		}
+		prestamo.setEstado(val);
+		model.addAttribute("prestamoModel", prestamo);
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
-		mav.addObject("prestamos", prestamoServiceImpl.listPrestados());
-		model.addAttribute("mensaje", 2);
-		model.addAttribute("prestado", 2);
+		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
+		model.addAttribute("prestado",2);
+
 		return mav;
 		
 	}
 	@GetMapping("/recibidoMora")
-	public ModelAndView recibidoMora(HttpServletRequest request, Model model) throws ServletException, IOException  {
+	public ModelAndView recibidoMora(@RequestParam(name="id", required=false)int id, Model model,
+			@ModelAttribute(name="prestamoModel") PrestamoModel prestamoModel, HttpServletRequest request) throws ServletException, IOException  {
+		PrestamoModel prestamo=new PrestamoModel();
+		int val=3;
+		if(id!=0) {
+			prestamo=prestamoServiceImpl.findPrestamoByIdModel(id);
+			prestamo.setEstado(val);
+			prestamoServiceImpl.addPrestamo(prestamo);
+			model.addAttribute("mensaje", 2);
+			model.addAttribute("prestado", 3);
+			ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
+			mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
+		}
+		prestamo.setEstado(val);
+		model.addAttribute("prestamoModel", prestamo);
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
-		mav.addObject("prestamos", prestamoServiceImpl.listPrestados());
-		model.addAttribute("mensaje", 2);
-		model.addAttribute("prestado", 3);
+		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
+		
+
 		return mav;
 		
 	}
+
 	@PostMapping("/addPrestamo")
 	public String addPrestamo(@ModelAttribute(name="prestamoModel") PrestamoModel prestamoModel) {
+		prestamoServiceImpl.addPrestamo(prestamoModel);
 		return Template.AUTORIZAR;
 	}
 
