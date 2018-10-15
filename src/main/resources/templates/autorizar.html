@@ -50,92 +50,111 @@
 
 	<br />
 	<div class="container">
-	<h2>AUTORIZAR PRESTAMO Y RECIBIR PRESTAMOS</h2>
+
+		<h2>AUTORIZAR PRESTAMO Y RECIBIR PRESTAMOS</h2>
 		<div class="buscador">
+        	<a href="#" th:href="@{/recursoEspecifico/mostrarTodosLosRegistros}">
+        	<button class="btn btn-primary boton" type=button onclick="mostrar()">Regresar</button></a>
+    		<a href="#" th:href="@{/autorizar/listDenegados}">
+        	<button class="btn btn-primary boton" type=button onclick="mostrar()">Denegados/Recibidos</button></a>
+    	</div>
+
+	
+		<!--<div class="buscador">
         		<form class="form-inline" method="GET" action="" id="busqueda">
                 	<input class="buscador" name="consulta" id='consulta' type="text" placeholder="Buscar" value="">
                     <input type="submit" value="Buscar" id="buscar" class="btn btn-success buscador">
                 </form>
-         </div>
-          
-    <input class="btn btn-primary boton" type=submit value="Autorizar Prestamos" onclick="mostrar()"/>
-    <input class="btn btn-primary boton" type=submit value="Recibir Prestamos" onclick="mostrar2()"/>
-    <input class="btn btn-primary boton" type=submit value="Prestamos con Mora" onclick="mostrar3()"/>
+         </div>-->
+        
+    <a href="#" th:href="@{/autorizar/listPrestamos}"><button class="btn btn-primary boton" type=button onclick="mostrar()">Autorizar Prestamos</button></a>
+    <a href="#" th:href="@{/autorizar/listPrestados}"><button class="btn btn-primary boton" type=button onclick="mostrar2()">Recibir Prestamos</button></a>
+    <a href="#" th:href="@{/autorizar/listPrestadosMora}"><button class="btn btn-primary boton" type=button onclick="mostrar3()">Prestamos con Mora</button></a>
 
-<section id="tabla1">
+<div th:if="${mensaje==2}" class="alert alert-info">
+  	<strong>Prestamo Recibido</strong>
+</div>
+<section th:if="${prestado==1}">
+	<div th:if="${mensaje==0}" class="alert alert-success">
+		<strong>Prestamo Autorizado</strong> 
+	</div>
+	<div th:if="${mensaje==1}" class="alert alert-danger">
+  		<strong>Prestamo Denegado</strong>
+	</div>
 	<table class="table" border="2">
 		<thead class="thead">
 			<tr>
 				<th>Usuario</th>
-				<th>Libro</th>
+				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
 				<th>Fecha de entrega</th>
-				<th>Datos del libro</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><img th:src="@{/imgs/user.jpg}" width=75 length=75></td>
-				<td><img th:src="@{/imgs/libro.jpg}" width=50 length=50></td>
-				<td><span>24/09/18</span></td>
-				<td><span>30/09/18</span></td>
-				<td> <span>codigo: 123 </span>
-					<p><span>Autor: Disney </span></p> </td>
-				<td> <button type="button" class="btn btn-success boton3">Autorizar</button>
-					<p><button type="button" class="btn btn-danger">Denegar</button></p> </td>
+		<tr th:each="prestamo: ${prestamos}">
+				<th> <span th:text="${prestamo.usuario.nombre}"> </span> </th>
+				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
+				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
+				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
+				
+				<td> <a href="#" th:href="@{/autorizar/autorizado?id=__${prestamo.id}__}">
+				<button type="button" class="btn btn-success boton3">Autorizar</button></a>
+				
+				<p><a href="#" th:href="@{/autorizar/denegado?id=__${prestamo.id}__}">
+				<button type="button" class="btn btn-danger">Denegar</button></a></p> </td>
 			</tr>
 		</tbody>
 	</table>
 </section>
-<section id="tabla2" class="ocultar">
+<section th:if="${prestado==2}">
 	<table class="table" border="2">
 		<thead class="thead">
 			<tr>
 				<th>Usuario</th>
-				<th>Libro</th>
+				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
 				<th>Fecha de entrega</th>
-				<th>Datos del libro</th>
+				<th>Fecha de devolucion</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><img th:src="@{/imgs/user.jpg}" width=75 length=75></td>
-				<td><img th:src="@{/imgs/libro.jpg}" width=50 length=50></td>
-				<td><span>24/09/18</span></td>
-				<td><span>30/09/18</span></td>
-				<td> <span>codigo: 123 </span>
-					<p><span>Autor: Disney </span></p> </td>
-				<td> <button type="button" class="btn btn-success boton3">Recibir</button></td>
+			<tr th:each="prestamo: ${prestamos}">
+				<th> <span th:text="${prestamo.usuario.nombre}"> </span> </th>
+				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
+				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
+				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
+				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
+
+				<td> <a href="#" th:href="@{/autorizar/recibido?id=__${prestamo.id}__}">
+				<button type="button" class="btn btn-success boton3">Recibir</button></a></td>
 			</tr>
 		</tbody>
 	</table>
 </section>
-<section id="tabla3" class="ocultar">
+<section th:if="${prestado==3}">
 	<table class="table" border="2">
 		<thead class="thead">
 			<tr>
 				<th>Usuario</th>
-				<th>Libro</th>
+				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
 				<th>Fecha de entrega</th>
-				<th>Dias de atraso</th>
-				<th>Datos del libro</th>
+				<th>Fecha de devolucion</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td><img th:src="@{/imgs/user.jpg}" width=75 length=75></td>
-				<td><img th:src="@{/imgs/libro.jpg}" width=50 length=50></td>
-				<td><span>24/09/18</span></td>
-				<td><span>30/09/18</span></td>
-				<td><span>5 Dias</span></td>
-				<td> <span>codigo: 123 </span>
-					<p><span>Autor: Disney </span></p> </td>
-				<td> <button type="button" class="btn btn-success boton3">Recibir</button></td>
+			<tr th:each="prestamo: ${prestamos}">
+				<th> <span th:text="${prestamo.usuario.nombre}"> </span> </th>
+				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
+				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
+				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
+				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
+
+				<td> <a href="#" th:href="@{/autorizar/recibidoMora?id=__${prestamo.id}__}">
+				<button type="button" class="btn btn-success boton3">Recibir</button></a></td>
 			</tr>
 		</tbody>
 	</table>

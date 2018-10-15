@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+	<title th:text="${titulo}"></title>
+	<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.min.js}" />
+	<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.css}" />
+	
+	<link rel="stylesheet" href="#" />
+</head>
+<Style type="text/css">
+  .ocultar{
+  display: none
+  }
+  .boton {
+  margin-top: 50px;
+  margin-bottom: 10px;
+  }
+  .boton2 {
+  margin-top: 50px;
+  padding: 10px;
+  }
+  .boton3 {
+  margin-bottom: 10px;
+  }
+  .buscador{
+   float: right;
+   margin-bottom: 10px;
+  }
+ </Style>
+ <script type="text/JavaScript">
+ function mostrar(){
+	 document.getElementById("tabla1").style.display="block";
+	 document.getElementById("tabla2").style.display="none";
+	 document.getElementById("tabla3").style.display="none";
+ }
+ function mostrar2(){
+	 document.getElementById("tabla2").style.display="block";
+	 document.getElementById("tabla1").style.display="none";
+	 document.getElementById("tabla3").style.display="none";
+ }
+ function mostrar3(){
+	 document.getElementById("tabla3").style.display="block";
+	 document.getElementById("tabla1").style.display="none";
+	 document.getElementById("tabla2").style.display="none";
+ }
+  </script>
+<body>
+	
+	<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
+
+	<br />
+	<div class="container">
+	<h2>PRESTAMOS DENEGADOS Y RECIBIDOS</h2>
+		<div class="buscador">
+        	<a href="#" th:href="@{/autorizar/listPrestamos}">
+        	<button class="btn btn-primary boton" type=button onclick="mostrar()">Regresar</button></a>
+    	</div>
+		<!--<div class="buscador">
+        		<form class="form-inline" method="GET" action="" id="busqueda">
+                	<input class="buscador" name="consulta" id='consulta' type="text" placeholder="Buscar" value="">
+                    <input type="submit" value="Buscar" id="buscar" class="btn btn-success buscador">
+                </form>
+         </div>-->
+            
+    <a href="#" th:href="@{/autorizar/listDenegados}"><button class="btn btn-primary boton" type=button onclick="mostrar()">Prestamos Denegados</button></a>
+    <a href="#" th:href="@{/autorizar/listRecibidos}"><button class="btn btn-primary boton" type=button onclick="mostrar2()">Prestamos Recibidos</button></a>
+
+<section th:if="${prestado==1}">
+	<table class="table" border="2">
+		<thead class="thead">
+			<tr>
+				<th>Usuario</th>
+				<th>Cantidad Recurso</th>
+				<th>Fecha de prestamo</th>
+				<th>Fecha de entrega</th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr th:each="prestamo: ${prestamos}">
+				<th> <span th:text="${prestamo.usuario.nombre}"> </span> </th>
+				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
+				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
+				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
+				
+			</tr>
+		</tbody>
+	</table>
+</section>
+<section th:if="${prestado==2}">
+	<table class="table" border="2">
+		<thead class="thead">
+			<tr>
+				<th>Usuario</th>
+				<th>Cantidad Recurso</th>
+				<th>Fecha de prestamo</th>
+				<th>Fecha de entrega</th>
+				<th>Fecha de devolucion</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="prestamo: ${prestamos}">
+				<th> <span th:text="${prestamo.usuario.nombre}"> </span> </th>
+				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
+				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
+				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
+				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
+
+			</tr>
+		</tbody>
+	</table>
+</section>
+	</div>
+	
+	
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
-	<title th:text="${titulo}"></title>
+	<title th:text="${biblioteca.nombre_biblioteca}"></title>
 	
 	<link rel="stylesheet" href="#" />
 </head>
@@ -12,8 +12,6 @@
 	<br />
 	<div class="container">
 		<p>Bienvenido/a usuario anonimo/a</span></p>
-		<a th:href="@{/departamento/}">Aqui puedes registrar departamento sin logearte</a> <br>
-		<a th:href="@{/municipio/}">Aqui puedes registrar municipio sin logearte</a><br>
 		<a th:href="@{/biblioteca}">Aqui puedes registrar biblioteca sin logearte</a>		
 	</div>
 	<div th:replace="fragmentos/plantilla :: login"></div>

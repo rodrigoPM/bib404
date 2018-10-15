@@ -18,6 +18,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
 	public String handleError(HttpServletRequest request, Model model) {
 		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 		model.addAttribute("titulo","BIB404");
+		model.addAttribute("urlHome","/");
 		HttpSession sesion = request.getSession();
 		if (sesion.getAttribute(Template.USER)==null) {
 			model.addAttribute("authF",true);

@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head(title, links)">
-	<meta charset="UTF-8" />
-	<title th:replace="${title}"></title>
-	<link rel="stylesheet" href="#" th:href="@{/css/bootstrap.min.css}" />
-	<link rel="stylesheet" href="#" th:href="@{/css/fontawesome.min.css}" />
-	<link rel="stylesheet" href="#" th:href="@{/css/regular.min.css}" />
-	<link rel="stylesheet" href="#" th:href="@{/css/solid.min.css}" />
-	<link rel="stylesheet" href="#" th:href="@{/css/bib404/plantilla.css}" />
-	<script src="js/deshabilitar.js"></script>
-	<th:block th:replace="${links}" />
-	
+<meta charset="UTF-8" />
+<title th:replace="${title}"></title>
+<link rel="stylesheet" href="#" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="#" th:href="@{/css/fontawesome.min.css}" />
+<link rel="stylesheet" href="#" th:href="@{/css/regular.min.css}" />
+<link rel="stylesheet" href="#" th:href="@{/css/solid.min.css}" />
+<link rel="stylesheet" href="#" th:href="@{/css/bib404/plantilla.css}" />
+<script src="js/deshabilitar.js"></script>
+<th:block th:replace="${links}" />
+
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
 		th:fragment="navbar-anonimo">
 		<div class="container">
-			<a class="navbar-brand" href="#"><span th:text="${name_bib}"></span> <i class="fas fa-book-reader"></i></a>
+			<a class="navbar-brand" th:href="${urlHome}"><span
+				th:text="${name_bib}"></span> <i class="fas fa-book-reader"></i></a>
 			<button class="navbar-toggler collapsed" type="button"
 				data-toggle="collapse" data-target="#navbarsBib404"
 				aria-controls="navbarsBib404" aria-expanded="false"
@@ -26,9 +27,13 @@
 
 			<div class="navbar-collapse collapse" id="navbarsBib404" style="">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#modalLogin" >Login <i class="fas fa-door-open"></i>
+					<li class="nav-item"><a class="nav-link" href=""
+						data-toggle="modal" data-target="#modalLogin">Login <i
+							class="fas fa-door-open"></i>
 					</a></li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/usuarios/registrarse}" >Registrarse <i class="fas fa-user-plus"></i></a></li>
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/usuarios/registrarse}">Registrarse <i
+							class="fas fa-user-plus"></i></a></li>
 				</ul>
 			</div>
 		</div>
@@ -36,7 +41,8 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
 		th:fragment="navbar-user">
 		<div class="container">
-			<a class="navbar-brand text-bold" href="#"><span th:text="${name_bib}"></span> <i class="fas fa-book-reader"></i></a>
+			<a class="navbar-brand text-bold" th:href="${urlHome}"><span
+				th:text="${name_bib}"></span> <i class="fas fa-book-reader"></i></a>
 			<button class="navbar-toggler collapsed" type="button"
 				data-toggle="collapse" data-target="#navbarsBib404"
 				aria-controls="navbarsBib404" aria-expanded="false"
@@ -46,54 +52,103 @@
 
 			<div class="navbar-collapse collapse" id="navbarsBib404" style="">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link text-bold" href="#">DashBoard <i class="fas fa-toolbox"></i>
+					<li class="nav-item"><a class="nav-link text-bold" href="#">DashBoard
+							<i class="fas fa-toolbox"></i>
 					</a></li>
-					<li class="nav-item"><a class="nav-link text-bold" href="#">Administrar Prestamos <i class="fas fa-book"></i></a></li>
+					<li class="nav-item"><a class="nav-link text-bold"
+						th:href="@{/autorizar/listPrestamos}">Administrar Prestamos <i
+							class="fas fa-book"></i></a></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle text-bold" href="#"
 						id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false">User <i class="fas fa-user"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownUser">
-							<a class="dropdown-item" th:href="@{/perfil}" >Perfil</a> <a
+							<a class="dropdown-item" th:href="@{/perfil}">Perfil</a> <a
 								class="dropdown-item" href="#">Mis Digitales</a> <a
-								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar Sesión</a>
+								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
+								Sesión</a>
 						</div></li>
+<<<<<<< HEAD
     
+=======
+
+				</ul>
 			</div>
 		</div>
 	</nav>
-	
-	<div th:fragment="login">	
-		<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Iniciar sesion</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-				<form th:action="@{/usuarios/logcheck}" th:method="post">
-				  <div class="form-group">
-				    <label for="user">usuario</label>
-				    <input type="text" class="form-control" id="username" name="username" aria-describedby="username" placeholder="ingrese su usuario">
-				    <small id="emailHelp" class="form-text text-muted">Ingrese su usuario</small>
-				  </div>
-				  <div class="form-group">
-				    <label for="password1">Password</label>
-				    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-				  </div>
-				  <button type="submit" class="btn btn-primary">Entrar</button>
-				</form>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-		      </div>
-		    </div>
-		  </div>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
+		th:fragment="navbar-bib">
+		<div class="container">
+			<a class="navbar-brand text-bold" th:href="@{/}">BIB404 <i
+				class="fas fa-book-reader"></i></a>
+			<button class="navbar-toggler collapsed" type="button"
+				data-toggle="collapse" data-target="#navbarsBib404"
+				aria-controls="navbarsBib404" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="navbar-collapse collapse" id="navbarsBib404" style="">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link text-bold"
+						th:href="@{/recursoEspecifico/mostrarTodosLosRegistros}">Ver
+							recursos especificos <i class="fas fa-book"></i>
+					</a></li>
+					<li class="nav-item"><a class="nav-link text-bold"
+						th:href="@{/biblioteca}">Crear Biblioteca</a></li>
+				</ul>
+>>>>>>> 686e020cbc1d7585b078475f125ef445f02881e7
+			</div>
+
+
+
+		</div>
+	</nav>
+
+
+	<div th:fragment="login">
+		<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Iniciar sesion</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form th:action="@{/usuarios/logcheck}" th:method="post">
+							<div class="form-group">
+								<label for="user">usuario</label> <input type="text"
+									class="form-control" id="username" name="username"
+									aria-describedby="username" placeholder="ingrese su usuario">
+								<small id="emailHelp" class="form-text text-muted">Ingrese
+									su usuario</small>
+							</div>
+							<div class="form-group">
+								<label for="password1">Password</label> <input type="password"
+									class="form-control" id="password" name="password"
+									placeholder="Password">
+							</div>
+							<button type="submit" class="btn btn-fill btn-info btn-wd btn-sm">Entrar</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button"
+							class="btn btn-fill btn-danger btn-wd btn-sm"
+							data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+
+	<footer class="bg-dark p-4" th:fragment="footer">
+		<p class="text-center m-0 text-bold text-white">BIB404 2018</p>
+	</footer>
 
 	<div th:fragment="scripts">
 		<script src="#" th:src="@{/js/jquery-3.3.1.min.js}"></script>

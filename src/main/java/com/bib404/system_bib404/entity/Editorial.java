@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "editorial")
 public class Editorial {
@@ -65,12 +67,11 @@ public class Editorial {
 		this.recurso_especifico = recurso_especifico;
 	}
 
-	public Editorial(int id, String nombre_editorial, Date anio_publicacion, RecursoEspecifico recurso_especifico) {
+	public Editorial(int id, String nombre_editorial, Date anio_publicacion) {
 		super();
 		this.id = id;
 		this.nombre_editorial = nombre_editorial;
 		this.anio_publicacion = anio_publicacion;
-		this.recurso_especifico = recurso_especifico;
 	}
 
 	public Editorial() {

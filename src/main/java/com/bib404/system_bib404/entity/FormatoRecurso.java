@@ -49,11 +49,10 @@ public class FormatoRecurso {
 		this.recurso_especifico = recurso_especifico;
 	}
 
-	public FormatoRecurso(int id, String nombre_formato, RecursoEspecifico recurso_especifico) {
+	public FormatoRecurso(int id, String nombre_formato) {
 		super();
 		this.id = id;
 		this.nombre_formato = nombre_formato;
-		this.recurso_especifico = recurso_especifico;
 	}
 
 	public FormatoRecurso() {

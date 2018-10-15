@@ -167,7 +167,7 @@ public class RecursoEspecifico {
 	}
 
 	public RecursoEspecifico() {
-		super();
+		
 	}
 
 }
