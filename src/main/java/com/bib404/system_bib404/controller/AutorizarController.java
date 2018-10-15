@@ -57,6 +57,22 @@ public class AutorizarController {
 		
 		return mav;
 	}
+	@RequestMapping("/listDenegados")
+	public ModelAndView listDenegados(Model model, HttpServletRequest request)  throws ServletException, IOException  {
+		ModelAndView mav = new ModelAndView(Template.DENEGADOS);
+		mav.addObject("prestamos", prestamoServiceImpl.listDenegados());
+		model.addAttribute("prestado", 1);
+		
+		return mav;
+	}
+	@RequestMapping("/listRecibidos")
+	public ModelAndView listRecibidos(Model model, HttpServletRequest request)  throws ServletException, IOException  {
+		ModelAndView mav = new ModelAndView(Template.DENEGADOS);
+		mav.addObject("prestamos", prestamoServiceImpl.listRecibidos());
+		model.addAttribute("prestado", 2);
+		
+		return mav;
+	}
 	@GetMapping("/autorizado")
 	public ModelAndView autorizado(@RequestParam(name="id", required=false)int id, Model model,
 			@ModelAttribute(name="prestamoModel") PrestamoModel prestamoModel, HttpServletRequest request) throws ServletException, IOException  {

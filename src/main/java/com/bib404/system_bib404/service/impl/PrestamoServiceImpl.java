@@ -58,5 +58,24 @@ public class PrestamoServiceImpl implements PrestamoService{
 		}
 		return prestamoModels;
 	}
+	public List<PrestamoModel> listDenegados() {
+		List<Prestamo> prestamos=prestamoRepository.findAll();
+		List<Prestamo> valprestamos= prestamos.stream().filter(x -> x.getEstado()==0).collect(Collectors.toList());
+		List<PrestamoModel> prestamoModels=new ArrayList<PrestamoModel>();
+		for(Prestamo prestamo:valprestamos) {
+			prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
+		}
+		return prestamoModels;
+	}
+	public List<PrestamoModel> listRecibidos() {
+		List<Prestamo> prestamos=prestamoRepository.findAll();
+		List<Prestamo> valprestamos= prestamos.stream().filter(x -> x.getEstado()==3).collect(Collectors.toList());
+		List<PrestamoModel> prestamoModels=new ArrayList<PrestamoModel>();
+		for(Prestamo prestamo:valprestamos) {
+			prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
+		}
+		return prestamoModels;
+	}
+
 
 }
