@@ -13,9 +13,6 @@ public class Template {
 	public static final String AUTORIZAR ="autorizar";
 	public static final String DENEGADOS ="denegados";
 	public static final String PERFIL ="perfil";
-<<<<<<< HEAD
 	public static final String EDITAR="editar";
-=======
 	public static final String RECURSOSESPECIFICOS = "recursosespecificos";
->>>>>>> 686e020cbc1d7585b078475f125ef445f02881e7
 }

@@ -34,28 +34,26 @@ public class bibliotecaController {
 	private RecursoBibliotecarioServiceImpl rbService;
 
 	@RequestMapping("/{id}")
-	public ModelAndView inicioBibX(@PathVariable("id") int id_bib, HttpServletRequest request, Model model)  throws ServletException, IOException {
-		ModelAndView mav = new ModelAndView(Template.INDEX_BIB_X);
-		mav.addObject("biblioteca",bibliotecaService.findById(id_bib));
+	public String inicioBibX(@PathVariable("id") int id_bib, HttpServletRequest request, Model model)  throws ServletException, IOException {
+		model.addAttribute("biblioteca",bibliotecaService.findById(id_bib));
 		if(bibliotecaService.findById(id_bib).getId()<1) {
 			System.out.println("No se encontro biblioteca");
-			mav.setViewName(Template.INDEX_BIB404);
-			return mav;
+			return "redirect:/";
 		}
-		mav.addObject("name_bib", bibliotecaService.findById(id_bib).getNombre_biblioteca());
-		mav.addObject("urlHome", "/bib404/"+bibliotecaService.findById(id_bib).getId());
+		model.addAttribute("name_bib", bibliotecaService.findById(id_bib).getNombre_biblioteca());
+		model.addAttribute("urlHome", "/bib404/"+bibliotecaService.findById(id_bib).getId());
 		HttpSession sesion = request.getSession();
 		if(sesion.getAttribute(Template.USER)!=null) {
-			mav.addObject("isUser", true);
+			model.addAttribute("isUser", true);
 		}else {
-			mav.addObject("isNoUser", true);
+			model.addAttribute("isNoUser", true);
 		}
-		mav.addObject("rbs", rbService.listAllRBOfBib(id_bib));
+		model.addAttribute("rbs", rbService.listAllRBOfBib(id_bib));
 		if(rbService.listAllRBOfBib(id_bib).size()==0) {
-			mav.addObject("vacio","No se encontraron Recursos bibliotecarios");
+			model.addAttribute("vacio","No se encontraron Recursos bibliotecarios");
 		}
 		System.out.println(rbService.listAllRBOfBib(id_bib).size());
-		return mav;
+		return Template.INDEX_BIB_X;
 	}
 	
 	
