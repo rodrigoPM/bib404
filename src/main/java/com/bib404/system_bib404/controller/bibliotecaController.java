@@ -36,23 +36,26 @@ public class bibliotecaController {
 	@RequestMapping("/{id}")
 	public String inicioBibX(@PathVariable("id") int id_bib, HttpServletRequest request, Model model)  throws ServletException, IOException {
 		model.addAttribute("biblioteca",bibliotecaService.findById(id_bib));
-		if(bibliotecaService.findById(id_bib).getId()<1) {
+		if(id_bib<1) {
 			System.out.println("No se encontro biblioteca");
 			return "redirect:/";
 		}
-		model.addAttribute("name_bib", bibliotecaService.findById(id_bib).getNombre_biblioteca());
-		model.addAttribute("urlHome", "/bib404/"+bibliotecaService.findById(id_bib).getId());
+		model.addAttribute("name_bib", bibliotecaService.findById(id_bib).getNombre_biblioteca()); //nombre de la biblioteca
+		model.addAttribute("urlHome", "/bib404/"+bibliotecaService.findById(id_bib).getId());  //url de la biblioteca 
+		
+		
 		HttpSession sesion = request.getSession();
 		if(sesion.getAttribute(Template.USER)!=null) {
 			model.addAttribute("isUser", true);
 		}else {
 			model.addAttribute("isNoUser", true);
 		}
-		model.addAttribute("rbs", rbService.listAllRBOfBib(id_bib));
+		
+		
+		model.addAttribute("rbs", rbService.listAllRBOfBib(id_bib));  //listado de recursos bibliotecarios
 		if(rbService.listAllRBOfBib(id_bib).size()==0) {
 			model.addAttribute("vacio","No se encontraron Recursos bibliotecarios");
 		}
-		System.out.println(rbService.listAllRBOfBib(id_bib).size());
 		return Template.INDEX_BIB_X;
 	}
 	

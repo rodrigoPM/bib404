@@ -69,9 +69,10 @@
 						<p>
 							<b>Codigo: </b><span th:text="${biblioteca.codigo_biblioteca}"></span>
 						</p>
-						<!-- 					<p> -->
-						<!-- 						<b>Municipio: </b><span th:text="${biblioteca.getNombreMunicipio()"></span> -->
-						<!-- 					</p> -->
+						<p>
+							<b>Municipio: </b><span
+								th:text="${biblioteca.municipio.nombre_municipio}"></span>
+						</p>
 						<p>
 							<b>Descripcion: </b><span>Proximamente...</span>
 						</p>
@@ -81,7 +82,9 @@
 				</div>
 			</div>
 		</div>
-		<div th:unless="${bib}"><h3>No hay ninguna biblioteca en el sistema.</h3></div>
+		<div th:unless="${bib}">
+			<h3>No hay ninguna biblioteca en el sistema.</h3>
+		</div>
 	</div>
 
 	<footer th:replace="fragmentos/plantilla :: footer"></footer>

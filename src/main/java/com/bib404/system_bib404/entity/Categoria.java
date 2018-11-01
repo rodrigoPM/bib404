@@ -10,8 +10,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "categoria")
@@ -26,6 +31,11 @@ public class Categoria {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "categoria")
 	private Set<RecursoBibliotecario> recurso_bib = new HashSet<>();
+	
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "categoria_id", nullable = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Categoria categoria;
 
 	public int getId() {
 		return id;

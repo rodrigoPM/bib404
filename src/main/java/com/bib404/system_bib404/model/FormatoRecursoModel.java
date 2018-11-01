@@ -10,10 +10,8 @@ import com.bib404.system_bib404.entity.RecursoEspecifico;
 public class FormatoRecursoModel {
 	private int id;
 
-	@Column(name = "nombre_formato")
 	private String nombre_formato;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "formato_recurso")
 	private RecursoEspecifico recurso_especifico;
 
 	public int getId() {
