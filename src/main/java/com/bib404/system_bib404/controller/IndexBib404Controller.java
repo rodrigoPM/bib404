@@ -64,10 +64,13 @@ public class IndexBib404Controller {
 	@GetMapping("/index")
 	public String indexUsuario(HttpServletRequest request, Model model)  throws ServletException, IOException  {
 		HttpSession sesion = request.getSession();
+		
 		model.addAttribute("titulo","BIB404");		
 		if(sesion.getAttribute(Template.USER)==null) {
 			return "redirect:/";
 		}else {
+		
+			
 			model.addAttribute("user", sesion.getAttribute(Template.USER));
 			return "redirect:/";
 		}

@@ -14,9 +14,9 @@ public class PerfilConverter {
 		perfil.setBiblioteca(perfilModel.getBiblioteca());
 		perfil.setEmail(perfilModel.getEmail());
 		perfil.setEnable(perfilModel.isEnable());
-		perfil.setFecha_nacimiento(perfilModel.getFecha_nacimiento());
-		perfil.setFecha_registro(perfilModel.getFecha_registro());
-		perfil.setFoto_perfil(perfilModel.getFoto_perfil());
+		//perfil.setFecha_nacimiento(perfilModel.getFecha_nacimiento());
+		//perfil.setFecha_registro(perfilModel.getFecha_registro());
+		//perfil.setFoto_perfil(perfilModel.getFoto_perfil());
 		perfil.setGenero(perfilModel.getGenero());
 		perfil.setId(perfilModel.getId());
 		perfil.setLugar_estudio(perfilModel.getLugar_estudio());
@@ -39,8 +39,8 @@ public class PerfilConverter {
 		perfil.setBiblioteca(usuario.getBiblioteca());
 		perfil.setEmail(usuario.getEmail());
 		perfil.setEnable(usuario.isEnable());
-		perfil.setFecha_nacimiento(usuario.getFecha_nacimiento());
-		perfil.setFecha_registro(usuario.getFecha_registro());
+	//	perfil.setFecha_nacimiento(usuario.getFecha_nacimiento());
+		//perfil.setFecha_registro(usuario.getFecha_registro());
 		perfil.setFoto_perfil(usuario.getFoto_perfil());
 		perfil.setGenero(usuario.getGenero());
 		perfil.setId(usuario.getId());

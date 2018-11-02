@@ -1,5 +1,6 @@
 package com.bib404.system_bib404.entity;
 
+import java.io.File;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -84,7 +85,7 @@ public class Usuario {
 	@JoinColumn(name = "municipio_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Municipio municipio;
-
+   
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "biblioteca_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -236,7 +237,7 @@ public class Usuario {
 
 	public Usuario(int id, String username, String password, String nombre, String apellido, Date fecha_nacimiento,
 			String nombre_padre, String nombre_madre, String numero_telefono, String lugar_estudio, String genero,
-			String ocupacion, String email, Date fecha_registro, String foto_perfil, boolean enable,String rol,
+			String ocupacion, String email, Date fecha_registro,String foto_perfil, boolean enable,String rol,
 			Municipio municipio, Biblioteca biblioteca) {
 		super();
 		this.id = id;

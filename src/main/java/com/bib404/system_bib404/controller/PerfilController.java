@@ -1,6 +1,11 @@
 package com.bib404.system_bib404.controller;
 
+import java.awt.Image;
+import java.io.File;
 import java.security.Principal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bib404.system_bib404.Repository.ImagenPerfil;
 import com.bib404.system_bib404.Repository.PerfilRepository;
 import com.bib404.system_bib404.Repository.UsuarioRepository;
+import com.bib404.system_bib404.Repository.actualizarPerfil;
 import com.bib404.system_bib404.component.PerfilConverter;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Usuario;
@@ -37,6 +44,12 @@ public class PerfilController {
 	@Autowired
 	@Qualifier("perfilRepository")
 		private PerfilRepository perfilRepository;
+	@Autowired
+	@Qualifier("actualizarPerfil")
+		private actualizarPerfil actPerfil;
+	@Autowired
+	@Qualifier("ImagenPerfil")
+		private ImagenPerfil imagenPerfil;
 	@Autowired
 	@Qualifier("usuarioRepository")
 	private UsuarioRepository usuarioRep;
@@ -57,10 +70,12 @@ private PerfilConverter perfilconverter;
 @GetMapping("/perfil")
 public String redirectPerfilForm(Model model,HttpServletRequest request) {
 HttpSession session=request.getSession();
+
     model.addAttribute("user", session.getAttribute(Template.USER));
     //model.addAttribute("id",perfil.getId() );
-	model.addAttribute("bibliotecas", usuarioImp.listBibliotecas());
-	model.addAttribute("municipios", usuarioImp.listMunicipios());
+	
+	session.setAttribute("user", session.getAttribute(Template.USER));
+	
 
 	return Template.PERFIL;
 
@@ -68,21 +83,30 @@ HttpSession session=request.getSession();
 	
 
 @GetMapping("/editar")
-public String editar(@RequestParam(name="id",required=false) int id,
+public String editar(@ModelAttribute(name="username") String username,@ModelAttribute(name="fecha_nacimiento") String fecha_nacimiento,
 		Model model) {
-	PerfilModel perfil=perfilservice.findUsuarioByIdModel(id);
+	Date fecha = new Date();
+	int anio = fecha.getYear() - 4 ;
+	fecha.setYear(anio);
+	SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+	String fecha_actual = formateador.format(fecha);
+
 	Usuario user=new Usuario();
-	user=perfilconverter.convertPerfilModel2Perfil(perfil);
-	model.addAttribute("perfilModel",perfil );
+	
+	user=actPerfil.buscarusuario(username);
+	String fechanacimiento=formateador.format(user.getFecha_nacimiento());
+	model.addAttribute("perfilModel",user );
+	model.addAttribute("fechan",fechanacimiento);
+	model.addAttribute("fecha_actual", fecha_actual);
 	model.addAttribute("bibliotecas", usuarioImp.listBibliotecas());
 	model.addAttribute("municipios", usuarioImp.listMunicipios());
 	
-	System.out.println("nombre de usuario   "+ perfil.getNombre()+" apellido"+perfil.getApellido());
+	System.out.println("nombre de usuario   "+ user.getNombre()+" apellido"+user.getApellido()+"  fecha"+fecha_nacimiento);
 return Template.EDITAR;
 }
 		
 @PostMapping("/addPerfil")
-public String addperfil(@ModelAttribute(name="perfilModel")PerfilModel perfilModel,HttpServletRequest request,@ModelAttribute("bib") String bib ,@ModelAttribute("mun") String mun) {
+public String addperfil(@ModelAttribute(name="perfilModel")PerfilModel perfilModel,@RequestParam(name="username", required=true) String username,HttpServletRequest request,@ModelAttribute("bib") String bib ,@ModelAttribute("mun") String mun, @ModelAttribute("fecha_nacimiento") String fecha_nacimiento) throws ParseException {
 Usuario usuario= perfilconverter.convertPerfilModel2Perfil(perfilModel);
 	perfilRepository.actualizarNombre(perfilModel.getNombre(), perfilModel.getId());
 	perfilRepository.actualizarApellido(perfilModel.getApellido(), perfilModel.getId());
@@ -102,13 +126,20 @@ Usuario usuario= perfilconverter.convertPerfilModel2Perfil(perfilModel);
 	
 	perfilRepository.actualizarNumero(perfilModel.getNumero_telefono(), perfilModel.getId());
 	
-	perfilRepository.actualizarUsername(perfilModel.getUsername(), perfilModel.getId());
+	perfilRepository.actualizarUsername(perfilModel.getUsername(),perfilModel.getId());
+	  
 	
+	Date fecha = new Date();
+	SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+	fecha=formateador.parse(fecha_nacimiento);
+
+	imagenPerfil.actualizarFecha(fecha, username);
+	System.out.println("fecha nacimiento   :"+fecha.toString());
 	HttpSession sesion = request.getSession();
-	
 	sesion.setAttribute("usuario", usuario);
-	sesion.setAttribute("usuario.genero",usuario.getGenero());
 	
+
+
 return "redirect:/index";
 }
 	

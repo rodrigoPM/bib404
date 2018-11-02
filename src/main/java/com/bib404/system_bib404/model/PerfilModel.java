@@ -16,7 +16,7 @@ public class PerfilModel {
 
 	private String apellido;
 
-	private Date fecha_nacimiento;
+
 
 	private String nombre_padre;
 
@@ -28,7 +28,7 @@ public class PerfilModel {
 	private String ocupacion;
 	private String email;
 
-	private Date fecha_registro;
+
 	private String foto_perfil;
 
 	private boolean enable;
@@ -79,13 +79,6 @@ public class PerfilModel {
 		this.apellido = apellido;
 	}
 
-	public Date getFecha_nacimiento() {
-		return fecha_nacimiento;
-	}
-
-	public void setFecha_nacimiento(Date fecha_nacimiento) {
-		this.fecha_nacimiento = fecha_nacimiento;
-	}
 
 	public String getNombre_padre() {
 		return nombre_padre;
@@ -143,13 +136,8 @@ public class PerfilModel {
 		this.email = email;
 	}
 
-	public Date getFecha_registro() {
-		return fecha_registro;
-	}
 
-	public void setFecha_registro(Date fecha_registro) {
-		this.fecha_registro = fecha_registro;
-	}
+
 
 	public String getFoto_perfil() {
 		return foto_perfil;
@@ -195,9 +183,9 @@ public class PerfilModel {
 
 	}
 
-	public PerfilModel(int id, String username, String password, String nombre, String apellido, Date fecha_nacimiento,
+	public PerfilModel(int id, String username, String password, String nombre, String apellido,
 			String nombre_padre, String nombre_madre, String numero_telefono, String lugar_estudio, String genero,
-			String ocupacion, String email, Date fecha_registro, String foto_perfil, boolean enable, String rol,
+			String ocupacion, String email, String foto_perfil, boolean enable, String rol,
 			Municipio municipio, Biblioteca biblioteca) {
 		super();
 		this.id = id;
@@ -205,7 +193,7 @@ public class PerfilModel {
 		this.password = password;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.fecha_nacimiento = fecha_nacimiento;
+		
 		this.nombre_padre = nombre_padre;
 		this.nombre_madre = nombre_madre;
 		this.numero_telefono = numero_telefono;
@@ -213,7 +201,7 @@ public class PerfilModel {
 		this.genero = genero;
 		this.ocupacion = ocupacion;
 		this.email = email;
-		this.fecha_registro = fecha_registro;
+		
 		this.foto_perfil = foto_perfil;
 		this.enable = enable;
 		this.rol = rol;

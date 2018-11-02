@@ -1,5 +1,6 @@
 package com.bib404.system_bib404.Repository;
 
+import java.awt.Image;
 import java.io.Serializable;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.PerfilModel;
 @Transactional(readOnly=true)
 @Repository("perfilRepository")
-public interface PerfilRepository extends JpaRepository<Usuario,Integer> {
+public interface PerfilRepository extends JpaRepository<Usuario,Long> {
 	
 	public abstract Usuario findById(int id);
 	
@@ -83,5 +84,8 @@ public interface PerfilRepository extends JpaRepository<Usuario,Integer> {
 		@Query(value = "update Usuario u set u.municipio_id = ? where u.id = ?", 
 		  nativeQuery = true)
 		int actualizarMunicipio(int municipio_id, int id);
+	
+	
+	
 	
 }
