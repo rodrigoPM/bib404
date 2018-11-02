@@ -45,6 +45,8 @@ public class BibliotecaModel {
 		this.municipio = municipio;
 	}
 
+	
+
 	public Set<RecursoBibliotecario> getRecurso_bib() {
 		return recurso_bib;
 	}
@@ -52,6 +54,8 @@ public class BibliotecaModel {
 	public void setRecurso_bib(Set<RecursoBibliotecario> recurso_bib) {
 		this.recurso_bib = recurso_bib;
 	}
+
+
 
 	public BibliotecaModel(int id, String nombre_biblioteca, String codigo_biblioteca, MunicipioModel municipio,
 			Set<RecursoBibliotecario> recurso_bib) {

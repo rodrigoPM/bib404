@@ -16,7 +16,7 @@ public class RecursoBibliotecarioModel {
 	private String fisico_recurso_bib;
 	private String total_recurso_bib;
 	private Set<Biblioteca> biblioteca;
-	private TipoRecurso tipo_recurso;
+	private TipoRecursoModel tipo_recurso;
 	private Set<Categoria> categoria;
 
 	public int getId() {
@@ -83,20 +83,20 @@ public class RecursoBibliotecarioModel {
 		this.total_recurso_bib = total_recurso_bib;
 	}
 
+	public TipoRecursoModel getTipo_recurso() {
+		return tipo_recurso;
+	}
+
+	public void setTipo_recurso(TipoRecursoModel tipo_recurso) {
+		this.tipo_recurso = tipo_recurso;
+	}
+
 	public Set<Biblioteca> getBiblioteca() {
 		return biblioteca;
 	}
 
 	public void setBiblioteca(Set<Biblioteca> biblioteca) {
 		this.biblioteca = biblioteca;
-	}
-
-	public TipoRecurso getTipo_recurso() {
-		return tipo_recurso;
-	}
-
-	public void setTipo_recurso(TipoRecurso tipo_recurso) {
-		this.tipo_recurso = tipo_recurso;
 	}
 
 	public Set<Categoria> getCategoria() {
@@ -109,8 +109,8 @@ public class RecursoBibliotecarioModel {
 
 	public RecursoBibliotecarioModel(int id, String nombre_recurso_bib, String descripcion_recurso_bib,
 			String sinopsis_recurso_bib, String imagen_recurso_bibl, String digital_recurso_bib,
-			String fisico_recurso_bib, String total_recurso_bib, Set<Biblioteca> biblioteca, TipoRecurso tipo_recurso,
-			Set<Categoria> categoria) {
+			String fisico_recurso_bib, String total_recurso_bib, Set<Biblioteca> biblioteca,
+			TipoRecursoModel tipo_recurso, Set<Categoria> categoria) {
 		super();
 		this.id = id;
 		this.nombre_recurso_bib = nombre_recurso_bib;

@@ -1,12 +1,23 @@
 package com.bib404.system_bib404.component;
 
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+
 import com.bib404.system_bib404.entity.RecursoBibliotecario;
+
 import com.bib404.system_bib404.model.RecursoBibliotecarioModel;
 
 @Component("recursoBibliotecarioConverter")
 public class RecursoBibliotecarioConverter {
+
+
+	@Autowired
+	@Qualifier("tipoRecursoConverter")
+	private TipoRecursoConverter tipoRecurso;
 
 	public RecursoBibliotecario converterRBModel2RB(RecursoBibliotecarioModel rbModel) {
 		RecursoBibliotecario rb = new RecursoBibliotecario();
@@ -18,9 +29,13 @@ public class RecursoBibliotecarioConverter {
 		rb.setDigital_recurso_bib(rbModel.getDigital_recurso_bib());
 		rb.setFisico_recurso_bib(rbModel.getFisico_recurso_bib());
 		rb.setTotal_recurso_bib(rbModel.getTotal_recurso_bib());
+		
 		rb.setBiblioteca(rbModel.getBiblioteca());
-		rb.setTipo_recurso(rbModel.getTipo_recurso());
+
+		rb.setTipo_recurso(tipoRecurso.convertTipoRecursoModel2TipoRecurso(rbModel.getTipo_recurso()));
+
 		rb.setCategoria(rbModel.getCategoria());
+
 		return rb;
 	}
 
@@ -35,8 +50,11 @@ public class RecursoBibliotecarioConverter {
 		rbModel.setDigital_recurso_bib(rb.getDigital_recurso_bib());
 		rbModel.setFisico_recurso_bib(rb.getFisico_recurso_bib());
 		rbModel.setTotal_recurso_bib(rb.getTotal_recurso_bib());
+
 		rbModel.setBiblioteca(rb.getBiblioteca());
-		rbModel.setTipo_recurso(rb.getTipo_recurso());
+
+		rbModel.setTipo_recurso(tipoRecurso.convertTipoRecurso2TipoRecursoModel(rb.getTipo_recurso()));
+
 		rbModel.setCategoria(rb.getCategoria());
 
 		return rbModel;

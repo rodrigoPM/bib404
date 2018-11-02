@@ -29,11 +29,10 @@ public class BibliotecaServiceImpl implements BibliotecaService{
 	public List<BibliotecaModel> listAllBibs() {
 		// TODO Auto-generated method stub}
 		List<Biblioteca> bibliotecas = bibliotecaRepository.findAll();
-		System.out.println("numero encontradas: "+bibliotecas.size());
 		List<BibliotecaModel> bibliotecasModel = new ArrayList<BibliotecaModel>();
 		for (Biblioteca biblioteca : bibliotecas) {
+			System.out.println(biblioteca);
 			bibliotecasModel.add(bibliotecaConverter.convertBiblioteca2BibliotecaModel(biblioteca));
-			System.out.println(bibliotecaConverter.convertBiblioteca2BibliotecaModel(biblioteca).getId()+" id de la biblioteca");
 		}
 		return bibliotecasModel;
 	}
