@@ -100,4 +100,10 @@ public class Biblioteca {
 		super();
 	}
 
+	@Override
+	public String toString() {
+		return "Biblioteca [id=" + id + ", nombre_biblioteca=" + nombre_biblioteca + ", codigo_biblioteca="
+				+ codigo_biblioteca + ", municipio=" + municipio + ", recurso_bib=" + recurso_bib + "]";
+	}
+	
 }

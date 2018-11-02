@@ -10,7 +10,7 @@ public class BibliotecaModel {
 	private int id;
 	private String nombre_biblioteca;
 	private String codigo_biblioteca;
-	private Municipio municipio;
+	private MunicipioModel municipio;
 	private Set<RecursoBibliotecario> recurso_bib;
 
 	public int getId() {
@@ -37,13 +37,15 @@ public class BibliotecaModel {
 		this.codigo_biblioteca = codigo_biblioteca;
 	}
 
-	public Municipio getMunicipio() {
+	public MunicipioModel getMunicipio() {
 		return municipio;
 	}
 
-	public void setMunicipio(Municipio municipio) {
+	public void setMunicipio(MunicipioModel municipio) {
 		this.municipio = municipio;
 	}
+
+	
 
 	public Set<RecursoBibliotecario> getRecurso_bib() {
 		return recurso_bib;
@@ -53,7 +55,9 @@ public class BibliotecaModel {
 		this.recurso_bib = recurso_bib;
 	}
 
-	public BibliotecaModel(int id, String nombre_biblioteca, String codigo_biblioteca, Municipio municipio,
+
+
+	public BibliotecaModel(int id, String nombre_biblioteca, String codigo_biblioteca, MunicipioModel municipio,
 			Set<RecursoBibliotecario> recurso_bib) {
 		super();
 		this.id = id;

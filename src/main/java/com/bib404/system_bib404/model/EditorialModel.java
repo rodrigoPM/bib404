@@ -14,14 +14,10 @@ import com.bib404.system_bib404.entity.RecursoEspecifico;
 public class EditorialModel {
 	private int id;
 
-	@Column(name = "nombre_editorial")
 	private String nombre_editorial;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "anio_publicacion")
 	private Date anio_publicacion;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "editorial")
 	private RecursoEspecifico recurso_especifico;
 
 	public int getId() {

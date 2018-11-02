@@ -1,12 +1,11 @@
 package com.bib404.system_bib404.model;
 
-import com.bib404.system_bib404.entity.Departamento;
 
 public class MunicipioModel {
 	
 	private int id;
 	private String nombre_municipio;
-	private Departamento departamento;
+	private DepartamentoModel departamento;
 	public int getId() {
 		return id;
 	}
@@ -19,13 +18,13 @@ public class MunicipioModel {
 	public void setNombre_municipio(String nombre_municipio) {
 		this.nombre_municipio = nombre_municipio;
 	}
-	public Departamento getDepartamento() {
+	public DepartamentoModel getDepartamento() {
 		return departamento;
 	}
-	public void setDepartamento(Departamento departamento) {
+	public void setDepartamento(DepartamentoModel departamento) {
 		this.departamento = departamento;
 	}
-	public MunicipioModel(int id, String nombre_municipio, Departamento departamento) {
+	public MunicipioModel(int id, String nombre_municipio, DepartamentoModel departamento) {
 		super();
 		this.id = id;
 		this.nombre_municipio = nombre_municipio;
@@ -34,6 +33,7 @@ public class MunicipioModel {
 	public MunicipioModel() {
 		super();
 	}
+	
 	
 	
 }
