@@ -6,6 +6,12 @@
 	<link rel="stylesheet" href="#" />
 	<script src="js/deshabilitar.js"></script>
 </head>
+<Style type="text/css">
+  .buscador{
+   float: right;
+   margin-bottom: 10px;
+  }
+ </Style>
 <body>
 	
 
@@ -115,6 +121,11 @@
 				
 								<button type="submit" class="btn btn-primary center" id="editar"   >Editar</button>
 				</a>
+			<div class="buscador">
+        	<a href="#" th:href="@{/digitales}">
+        		<button class="btn btn-primary boton" type=button onclick="mostrar()">Mis recursos
+        		digitales</button></a>
+    		</div>
 
 				</form>			
 		</div>
