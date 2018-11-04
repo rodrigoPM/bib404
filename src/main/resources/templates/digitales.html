@@ -47,7 +47,6 @@
 }
 
 .middle {
-  float: center;
   transition: .5s ease;
   opacity: 0;
   position: absolute;
@@ -59,7 +58,7 @@
 }
 
 .containeru:hover .image {
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .containeru:hover .middle {
@@ -71,6 +70,9 @@
   color: white;
   font-size: 16px;
   padding: 16px 32px;
+  margin-left:100px;
+  }
+
  </Style>
  <script type="text/JavaScript">
  function mostrar(){
@@ -105,10 +107,12 @@
   			<div class="panel">
     			<div class="card">
     			<div class="containeru">
+    			<div class="image">
 				  	<img class="card-img-top" th:src="@{/imgs/libro.jpg}" style="height:200px; opacity: 1;
   						width:200px; display: block; transition: .5s ease; backface-visibility: hidden">
+  						</div>
   						<div class="middle">
-    						<div class="text">Datos</div>
+    						<div class="text">Autor:Disney Editorial: La Ceiba</div>
   						</div>
   					</div>
 				  <div class="card-body">
@@ -120,7 +124,15 @@
   			</div>
   			<div class="panel">
     			<div class="card">
-				  	<img class="card-img-top" th:src="@{/imgs/libro.jpg}" style="height:200px">
+				  	<div class="containeru">
+    			<div class="image">
+				  	<img class="card-img-top" th:src="@{/imgs/libro.jpg}" style="height:200px; opacity: 1;
+  						width:200px; display: block; transition: .5s ease; backface-visibility: hidden">
+  						</div>
+  						<div class="middle">
+    						<div class="text">Autor:Disney Editorial: La Ceiba</div>
+  						</div>
+  					</div>
 				  <div class="card-body">
 				    <h4 class="card-title">El Libro de la Selva</h4>
 				    <!--<p class="card-text">Some example text.</p>
@@ -130,7 +142,15 @@
   			</div>
   			<div class="panel">
     			<div class="card">
-				  	<img class="card-img-top" th:src="@{/imgs/libro.jpg}" style="height:200px">
+				  	<div class="containeru">
+    				<div class="image">
+				  	<img class="card-img-top" th:src="@{/imgs/libro.jpg}" style="height:200px; opacity: 1;
+  						width:200px; display: block; transition: .5s ease; backface-visibility: hidden">
+  						</div>
+  						<div class="middle">
+    						<div class="text">Autor:Disney Editorial: La Ceiba</div>
+  						</div>
+  					</div>
 				  <div class="card-body">
 				    <h4 class="card-title">El Libro de la Selva</h4>
 				    <!--<p class="card-text">Some example text.</p>
