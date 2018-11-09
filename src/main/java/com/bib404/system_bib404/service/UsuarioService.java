@@ -1,5 +1,6 @@
 package com.bib404.system_bib404.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -23,28 +24,30 @@ public interface UsuarioService {
 	
 	public abstract Usuario findBy(String username);
 
-	int addDpto(Departamento depto);
+	public abstract int addDpto(Departamento depto);
 
-	List<Departamento> listDpto();
+	public abstract List<Departamento> listDpto();
 
-	int addMunicipio(Municipio municipio);
+	public abstract int addMunicipio(Municipio municipio);
 
-	List<Municipio> listMunicipios();
+	public abstract List<Municipio> listMunicipios();
 
-	int addMunicipio(Municipio municipio, int id_departamento);
+	public abstract int addMunicipio(Municipio municipio, int id_departamento);
 
-	int addBiblio(Biblioteca bib, int id_municipio);
+	public abstract int addBiblio(Biblioteca bib, int id_municipio);
 
-	List<Biblioteca> listBibliotecas();
+	public abstract List<Biblioteca> listBibliotecas();
 
-	int addUser(Usuario usuario, int id_numicipio, int id_b);
+	public abstract int addUser(Usuario usuario, int id_numicipio, int id_b);
 
-	Biblioteca findBibBy(int id);
+	public abstract Biblioteca findBibBy(int id);
 
-	Municipio findMunBy(int id);
+	public abstract Municipio findMunBy(int id);
 
-	List<Municipio> listMunicipiosOrderByNombre();
+	public abstract List<Municipio> listMunicipiosOrderByNombre();
 
-	Departamento findDepBy(int id);
+	public abstract Departamento findDepBy(int id);
+
+	public abstract Usuario findById(int id);
 	
 }
