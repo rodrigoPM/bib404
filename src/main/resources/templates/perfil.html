@@ -6,6 +6,12 @@
 	<link rel="stylesheet" href="#" />
 	<script src="js/deshabilitar.js"></script>
 </head>
+<Style type="text/css">
+  .buscador{
+   float: right;
+   margin-bottom: 10px;
+  }
+ </Style>
 <body>
 	
 
@@ -109,22 +115,19 @@
 	
 				</div>
 			</div>
-<<<<<<< HEAD
-						
-=======
->>>>>>> 556c7dd10d5e693cc4cd16468644b9b69bdf79c7
+
 				</form>
 				<a href="#" th:href="@{/editar?username=__${user.username}__}">
 				
 								<button type="submit" class="btn btn-primary center" id="editar"   >Editar</button>
 				</a>
-<<<<<<< HEAD
-									
-					
+			<div class="buscador">
+        	<a href="#" th:href="@{/digitales}">
+        		<button class="btn btn-primary boton" type=button onclick="mostrar()">Mis recursos
+        		digitales</button></a>
+    		</div>
 
-=======
 				</form>			
->>>>>>> 556c7dd10d5e693cc4cd16468644b9b69bdf79c7
 		</div>
 	
 	<div th:replace="fragmentos/plantilla :: login"></div>

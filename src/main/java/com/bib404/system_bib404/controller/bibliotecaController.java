@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
+import com.bib404.system_bib404.service.impl.Functions;
 import com.bib404.system_bib404.service.impl.RecursoBibliotecarioServiceImpl;
 
 @Controller
@@ -32,6 +33,10 @@ public class bibliotecaController {
 	@Autowired
 	@Qualifier("recursoBibliotecarioServiceImpl")
 	private RecursoBibliotecarioServiceImpl rbService;
+	
+	@Autowired
+	@Qualifier("Functions")
+	private Functions funcion;
 
 	@RequestMapping("/{id}")
 	public String inicioBibX(@PathVariable("id") int id_bib, HttpServletRequest request, Model model)  throws ServletException, IOException {
@@ -43,12 +48,12 @@ public class bibliotecaController {
 		model.addAttribute("name_bib", bibliotecaService.findById(id_bib).getNombre_biblioteca()); //nombre de la biblioteca
 		model.addAttribute("urlHome", "/bib404/"+bibliotecaService.findById(id_bib).getId());  //url de la biblioteca 
 		
-		
-		HttpSession sesion = request.getSession();
-		if(sesion.getAttribute(Template.USER)!=null) {
+		if(funcion.isAnyUser(request)) {
 			model.addAttribute("isUser", true);
+			System.out.println("Usuario simple");
 		}else {
 			model.addAttribute("isNoUser", true);
+			System.out.println("No se valida si es usuario");
 		}
 		
 		

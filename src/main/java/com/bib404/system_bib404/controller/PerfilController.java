@@ -2,11 +2,13 @@ package com.bib404.system_bib404.controller;
 
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -68,6 +70,14 @@ private EncriptadoPass encriptado;
 @Qualifier("perfilConverter")
 private PerfilConverter perfilconverter;
 
+@RequestMapping("/digitales")
+public ModelAndView listPrestamos(Model model, HttpServletRequest request)  throws ServletException, IOException  {
+	ModelAndView mav = new ModelAndView(Template.DIGITALES);
+	/*mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
+	model.addAttribute("prestado", 1);*/
+	
+	return mav;
+}
 @GetMapping("/perfil")
 public String redirectPerfilForm(Model model,@ModelAttribute(name="username") String username,HttpServletRequest request) {
 HttpSession sesion = request.getSession();
@@ -84,7 +94,7 @@ HttpSession sesion = request.getSession();
 	return Template.PERFIL;
 
 }
-	
+
 
 @GetMapping("/editar")
 public String editar(@ModelAttribute("username") String username,@ModelAttribute(name="fecha_nacimiento") String fecha_nacimiento,

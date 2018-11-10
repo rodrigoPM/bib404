@@ -15,4 +15,7 @@ public class Template {
 	public static final String PERFIL ="perfil";
 	public static final String EDITAR="editar";
 	public static final String RECURSOSESPECIFICOS = "recursosespecificos";
+	public static final String DIGITALES = "digitales";
+	public static final String SUPER_USUARIO = "SUPERUSUARIO";
+	public static final String ADMIN = "ADMIN";
 }
