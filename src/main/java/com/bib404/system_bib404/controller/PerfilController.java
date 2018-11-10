@@ -29,6 +29,7 @@ import com.bib404.system_bib404.Repository.UsuarioRepository;
 import com.bib404.system_bib404.Repository.actualizarPerfil;
 import com.bib404.system_bib404.component.PerfilConverter;
 import com.bib404.system_bib404.constant.Template;
+import com.bib404.system_bib404.entity.Municipio;
 import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.PerfilModel;
 import com.bib404.system_bib404.service.EncriptadoPass;
@@ -38,7 +39,7 @@ import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 @Controller
 @RequestMapping("/")
 public class PerfilController {
-
+	private static Municipio MUNICIPIO;
 	private static Log LOG = LogFactory.getLog(UsuarioController.class);
 	@Autowired
 	@Qualifier("perfilRepository")
@@ -68,13 +69,16 @@ private EncriptadoPass encriptado;
 private PerfilConverter perfilconverter;
 
 @GetMapping("/perfil")
-public String redirectPerfilForm(Model model,HttpServletRequest request) {
-HttpSession session=request.getSession();
-
-    model.addAttribute("user", session.getAttribute(Template.USER));
-    //model.addAttribute("id",perfil.getId() );
+public String redirectPerfilForm(Model model,@ModelAttribute(name="username") String username,HttpServletRequest request) {
+HttpSession sesion = request.getSession();
 	
-	session.setAttribute("user", session.getAttribute(Template.USER));
+	
+	Usuario user=actPerfil.buscarusuario(username);
+	
+
+    model.addAttribute("usua",user);
+    //model.addAttribute("id",perfil.getId() );
+    model.addAttribute("user", sesion.getAttribute(Template.USER));
 	
 
 	return Template.PERFIL;
@@ -83,7 +87,7 @@ HttpSession session=request.getSession();
 	
 
 @GetMapping("/editar")
-public String editar(@ModelAttribute(name="username") String username,@ModelAttribute(name="fecha_nacimiento") String fecha_nacimiento,
+public String editar(@ModelAttribute("username") String username,@ModelAttribute(name="fecha_nacimiento") String fecha_nacimiento,
 		Model model) {
 	Date fecha = new Date();
 	int anio = fecha.getYear() - 4 ;
@@ -106,7 +110,7 @@ return Template.EDITAR;
 }
 		
 @PostMapping("/addPerfil")
-public String addperfil(@ModelAttribute(name="perfilModel")PerfilModel perfilModel,@RequestParam(name="username", required=true) String username,HttpServletRequest request,@ModelAttribute("bib") String bib ,@ModelAttribute("mun") String mun, @ModelAttribute("fecha_nacimiento") String fecha_nacimiento) throws ParseException {
+public String addperfil(@ModelAttribute(name="perfilModel")PerfilModel perfilModel,@RequestParam(name="username", required=true) String username,HttpServletRequest request,@ModelAttribute("bib") String bib ,@ModelAttribute("mun") String mun, @ModelAttribute("fecha_nacimiento") String fecha_nacimiento,@ModelAttribute("mun") String muni, Model model) throws ParseException {
 Usuario usuario= perfilconverter.convertPerfilModel2Perfil(perfilModel);
 	perfilRepository.actualizarNombre(perfilModel.getNombre(), perfilModel.getId());
 	perfilRepository.actualizarApellido(perfilModel.getApellido(), perfilModel.getId());
@@ -136,11 +140,15 @@ Usuario usuario= perfilconverter.convertPerfilModel2Perfil(perfilModel);
 	imagenPerfil.actualizarFecha(fecha, username);
 	System.out.println("fecha nacimiento   :"+fecha.toString());
 	HttpSession sesion = request.getSession();
-	sesion.setAttribute("usuario", usuario);
+	
+	model.addAttribute("user", usuario);
+    //model.addAttribute("id",perfil.getId() );
+	
+	sesion.setAttribute("user", usuario);
 	
 
 
-return "redirect:/index";
+ return "redirect:/index";
 }
 	
 }

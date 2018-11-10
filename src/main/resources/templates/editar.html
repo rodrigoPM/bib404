@@ -10,7 +10,7 @@
 </head>
 <body>
 	
-<nav th:replace="fragmentos/plantilla :: navbar-user"></nav> 	
+
 <h1 class="text-center" >Editar  </h1>
 
 	<div class="container">
@@ -102,7 +102,7 @@
 			        <option th:each="muni : ${municipios}" 
 			        	th:value="${muni.id}"
 			        	th:text="${muni.nombre_municipio}"
-			        ></option>
+			       th:selected="${muni.id}==*{municipio.id}" ></option>
 			      </select>
 			  	</div>
 			  	<label for="inputState" class="col-sm-2 col-form-label">Biblioteca</label>
@@ -111,7 +111,8 @@
 			        <option th:each="bib : ${bibliotecas}" 
 			        	th:value="${bib.id}"
 			        	th:text="${bib.nombre_biblioteca}"
-			        ></option>
+			        	th:selected="${bib.nombre_biblioteca}==*{biblioteca.nombre_biblioteca}"
+ ></option>
 			      </select>
 			  	</div>
 			  </div>

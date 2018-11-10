@@ -9,7 +9,7 @@
 <body>
 	
 
-<nav th:replace="fragmentos/plantilla :: navbar-user"></nav> 
+
 
 
 <h1 class="text-center" >Perfil    <span th:text="${user.username}">   </span>  </h1>
@@ -23,7 +23,7 @@
 			</div>
 		</div>
 		
-			<form action="#" th:action="@{/perfil/editar}" th:object="${user}" method="post"  >
+			<form action="#" th:action="@{/perfil/editar}" th:object="${usua}" method="post"  >
 			<div class="form-group row">
 			    <label for="user" class="col-sm-2 col-form-label">Usuario:</label>
 			    <div class="col-sm-4">
