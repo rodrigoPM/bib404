@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="#" th:href="@{/css/fontawesome.min.css}" />
 <link rel="stylesheet" href="#" th:href="@{/css/regular.min.css}" />
 <link rel="stylesheet" href="#" th:href="@{/css/solid.min.css}" />
+<link rel="stylesheet" href="#" th:href="@{/css/main.css}" />
 <link rel="stylesheet" href="#" th:href="@{/css/bib404/plantilla.css}" />
 <script src="js/deshabilitar.js"></script>
 <th:block th:replace="${links}" />
@@ -52,7 +53,7 @@
 
 			<div class="navbar-collapse collapse" id="navbarsBib404" style="">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link text-bold" href="#">DashBoard
+					<li class="nav-item"><a class="nav-link text-bold" th:href="@{/DashBoard/admin}">DashBoard
 							<i class="fas fa-toolbox"></i>
 					</a></li>
 					<li class="nav-item"><a class="nav-link text-bold"
@@ -72,6 +73,51 @@
 			</div>
 		</div>
 	</nav>
+	
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navbar-admin">
+		<div class="container">
+				<header id="header" class="alt" >
+					<a href="#menu">Menu BIB404</a>	
+				</header>
+						<!-- Nav -->
+				<nav id="menu">
+					<ul class="links">
+						<li><a href="/">Administradores de bibliotecas</a></li>
+						<li><a href="/">Bibliotecas en el sistema</a></li>
+						<li><a href="/">Estadisticas de bibliotecas</a></li>
+					</ul>
+				</nav>
+			<div class="navbar-collapse collapse" id="navbarsBib404" style="">
+				<ul class="navbar-nav ml-auto alt">
+					<li class="nav-item"><a class="nav-link text-bold" th:href="@{/DashBoard/admin}">DashBoard
+							<i class="fas fa-toolbox"></i>
+					</a></li>
+					<li class="nav-item"><a class="nav-link text-bold"
+						th:href="@{/autorizar/listPrestamos}">Administrar Prestamos <i
+							class="fas fa-book"></i></a></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle text-bold" href="#"
+						id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">User <i class="fas fa-user"></i></a>
+						<div class="dropdown-menu" aria-labelledby="dropdownUser">
+							<a class="dropdown-item" th:href="@{/perfil}">Perfil</a> <a
+								class="dropdown-item" th:href="@{/digitales}">Mis Digitales</a> <a
+								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
+								Sesión</a>
+						</div></li>
+				</ul>
+				</div>
+		</div>
+	</nav>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
 		th:fragment="navbar-bib">

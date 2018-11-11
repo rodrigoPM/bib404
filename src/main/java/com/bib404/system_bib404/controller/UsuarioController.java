@@ -120,7 +120,7 @@ public class UsuarioController extends HttpServlet{
 			System.out.println("username= " +username+"=="+user.getUsername()+" password= " +password+"=="+encriptado.Desencriptar(user.getPassword()));
 			if (username.compareToIgnoreCase(user.getUsername()) == 0 && password.compareToIgnoreCase(encriptado.Desencriptar(user.getPassword()))==0 && sesion.getAttribute("usuario")==null) {
 				sesion.setAttribute("usuario", user);
-				return "redirect:/index";
+				return "redirect:/";
 			}else {
 				return "redirect:/?error=user";
 			}
@@ -135,7 +135,7 @@ public class UsuarioController extends HttpServlet{
 			session.setAttribute(Template.USER, null);
 			session.invalidate();
 		}
-		return "redirect:/";
+		return "redirect:/index";
 	}
 	
 	

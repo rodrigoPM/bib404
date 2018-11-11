@@ -26,6 +26,7 @@ import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Biblioteca;
 import com.bib404.system_bib404.entity.Municipio;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
+import com.bib404.system_bib404.service.impl.Functions;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 
 @Controller
@@ -35,10 +36,14 @@ public class IndexBib404Controller {
 	@Autowired
 	@Qualifier("usuarioServiceImpl")
 	private UsuarioServiceImpl usuarioImp;
-	
+
 	@Autowired
 	@Qualifier("bibliotecaServiceImpl")
 	private BibliotecaServiceImpl bibliotecaService;
+
+	@Autowired
+	@Qualifier("Functions")
+	private Functions funtions;
 	
 	@GetMapping("/")
 	public ModelAndView indexAnonimo(HttpServletRequest request)  throws ServletException, IOException  {
@@ -64,13 +69,10 @@ public class IndexBib404Controller {
 	@GetMapping("/index")
 	public String indexUsuario(HttpServletRequest request, Model model)  throws ServletException, IOException  {
 		HttpSession sesion = request.getSession();
-		
 		model.addAttribute("titulo","BIB404");		
 		if(sesion.getAttribute(Template.USER)==null) {
 			return "redirect:/";
 		}else {
-		
-			
 			model.addAttribute("user", sesion.getAttribute(Template.USER));
 			return "redirect:/";
 		}
