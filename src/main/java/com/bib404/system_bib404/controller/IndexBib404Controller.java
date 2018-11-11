@@ -52,7 +52,18 @@ public class IndexBib404Controller {
 			mav.addObject("anonimo", true);
 		}else {
 			mav.addObject("user2", true);
+			
+			if (sesion.getAttribute("userup")==null)
+			{
+			
 			mav.addObject("user", sesion.getAttribute(Template.USER));
+			}
+			else {
+				
+				mav.addObject("user", sesion.getAttribute("userup"));
+				
+			}
+			
 			
 		}
 		if(bibliotecaService.listAllBibs().size() >0) {

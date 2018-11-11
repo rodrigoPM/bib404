@@ -80,25 +80,41 @@ public ModelAndView listPrestamos(Model model, HttpServletRequest request)  thro
 }
 @GetMapping("/perfil")
 public String redirectPerfilForm(Model model,@ModelAttribute(name="username") String username,HttpServletRequest request) {
-HttpSession sesion = request.getSession();
+
 	
 	
+	HttpSession sesion = request.getSession();
 	Usuario user=actPerfil.buscarusuario(username);
+	if(sesion.getAttribute(Template.USER)==null) {
+		return "redirect:/";
+	}else {
+		
+		
+		if (sesion.getAttribute("userup")==null)
+		{
+		
+		model.addAttribute("user", sesion.getAttribute(Template.USER));
+		}
+		else {
+			
+			model.addAttribute("user", sesion.getAttribute("userup"));
+			
+		}
+	}
 	
 
     model.addAttribute("usua",user);
-    //model.addAttribute("id",perfil.getId() );
-    model.addAttribute("user", sesion.getAttribute(Template.USER));
-	
+    
 
 	return Template.PERFIL;
-
+	
 }
 
 
 @GetMapping("/editar")
 public String editar(@ModelAttribute("username") String username,@ModelAttribute(name="fecha_nacimiento") String fecha_nacimiento,
-		Model model) {
+		Model model,HttpServletRequest request) {
+	HttpSession sesion = request.getSession();
 	Date fecha = new Date();
 	int anio = fecha.getYear() - 4 ;
 	fecha.setYear(anio);
@@ -107,8 +123,26 @@ public String editar(@ModelAttribute("username") String username,@ModelAttribute
 
 	Usuario user=new Usuario();
 	
-	user=actPerfil.buscarusuario(username);
+   user=actPerfil.buscarusuario(username);
 	String fechanacimiento=formateador.format(user.getFecha_nacimiento());
+	if(sesion.getAttribute(Template.USER)==null) {
+		return "redirect:/";
+	}else {
+		
+		
+		if (sesion.getAttribute("userup")==null)
+		{
+		
+		model.addAttribute("user", sesion.getAttribute(Template.USER));
+		}
+		else {
+			
+			model.addAttribute("user", sesion.getAttribute("userup"));
+			
+		}
+	}
+	
+
 	model.addAttribute("perfilModel",user );
 	model.addAttribute("fechan",fechanacimiento);
 	model.addAttribute("fecha_actual", fecha_actual);
@@ -151,16 +185,49 @@ Usuario usuario= perfilconverter.convertPerfilModel2Perfil(perfilModel);
 	System.out.println("fecha nacimiento   :"+fecha.toString());
 	HttpSession sesion = request.getSession();
 	
-	model.addAttribute("user", usuario);
+	model.addAttribute("userup", usuario);
     //model.addAttribute("id",perfil.getId() );
-	
-	sesion.setAttribute("user", usuario);
+	sesion.setAttribute("userup", usuario);
 	
 
 
  return "redirect:/index";
 }
+
+@GetMapping("/cambiarpassword")
+public String cambiar(@ModelAttribute("username") String username, Model model) {
+	Usuario user=new Usuario();
 	
+	   user=actPerfil.buscarusuario(username);	
+	   model.addAttribute("perfilModel",user );
+	   
+return Template.CONTRA;
+}
+
+
+@PostMapping("/addContra")
+public String addcontra(@ModelAttribute("username")String us, @ModelAttribute("contra") String contra) {
+	
+	Usuario user=new Usuario();
+	String pass =encriptado.Encriptar("dixonargueta");
+	
+	   user=actPerfil.buscarusuario(us);	
+	   
+	   perfilRepository.actualizarPassword(pass,user.getId());
+
+		  
+		   System.out.println("probando validando contraseña"+user.getPassword()+"contra");
+		   
+		   
+	  
+		   
+		   
+   return "redirect:/index";
+	   
+	   
+	   
+
+}
 }
 	
 

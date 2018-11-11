@@ -85,7 +85,9 @@ public interface PerfilRepository extends JpaRepository<Usuario,Long> {
 		  nativeQuery = true)
 		int actualizarMunicipio(int municipio_id, int id);
 	
-	
-	
-	
+	@Modifying
+	 @Transactional(readOnly=false)
+		@Query(value = "update Usuario u set u.password = ? where u.id = ?", 
+		  nativeQuery = true)
+		int actualizarPassword(String password, int id);
 }

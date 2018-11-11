@@ -63,14 +63,10 @@
 						id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false">User <i class="fas fa-user"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownUser">
-<<<<<<< HEAD
-							<a class="dropdown-item"  th:href="@{/}">Regresar a la pestaña de inicio</a> <a
-								class="dropdown-item" href="#">Mis Digitales</a> <a
-=======
-							<a class="dropdown-item" th:href="@{/perfil}">Perfil</a> <a
-								class="dropdown-item" th:href="@{/digitales}">Mis Digitales</a> <a
->>>>>>> 73c2b1a194fec43f4defc04854d1333f36209700
-								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
+
+							<a class="dropdown-item"  th:href="@{/}">Regresar a la pestaña de inicio</a><a
+								class="dropdown-item" th:href="@{/digitales}">Mis Digitales</a> 
+								<a class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
 								Sesión</a>
 						</div></li>
 				</ul>
@@ -106,7 +102,7 @@
 						aria-expanded="false">User <i class="fas fa-user"></i></a>
 						
 						<div class="dropdown-menu" aria-labelledby="dropdownUser " >
-							<a class="dropdown-item"  th:object="${user}" th:href="@{/perfil?username=__${user.username}__}">Ver perfil</a> <a
+							<a class="dropdown-item"  th:href="@{/perfil?username=__${user.username}__}">Ver perfil</a> <a
 								class="dropdown-item" href="#" >Mis Digitales</a> <a
 								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
 								Sesión</a>
