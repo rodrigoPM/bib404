@@ -61,6 +61,7 @@ public class bibliotecaController {
 		if(rbService.listAllRBOfBib(id_bib).size()==0) {
 			model.addAttribute("vacio","No se encontraron Recursos bibliotecarios");
 		}
+		
 		return Template.INDEX_BIB_X;
 	}
 	

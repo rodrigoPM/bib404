@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
@@ -35,23 +36,30 @@ public class AutorizarController {
 	
 	@RequestMapping("/listPrestamos")
 	public ModelAndView listPrestamos(Model model, HttpServletRequest request)  throws ServletException, IOException  {
+		
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
+		
 		model.addAttribute("prestado", 1);
 		
 		return mav;
 	}
 	@RequestMapping("/listPrestados")
 	public ModelAndView listPrestados(Model model, HttpServletRequest request)  throws ServletException, IOException  {
+		
+		
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestados());
+		
 		model.addAttribute("prestado", 2);
 		
 		return mav;
 	}
 	@RequestMapping("/listPrestadosMora")
 	public ModelAndView listPrestadosMora(Model model, HttpServletRequest request)  throws ServletException, IOException  {
+		
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
+		
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestados());
 		model.addAttribute("prestado", 3);
 		
@@ -59,14 +67,16 @@ public class AutorizarController {
 	}
 	@RequestMapping("/listDenegados")
 	public ModelAndView listDenegados(Model model, HttpServletRequest request)  throws ServletException, IOException  {
+		
 		ModelAndView mav = new ModelAndView(Template.DENEGADOS);
 		mav.addObject("prestamos", prestamoServiceImpl.listDenegados());
 		model.addAttribute("prestado", 1);
-		
+				
 		return mav;
 	}
 	@RequestMapping("/listRecibidos")
 	public ModelAndView listRecibidos(Model model, HttpServletRequest request)  throws ServletException, IOException  {
+		
 		ModelAndView mav = new ModelAndView(Template.DENEGADOS);
 		mav.addObject("prestamos", prestamoServiceImpl.listRecibidos());
 		model.addAttribute("prestado", 2);
@@ -92,6 +102,7 @@ public class AutorizarController {
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
 
+
 		return mav;
 		
 	}
@@ -114,6 +125,7 @@ public class AutorizarController {
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
 
+
 		return mav;
 		
 	}
@@ -128,6 +140,7 @@ public class AutorizarController {
 			prestamoServiceImpl.addPrestamo(prestamo);
 			model.addAttribute("mensaje", 2);
 			model.addAttribute("prestado", 2);
+			
 
 		}
 		prestamo.setEstado(val);
@@ -135,6 +148,7 @@ public class AutorizarController {
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
 		model.addAttribute("prestado",2);
+
 
 		return mav;
 		
@@ -157,7 +171,6 @@ public class AutorizarController {
 		model.addAttribute("prestamoModel", prestamo);
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
-		
 
 		return mav;
 		

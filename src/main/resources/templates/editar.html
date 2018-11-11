@@ -3,15 +3,16 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+
 	<title th:text="${titulo}"></title>
 	
 	<link rel="stylesheet" href="#" />
 	<script src="js/deshabilitar.js"></script>
 </head>
 <body>
-	
 <nav th:replace="fragmentos/plantilla :: navbar-user"></nav> 	
-<h1 class="text-center" >Editar  </h1>
+
+<h1 class="text-center" >Edita tus datos </h1>
 
 	<div class="container">
 		<div th:if="${error}">
@@ -102,7 +103,7 @@
 			        <option th:each="muni : ${municipios}" 
 			        	th:value="${muni.id}"
 			        	th:text="${muni.nombre_municipio}"
-			        ></option>
+			       th:selected="${muni.id}==*{municipio.id}" ></option>
 			      </select>
 			  	</div>
 			  	<label for="inputState" class="col-sm-2 col-form-label">Biblioteca</label>
@@ -111,7 +112,8 @@
 			        <option th:each="bib : ${bibliotecas}" 
 			        	th:value="${bib.id}"
 			        	th:text="${bib.nombre_biblioteca}"
-			        ></option>
+			        	th:selected="${bib.nombre_biblioteca}==*{biblioteca.nombre_biblioteca}"
+ ></option>
 			      </select>
 			  	</div>
 			  </div>
@@ -125,8 +127,12 @@
 				<div class="col-sm-4">
 	
 				</div>
+			</div>
+			<div class="trans text-center" >
+			
+			<button type="submit" class="btn btn-primary center" id="editar"   >Guardar cambio</button>
 			</div>			
-					 	<button type="submit" class="btn btn-primary center" id="editar"   >Guardar cambio</button>
+					 	
 			</form>
 			</div>
 	<div th:replace="fragmentos/plantilla :: login"></div>

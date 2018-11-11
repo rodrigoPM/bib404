@@ -64,9 +64,10 @@
 						id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false">User <i class="fas fa-user"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownUser">
-							<a class="dropdown-item" th:href="@{/perfil}">Perfil</a> <a
-								class="dropdown-item" th:href="@{/digitales}">Mis Digitales</a> <a
-								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
+
+							<a class="dropdown-item"  th:href="@{/}">Regresar a la pestaña de inicio</a><a
+								class="dropdown-item" th:href="@{/digitales}">Mis Digitales</a> 
+								<a class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
 								Sesión</a>
 						</div></li>
 				</ul>
@@ -139,6 +140,32 @@
 					</a></li>
 					<li class="nav-item"><a class="nav-link text-bold"
 						th:href="@{/biblioteca}">Crear Biblioteca</a></li>
+						
+						
+						<li  th:if="${user2}" class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle text-bold" href="#"
+						id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">User <i class="fas fa-user"></i></a>
+						
+						<div class="dropdown-menu" aria-labelledby="dropdownUser " >
+							<a class="dropdown-item"  th:href="@{/perfil?username=__${user.username}__}">Ver perfil</a> <a
+								class="dropdown-item" href="#" >Mis Digitales</a> <a
+								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
+								Sesión</a>
+						</div>
+						</li>
+						
+						
+					<li th:if="${anonimo}" class="nav-item"><a class="nav-link" href=""
+						data-toggle="modal" data-target="#modalLogin">Login <i
+							class="fas fa-door-open"></i>
+					</a></li>
+					<li  th:if="${anonimo}" class="nav-item" ><a class="nav-link"
+						th:href="@{/usuarios/registrarse}">Registrarse <i
+							class="fas fa-user-plus"></i></a></li>
+	</div>
+					
+						</li>
 				</ul>
 			</div>
 		</div>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -50,12 +51,34 @@ public class IndexBib404Controller {
 		ModelAndView mav = new ModelAndView(Template.INDEX_BIB404);
 		mav.addObject("titulo", "System BIB404");
 		mav.addObject("urlHome", "/");
+		HttpSession sesion = request.getSession();
+		
+		if(sesion.getAttribute(Template.USER)==null) {
+			mav.addObject("anonimo", true);
+		}else {
+			mav.addObject("user2", true);
+			
+			if (sesion.getAttribute("userup")==null)
+			{
+			
+			mav.addObject("user", sesion.getAttribute(Template.USER));
+			}
+			else {
+				
+				mav.addObject("user", sesion.getAttribute("userup"));
+				
+			}
+			
+			
+		}
 		if(bibliotecaService.listAllBibs().size() >0) {
 			mav.addObject("bib", true);
 			mav.addObject("bibliotecas", bibliotecaService.listAllBibs());
 		}else {
 			mav.addObject("bib", false);
 		}
+		
+		
 		return mav;
 	}
 	
@@ -91,6 +114,7 @@ public class IndexBib404Controller {
 		List<Municipio> municipios = usuarioImp.listMunicipiosOrderByNombre();
 		model.addAttribute("biblioteca",new Biblioteca());
 		model.addAttribute("municipios",municipios);
+		model.addAttribute("user", sesion.getAttribute(Template.USER));
 		return bib;
 	}
 	
