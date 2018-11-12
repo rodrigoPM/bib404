@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -102,8 +103,9 @@ public String redirectPerfilForm(Model model,@ModelAttribute(name="username") St
 		}
 	}
 	
-
+model.addAttribute("username", user.getUsername());
     model.addAttribute("usua",user);
+    
     
 
 	return Template.PERFIL;
@@ -195,35 +197,105 @@ Usuario usuario= perfilconverter.convertPerfilModel2Perfil(perfilModel);
 }
 
 @GetMapping("/cambiarpassword")
-public String cambiar(@ModelAttribute("username") String username, Model model) {
+public String cambiar(@ModelAttribute("username") String username, Model model, HttpServletRequest request) {
+	HttpSession sesion = request.getSession();
 	Usuario user=new Usuario();
 	
-	   user=actPerfil.buscarusuario(username);	
-	   model.addAttribute("perfilModel",user );
+	   user=actPerfil.buscarusuario(username);
+	   if(sesion.getAttribute(Template.USER)==null) {
+			return "redirect:/";
+		}else {
+			
+			
+			if (sesion.getAttribute("userup")==null)
+			{
+			
+			model.addAttribute("user", sesion.getAttribute(Template.USER));
+			if (sesion.getAttribute("test")!=null)
+			{
+			model.addAttribute("valor","Error password incorrecto o los campos no coinciden");
+			model.addAttribute("error",true);
+			}
+			if (sesion.getAttribute("testn")!=null)
+			{
+			model.addAttribute("valor","Error las contraseñas no son iguales en los campos nuevo password y confirmar passsword");
+			model.addAttribute("error",true);
+			}
+			else {
+				
+				model.addAttribute("error", false);
+			}
+			
+			}
+			else {
+				
+				model.addAttribute("user", sesion.getAttribute("userup"));
+				
+			}
+			
+		}
+		
+	   
+	
 	   
 return Template.CONTRA;
 }
 
 
 @PostMapping("/addContra")
-public String addcontra(@ModelAttribute("username")String us, @ModelAttribute("contra") String contra) {
+public String addContra(@RequestParam(name="username", required=false, defaultValue="NULL") String username, @RequestParam("contra") String contra,@RequestParam("contranew") String contranew,@RequestParam("contranovo") String contranovo, Model model,HttpServletRequest request) {
+	HttpSession sesion = request.getSession();
+	Usuario   user=actPerfil.buscarusuario(username);	
 	
-	Usuario user=new Usuario();
-	String pass =encriptado.Encriptar("dixonargueta");
+	//String pass= encriptado.Desencriptar(user.getPassword());
+	String pas=encriptado.Encriptar(contranew);
+	String prueba=encriptado.Desencriptar(user.getPassword());
+	System.out.println("contra  "+contra+" usuario"+ username +"Encriptar"+pas+"Desencriptar"+prueba+"prueba"+prueba.equals(contra));	
+	if (!(contra.equals(prueba)))
+	{	
+		sesion.setAttribute("test",user);
+		System.out.println("contra  "+contra+" usuario"+ username +"Encriptar"+pas+"Desencriptar"+prueba);
+		return "redirect:/cambiarpassword?username="+user.getUsername();
+		
+	}
 	
-	   user=actPerfil.buscarusuario(us);	
-	   
-	   perfilRepository.actualizarPassword(pass,user.getId());
-
-		  
-		   System.out.println("probando validando contraseña"+user.getPassword()+"contra");
-		   
-		   
+	if (!(contranew.equals(contranovo))) {
+		
+		sesion.setAttribute("testn",user);
+		System.out.println("contra  "+contra+" usuario"+ username +"Encriptar"+pas+"Desencriptar"+prueba);
+		return "redirect:/cambiarpassword?username="+user.getUsername();
+		
+		
+	}
+	else {
+/*
+ * 
+ * 
+ * 
+	if (contra!=pass)
+	{
+		
+		model.addAttribute("error", true);
+		model.addAttribute("valor","el password actual es incorrecto");
+		
+		return Template.CONTRA;
+	}
+	if(contranew!=contranovo)
+	{
+		model.addAttribute("error", true);
+		model.addAttribute("valor","los campos de los password no coinciden");
+		return Template.CONTRA;
+		
+//	}
+	*/
+	
+	
+perfilRepository.actualizarPassword(pas, user.getId())	   ;
 	  
 		   
 		   
    return "redirect:/index";
-	   
+	}
 	   
 	   
 
