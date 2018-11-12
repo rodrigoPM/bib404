@@ -19,5 +19,6 @@ public class Template {
 	public static final String SUPER_USUARIO = "SUPERUSUARIO";
 	public static final String ADMIN = "ADMIN";
 	public static final String dashBoard="GestionarBIB404";
+	public static final String dashAd="GestionarBIB";
 	public static final String CONTRA="password";
 }

@@ -49,5 +49,9 @@ public interface UsuarioService {
 	public abstract Departamento findDepBy(int id);
 
 	public abstract Usuario findById(int id);
+
+	public abstract int updateSuperUser(Usuario usuario, int id_biblioteca);
+
+	public abstract Biblioteca findBibByUser(String username);
 	
 }

@@ -110,6 +110,39 @@ public class UsuarioController extends HttpServlet{
 		}
 	}
 	
+	
+
+	
+	@PostMapping("/addAdmin")
+	public String redireccionAdmin(@Valid @ModelAttribute("usuario") Usuario usuario,@ModelAttribute("bib") String bib ,@ModelAttribute("mun") String mun,HttpServletRequest request)  throws ServletException, IOException {
+		String pass = encriptado.Encriptar(usuario.getPassword());
+		usuario.setPassword(pass);
+		usuario.setFecha_registro(new Date());
+		usuario.setRol(Template.ADMIN);
+		int id_numicipio = Integer.parseInt(mun);
+		int id_biblioteca = Integer.parseInt(bib);
+		int val = 0;
+		Date fech = new Date();
+		int anio = fech.getYear() - 4;
+		if(usuario.getFecha_nacimiento().getYear()>anio) {
+			System.out.println(""+usuario.getFecha_nacimiento().getYear());
+			return "redirect:/usuarios/registrarse?error=fecha";
+		}else {
+			val = usuarioImp.addUser(usuario, id_numicipio, id_biblioteca);
+		}
+		
+		if (val==1) {
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("usuario", usuario);
+			return "redirect:/index";
+		}else {
+			return "redirect:/usuarios/registrarse?error=user";
+		}
+	}
+	
+	
+	
+	
 	@PostMapping("/logcheck")
 	public String loginCheck(@ModelAttribute("username") String username,@ModelAttribute("password") String password, HttpServletRequest request)  throws ServletException, IOException {
 		Usuario user = usuarioImp.findBy(username);

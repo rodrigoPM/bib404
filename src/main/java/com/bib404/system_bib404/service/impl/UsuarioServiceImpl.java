@@ -151,6 +151,28 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 	
 	
+	
+	@Override
+	public int updateSuperUser(Usuario usuario, int id_biblioteca) {
+		conectar();
+		int v=0;
+		try {
+			String sql = "UPDATE \'USUARIO\' SET BIBLIOTECA_ID = "+id_biblioteca+" WHERE ID = "+usuario.getId();
+			Statement sentencia;
+			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			v = sentencia.executeUpdate(sql);
+			getConexion().commit();
+			sentencia.close();
+		} catch (Exception e) {
+			System.out.println("DB");
+			
+		}
+		cerrar();
+		return v;		
+	}
+	
+	
+	
 	@Override
 	public int addDpto(Departamento depto) {
 		conectar();
@@ -206,6 +228,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			v = sentencia.executeUpdate(sql);
 			sentencia.close();
 			getConexion().commit();
+			v=id;
 		} catch (SQLException e) {
 			System.out.println("DB");
 		}
@@ -279,7 +302,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return us;
 	}
 
-	
+
 	@Override
 	public Biblioteca findBibBy(int id) {
 		conectar();
@@ -296,6 +319,28 @@ public class UsuarioServiceImpl implements UsuarioService{
 				us.setNombre_biblioteca(r.getString("nombre_biblioteca"));
 				us.setMunicipio(findMunBy(r.getInt("municipio_id")));
 				us.setId(id);
+			}
+			getConexion().commit();
+			sentencia.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cerrar();
+		return us;
+	}
+	
+	@Override
+	public Biblioteca findBibByUser(String username) {
+		conectar();
+		ResultSet r = null;
+		Biblioteca us = null;
+		try {
+			String sql = "SELECT * FROM USUARIO WHERE USERNAME = \'" + username+"\'";
+			Statement sentencia;
+			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			r= sentencia.executeQuery(sql);
+			while (r.next()) {
+				us=findBibBy(r.getInt("biblioteca_id"));
 			}
 			getConexion().commit();
 			sentencia.close();

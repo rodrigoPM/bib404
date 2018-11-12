@@ -1,6 +1,8 @@
 package com.bib404.system_bib404.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -21,11 +23,14 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Biblioteca;
 import com.bib404.system_bib404.entity.Municipio;
+import com.bib404.system_bib404.entity.Usuario;
+import com.bib404.system_bib404.service.EncriptadoPass;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
 import com.bib404.system_bib404.service.impl.Functions;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
@@ -45,6 +50,11 @@ public class IndexBib404Controller {
 	@Autowired
 	@Qualifier("Functions")
 	private Functions funtions;
+	
+	@Autowired
+	@Qualifier("encriptadoPass")
+	private EncriptadoPass encriptado;	
+	
 	
 	@GetMapping("/")
 	public ModelAndView indexAnonimo(HttpServletRequest request)  throws ServletException, IOException  {
@@ -96,42 +106,112 @@ public class IndexBib404Controller {
 		if(sesion.getAttribute(Template.USER)==null) {
 			return "redirect:/";
 		}else {
+
 			model.addAttribute("user", sesion.getAttribute(Template.USER));
 			return "redirect:/";
 		}
 
 	}
 	
+	
 	@GetMapping("/biblioteca")
+	public String registrarse(@RequestParam(name="error", required=false, defaultValue="NULL") String nm, Model model,HttpServletRequest request)  throws ServletException, IOException  {
+		model.addAttribute("titulo","BIB404-registrarse");
+		HttpSession session = request.getSession();
+		if(session.getAttribute(Template.USER)==null) {
+			if(nm.compareToIgnoreCase("user")==0) {
+				model.addAttribute("valor","Error username, ocupado");
+				model.addAttribute("error",1);
+			}else {
+				if(nm.compareToIgnoreCase("fecha")==0) {
+					model.addAttribute("valor","Error fecha, eres demasiado joven :v");
+					model.addAttribute("error",1);
+				}else
+				model.addAttribute("error",false);
+			}
+			model.addAttribute("usuario", new Usuario());
+			model.addAttribute("bibliotecas", usuarioImp.listBibliotecas());
+			Date fecha = new Date();
+			int anio = fecha.getYear() - 4 ;
+			fecha.setYear(anio);
+			SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+			String fecha_actual = formateador.format(fecha);
+			System.out.println(fecha_actual);
+			model.addAttribute("fecha_actual", fecha_actual);
+			model.addAttribute("municipios", usuarioImp.listMunicipiosOrderByNombre());
+			model.addAttribute("departamentos", usuarioImp.listDpto());
+			return "super";
+		}else {
+			return "redirect:/index";
+		}
+	}
+	
+	@PostMapping("/addSuper")
+	public String redireccionSuper(@Valid @ModelAttribute("usuario") Usuario usuario,@ModelAttribute("mun") String mun,HttpServletRequest request)  throws ServletException, IOException {
+		String pass = encriptado.Encriptar(usuario.getPassword());
+		usuario.setPassword(pass);
+		System.out.println(usuario.getPassword());
+		usuario.setFecha_registro(new Date());
+		usuario.setRol(Template.SUPER_USUARIO);
+		int id_numicipio = Integer.parseInt(mun);
+		int id_biblioteca = 1;
+		int val = 0;
+		Date fech = new Date();
+		int anio = fech.getYear() - 4;
+		if(usuario.getFecha_nacimiento().getYear()>anio) {
+			System.out.println(""+usuario.getFecha_nacimiento().getYear());
+			return "redirect:/biblioteca?error=fecha";
+		}else {
+			val = usuarioImp.addUser(usuario, id_numicipio, id_biblioteca);
+		}
+		
+		if (val==1) {
+			HttpSession sesion = request.getSession();
+			sesion.setAttribute("usuario", usuario);
+			return "redirect:/bibliotecaS";
+		}else {
+			return "redirect:/biblioteca?error=user";
+		}
+	}
+	
+	
+	
+	@GetMapping("/bibliotecaS")
 	public String biblioteca(HttpServletRequest request, Model model)  throws ServletException, IOException  {
 		String bib ="biblioteca";
-		HttpSession sesion = request.getSession();
-		if(sesion.getAttribute(Template.USER)==null) {
-			model.addAttribute("anonimo", true);
+		if(funtions.isSuperUser(request)){
+			HttpSession session = request.getSession();
+			List<Municipio> municipios = usuarioImp.listMunicipiosOrderByNombre();
+			model.addAttribute("biblioteca",new Biblioteca());
+			model.addAttribute("municipios",municipios);
+			model.addAttribute("user", session.getAttribute(Template.USER));			
 		}else {
-			model.addAttribute("user", true);
+			return "redirect:/";
 		}
-		List<Municipio> municipios = usuarioImp.listMunicipiosOrderByNombre();
-		model.addAttribute("biblioteca",new Biblioteca());
-		model.addAttribute("municipios",municipios);
-		model.addAttribute("user", sesion.getAttribute(Template.USER));
 		return bib;
 	}
 	
 
 	@PostMapping("/addBib")
-	public String insertBib(@Valid @ModelAttribute("biblioteca") Biblioteca bib, @ModelAttribute("mun") String mun_id) {
+	public String insertBib(HttpServletRequest request,@Valid @ModelAttribute("biblioteca") Biblioteca bib, @ModelAttribute("mun") String mun_id)throws ServletException, IOException   {
 		String ret="";
 		Log log = LogFactory.getLog(UsuarioController.class);
 		log.info(""+bib.getId());
-		log.info(bib.getNombre_biblioteca());
-		log.info(bib.getCodigo_biblioteca());
-		int id_mun = Integer.parseInt(mun_id);
-		int v=usuarioImp.addBiblio(bib, id_mun);
-		if (v==0) {
-			ret="redirect:/biblioteca";
+		
+		if (funtions.isSuperUser(request)) {
+			HttpSession session = request.getSession();
+			log.info(bib.getNombre_biblioteca());
+			log.info(bib.getCodigo_biblioteca());
+			int id_mun = Integer.parseInt(mun_id);
+			int v=usuarioImp.addBiblio(bib, id_mun);
+			if (v==0) {
+				ret="redirect:/biblioteca";
+			}else {
+				int c = usuarioImp.updateSuperUser((Usuario)session.getAttribute(Template.USER),v);
+				ret ="redirect:/DashBoard/admin";
+			}
 		}else {
-			ret ="redirect:/";
+			
 		}
 		return ret;
 	}	
