@@ -205,9 +205,11 @@ public class IndexBib404Controller {
 			int id_mun = Integer.parseInt(mun_id);
 			int v=usuarioImp.addBiblio(bib, id_mun);
 			if (v==0) {
-				ret="redirect:/biblioteca";
+				ret="redirect:/bibliotecaS";
 			}else {
-				int c = usuarioImp.updateSuperUser((Usuario)session.getAttribute(Template.USER),v);
+				Biblioteca b = usuarioImp.findBibByCode(bib.getCodigo_biblioteca());
+				System.out.println(b.getCodigo_biblioteca()+b.getId());
+				int c = usuarioImp.updateSuperUser((Usuario)session.getAttribute(Template.USER),b.getId());
 				ret ="redirect:/DashBoard/admin";
 			}
 		}else {

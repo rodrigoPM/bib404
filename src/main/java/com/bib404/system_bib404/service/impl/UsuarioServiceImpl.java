@@ -157,7 +157,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		conectar();
 		int v=0;
 		try {
-			String sql = "UPDATE \'USUARIO\' SET BIBLIOTECA_ID = "+id_biblioteca+" WHERE ID = "+usuario.getId();
+			String sql = "UPDATE USUARIO SET BIBLIOTECA_ID = "+id_biblioteca+" WHERE ID = "+usuario.getId();
 			Statement sentencia;
 			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			v = sentencia.executeUpdate(sql);
@@ -319,6 +319,32 @@ public class UsuarioServiceImpl implements UsuarioService{
 				us.setNombre_biblioteca(r.getString("nombre_biblioteca"));
 				us.setMunicipio(findMunBy(r.getInt("municipio_id")));
 				us.setId(id);
+			}
+			getConexion().commit();
+			sentencia.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		cerrar();
+		return us;
+	}
+	
+	@Override
+	public Biblioteca findBibByCode(String name) {
+		conectar();
+		ResultSet r = null;
+		Biblioteca us = null;
+		try {
+			String sql = "SELECT * FROM BIBLIOTECA WHERE CODIGO_BIBLIOTECA = \'" +name+"\'";
+			Statement sentencia;
+			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			r= sentencia.executeQuery(sql);
+			while (r.next()) {
+				us= new Biblioteca();
+				us.setCodigo_biblioteca(r.getString("codigo_biblioteca"));
+				us.setNombre_biblioteca(r.getString("nombre_biblioteca"));
+				us.setMunicipio(findMunBy(r.getInt("municipio_id")));
+				us.setId(r.getInt("ID"));
 			}
 			getConexion().commit();
 			sentencia.close();

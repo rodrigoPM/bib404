@@ -53,5 +53,8 @@ public interface UsuarioService {
 	public abstract int updateSuperUser(Usuario usuario, int id_biblioteca);
 
 	public abstract Biblioteca findBibByUser(String username);
+
+
+	Biblioteca findBibByCode(String name);
 	
 }
