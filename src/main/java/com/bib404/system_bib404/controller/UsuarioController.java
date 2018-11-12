@@ -126,17 +126,15 @@ public class UsuarioController extends HttpServlet{
 		int anio = fech.getYear() - 4;
 		if(usuario.getFecha_nacimiento().getYear()>anio) {
 			System.out.println(""+usuario.getFecha_nacimiento().getYear());
-			return "redirect:/usuarios/registrarse?error=fecha";
+			return "redirect:/DashBoard/insertAdmin?error=fecha";
 		}else {
 			val = usuarioImp.addUser(usuario, id_numicipio, id_biblioteca);
 		}
 		
 		if (val==1) {
-			HttpSession sesion = request.getSession();
-			sesion.setAttribute("usuario", usuario);
-			return "redirect:/index";
+			return "redirect:/DashBoard/admin";
 		}else {
-			return "redirect:/usuarios/registrarse?error=user";
+			return "redirect:/DashBoard/insertAdmin?error=user";
 		}
 	}
 	

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+    <meta charset="utf-8"/>
+
+    <title>Gestion de bibliotecas</title>
+
+ 	<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.min.js}" />
+	<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.css}" />
+	
+	<link rel="stylesheet" href="#" />
+ 	
+  </head>
+  <body>
+	<nav th:replace="fragmentos/plantilla :: navbar-admin-local"></nav> 
+	<div class="container">
+    <section class="bg-light" id="portfolio" style="margin-top:25px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase" th:text="${user.username}"></h2>
+            <h2 class="section-heading text-uppercase">Gestion de <span th:text="${bib.nombre_biblioteca}"></span>  </h2>
+            <h3 class="section-subheading text-muted">Seleccine una opcion.</h3>
+          </div>
+        </div>
+        <div class="row">
+          
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" href="">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-university"></i>
+                </div>
+              </div>
+              <img class="img-fluid" th:src="@{/imgs/categoria.png}" alt="" height="300" >
+            </a>
+            <div class="portfolio-caption">
+              <h4>Administrar categoria</h4>
+              <p class="text-muted">Puedes gestionar tus categorias de recursos</p>
+            </div>
+          </div>
+          
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" href="/">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-fire"></i>
+                </div>
+              </div>
+              <img class="img-fluid" th:src="@{/imgs/historial.jpg}"  alt="" height="300">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Historial biblioteca</h4>
+              <p class="text-muted">Historial de esta biblioteca</p>
+            </div>
+          </div>
+          
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" href="/">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-fire"></i>
+                </div>
+              </div>
+              <img class="img-fluid" th:src="@{/imgs/usuarios.png}"  alt="" height="300">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Usuario</h4>
+              <p class="text-muted">Usuarios de la biblioteca</p>
+            </div>
+          </div>
+          
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" href="/">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-fire"></i>
+                </div>
+              </div>
+              <img class="img-fluid" th:src="@{/imgs/biblioteca.jpg}"  alt="" height="300">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Recursos bibliotecarios</h4>
+              <p class="text-muted">Recursos disponibles en la biblioteca</p>
+            </div>
+          </div>
+          
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" href="/">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-user"></i>
+                </div>
+              </div>
+              <img class="img-fluid" th:src="@{/imgs/estad.jpg}" alt="" height="300">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Estadistica</h4>
+              <p class="text-muted">Estadisticas de esta biblioteca</p>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </section>
+	</div>
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+	<script src="#" th:src="@{/js/jquery.scrollex.min.js}"></script>
+	<script src="#" th:src="@{/js/skel.min.js}"></script>
+	<script src="#" th:src="@{/js/util.js}"></script>
+	<script src="#" th:src="@{/js/main.js}"></script>
+</body>
+</html>
