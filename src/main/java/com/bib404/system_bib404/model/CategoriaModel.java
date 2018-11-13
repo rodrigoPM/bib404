@@ -8,6 +8,7 @@ public class CategoriaModel {
 
 	private int id;
 	private String nombre_categoria;
+	private String descripcion_categoria;
 	private Set<RecursoBibliotecario> recurso_bib;
 	private CategoriaModel categoria;
 
@@ -43,17 +44,27 @@ public class CategoriaModel {
 		this.categoria = categoria;
 	}
 
-	public CategoriaModel(int id, String nombre_categoria, Set<RecursoBibliotecario> recurso_bib,
-			CategoriaModel categoria) {
+	public String getDescripcion_categoria() {
+		return descripcion_categoria;
+	}
+
+	public void setDescripcion_categoria(String descripcion_categoria) {
+		this.descripcion_categoria = descripcion_categoria;
+	}
+
+	public CategoriaModel(int id, String nombre_categoria, String descripcion_categoria,
+			Set<RecursoBibliotecario> recurso_bib, CategoriaModel categoria) {
 		super();
 		this.id = id;
 		this.nombre_categoria = nombre_categoria;
+		this.descripcion_categoria = descripcion_categoria;
 		this.recurso_bib = recurso_bib;
 		this.categoria = categoria;
 	}
 
 	public CategoriaModel() {
 		super();
+		this.categoria=null;
 	}
-	
+
 }

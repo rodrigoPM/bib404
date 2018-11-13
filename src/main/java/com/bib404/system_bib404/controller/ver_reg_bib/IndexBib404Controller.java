@@ -1,4 +1,4 @@
-package com.bib404.system_bib404.controller;
+	package com.bib404.system_bib404.controller.ver_reg_bib;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bib404.system_bib404.constant.Template;
+import com.bib404.system_bib404.constant.Url;
+import com.bib404.system_bib404.controller.UsuarioController;
 import com.bib404.system_bib404.entity.Biblioteca;
 import com.bib404.system_bib404.entity.Municipio;
 import com.bib404.system_bib404.entity.Usuario;
@@ -36,7 +38,7 @@ import com.bib404.system_bib404.service.impl.Functions;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping(Url.INDEX_BIB404) // --> /
 public class IndexBib404Controller {
 	
 	@Autowired
