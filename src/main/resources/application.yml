@@ -2,12 +2,12 @@ server:
     error:
         whitelabel:
             enabled: false
-    port: 90
+    port: 91
     
 spring:
   datasource: 
     url: jdbc:oracle:thin:@localhost:1521:orcl
-    username: C##_bib404
+    username: bib404
     password: too115
   jpa:
     show-sql: true

@@ -67,6 +67,9 @@
 				<p class="card-text" th:text="${rb.descripcion_recurso_bib}"></p>
 			</div>
 		</div>
+							<a href="#" th:href="@{/recursoBibliotecario/verRecurso?id=__${rb.id}__}">
+								<button type="button" class="btn btn-default">Ver recurso</button>
+							</a>
 		</div>
 	</div>
 	
