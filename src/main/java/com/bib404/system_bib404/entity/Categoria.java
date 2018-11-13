@@ -29,6 +29,9 @@ public class Categoria {
 	@Column(name = "nombre_categoria")
 	private String nombre_categoria;
 
+	@Column(name = "descripcion_categoria")
+	private String descripcion_categoria;
+
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "categoria")
 	private Set<RecursoBibliotecario> recurso_bib = new HashSet<>();
 
@@ -76,10 +79,20 @@ public class Categoria {
 		this.categoria = categoria;
 	}
 
-	public Categoria(int id, String nombre_categoria, Set<RecursoBibliotecario> recurso_bib, Categoria categoria) {
+	public String getDescripcion_categoria() {
+		return descripcion_categoria;
+	}
+
+	public void setDescripcion_categoria(String descripcion_categoria) {
+		this.descripcion_categoria = descripcion_categoria;
+	}
+
+	public Categoria(int id, String nombre_categoria, String descripcion_categoria,
+			Set<RecursoBibliotecario> recurso_bib, Categoria categoria) {
 		super();
 		this.id = id;
 		this.nombre_categoria = nombre_categoria;
+		this.descripcion_categoria = descripcion_categoria;
 		this.recurso_bib = recurso_bib;
 		this.categoria = categoria;
 	}

@@ -1,4 +1,4 @@
-package com.bib404.system_bib404.controller;
+package com.bib404.system_bib404.controller.consultar_rb;
 
 import java.io.IOException;
 
@@ -18,12 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bib404.system_bib404.constant.Template;
+import com.bib404.system_bib404.constant.Url;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
 import com.bib404.system_bib404.service.impl.Functions;
 import com.bib404.system_bib404.service.impl.RecursoBibliotecarioServiceImpl;
 
 @Controller
-@RequestMapping("/bib404")
+@RequestMapping(Url.INDEX_BIB_X) // -->  /bib404
 public class bibliotecaController {
 	
 	@Autowired

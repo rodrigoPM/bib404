@@ -9,6 +9,10 @@
 <link rel="stylesheet" href="#" th:href="@{/css/solid.min.css}" />
 <link rel="stylesheet" href="#" th:href="@{/css/main.css}" />
 <link rel="stylesheet" href="#" th:href="@{/css/bib404/plantilla.css}" />
+
+<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.min.js}" />
+<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.css}" />
+
 <script src="js/deshabilitar.js"></script>
 <th:block th:replace="${links}" />
 
@@ -53,8 +57,9 @@
 
 			<div class="navbar-collapse collapse" id="navbarsBib404" style="">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link text-bold" th:href="@{/DashBoard/admin}">DashBoard
-							<i class="fas fa-toolbox"></i>
+					<li class="nav-item"><a class="nav-link text-bold"
+						th:href="@{/DashBoard/admin}">DashBoard <i
+							class="fas fa-toolbox"></i>
 					</a></li>
 					<li class="nav-item"><a class="nav-link text-bold"
 						th:href="@{/autorizar/listPrestamos}">Administrar Prestamos <i
@@ -65,34 +70,37 @@
 						aria-expanded="false">User <i class="fas fa-user"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownUser">
 
-							<a class="dropdown-item"  th:href="@{/}">Regresar a la pestaña de inicio</a><a
-								class="dropdown-item" th:href="@{/digitales}">Mis Digitales</a> 
-								<a class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
+							<a class="dropdown-item" th:href="@{/}">Regresar a la pestaña
+								de inicio</a><a class="dropdown-item" th:href="@{/digitales}">Mis
+								Digitales</a> <a class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
 								Sesión</a>
 						</div></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navbar-admin">
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
+		th:fragment="navbar-admin">
 		<div class="container">
-				<header id="header" class="alt" >
-					<a href="#menu">Menu BIB404</a>	
-				</header>
-						<!-- Nav -->
-				<nav id="menu">
-					<ul class="links">
-						<li><a href="/">Administradores de bibliotecas</a></li>
-						<li><a href="/">Bibliotecas en el sistema</a></li>
-						<li><a href="/">Estadisticas de bibliotecas</a></li>
-						<li><a th:href="@{/DashBoard/insertAdmin}">Anadir administrador</a></li>
-					</ul>
-				</nav>
+			<header id="header" class="alt">
+				<a href="#menu">Menu BIB404</a>
+			</header>
+			<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="/">Administradores de bibliotecas</a></li>
+					<li><a href="/">Bibliotecas en el sistema</a></li>
+					<li><a href="/">Estadisticas de bibliotecas</a></li>
+					<li><a th:href="@{/DashBoard/insertAdmin}">Anadir
+							administrador</a></li>
+				</ul>
+			</nav>
 			<div class="navbar-collapse collapse" id="navbarsBib404" style="">
 				<ul class="navbar-nav ml-auto alt">
-					<li class="nav-item"><a class="nav-link text-bold" th:href="@{/DashBoard/admin}">DashBoard
-							<i class="fas fa-toolbox"></i>
+					<li class="nav-item"><a class="nav-link text-bold"
+						th:href="@{/DashBoard/admin}">DashBoard <i
+							class="fas fa-toolbox"></i>
 					</a></li>
 					<li class="nav-item"><a class="nav-link text-bold"
 						th:href="@{/autorizar/listPrestamos}">Administrar Prestamos <i
@@ -103,38 +111,40 @@
 						aria-expanded="false">User <i class="fas fa-user"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownUser">
 							<a class="dropdown-item" th:href="@{/perfil}">Perfil</a> <a
-								class="dropdown-item" th:href="@{/digitales}">Mis Digitales</a> <a
-								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
+								class="dropdown-item" th:href="@{/digitales}">Mis Digitales</a>
+							<a class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
 								Sesión</a>
 						</div></li>
 				</ul>
-				</div>
+			</div>
 		</div>
 	</nav>
-	
-	
-	
-	
-	
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="navbar-admin-local">
+
+
+
+
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
+		th:fragment="navbar-admin-local">
 		<div class="container">
-				<header id="header" class="alt" >
-					<a href="#menu">Menu BIB404</a>	
-				</header>
-						<!-- Nav -->
-				<nav id="menu">
-					<ul class="links">
-						<li><a href="/">Estadisticas biblioteca</a></li>
-						<li><a href="/">Administrar categoria</a></li>
-						<li><a href="/">Historial biblioteca</a></li>
-						<li><a href="/">Usuarios biblioteca</a></li>
-						<li><a href="/">Recurso bibliotecario</a></li>
-					</ul>
-				</nav>
+			<header id="header" class="alt">
+				<a href="#menu">Menu BIB404</a>
+			</header>
+			<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="/">Estadisticas biblioteca</a></li>
+					<li><a href="/">Administrar categoria</a></li>
+					<li><a href="/">Historial biblioteca</a></li>
+					<li><a href="/">Usuarios biblioteca</a></li>
+					<li><a href="/">Recurso bibliotecario</a></li>
+				</ul>
+			</nav>
 			<div class="navbar-collapse collapse" id="navbarsBib404" style="">
 				<ul class="navbar-nav ml-auto alt">
-					<li class="nav-item"><a class="nav-link text-bold" th:href="@{/DashBoard/admin}">DashBoard
-							<i class="fas fa-toolbox"></i>
+					<li class="nav-item"><a class="nav-link text-bold"
+						th:href="@{/DashBoard/admin}">DashBoard <i
+							class="fas fa-toolbox"></i>
 					</a></li>
 					<li class="nav-item"><a class="nav-link text-bold"
 						th:href="@{/autorizar/listPrestamos}">Administrar Prestamos <i
@@ -145,20 +155,20 @@
 						aria-expanded="false">User <i class="fas fa-user"></i></a>
 						<div class="dropdown-menu" aria-labelledby="dropdownUser">
 							<a class="dropdown-item" th:href="@{/perfil}">Perfil</a> <a
-								class="dropdown-item" th:href="@{/digitales}">Mis Digitales</a> <a
-								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
+								class="dropdown-item" th:href="@{/digitales}">Mis Digitales</a>
+							<a class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
 								Sesión</a>
 						</div></li>
 				</ul>
-				</div>
+			</div>
 		</div>
 	</nav>
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
 		th:fragment="navbar-bib">
@@ -180,34 +190,34 @@
 					</a></li>
 					<li class="nav-item"><a class="nav-link text-bold"
 						th:href="@{/biblioteca}">Crear Biblioteca</a></li>
-						
-						
-						<li  th:if="${user2}" class="nav-item dropdown"><a
+
+
+					<li th:if="${user2}" class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle text-bold" href="#"
 						id="dropdownUser" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false">User <i class="fas fa-user"></i></a>
-						
-						<div class="dropdown-menu" aria-labelledby="dropdownUser " >
-							<a class="dropdown-item"  th:href="@{/perfil?username=__${user.username}__}">Ver perfil</a> <a
-								class="dropdown-item" href="#" >Mis Digitales</a> <a
+
+						<div class="dropdown-menu" aria-labelledby="dropdownUser ">
+							<a class="dropdown-item"
+								th:href="@{/perfil?username=__${user.username}__}">Ver
+								perfil</a> <a class="dropdown-item" href="#">Mis Digitales</a> <a
 								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
 								Sesión</a>
-						</div>
-						</li>
-						
-						
-					<li th:if="${anonimo}" class="nav-item"><a class="nav-link" href=""
-						data-toggle="modal" data-target="#modalLogin">Login <i
+						</div></li>
+
+
+					<li th:if="${anonimo}" class="nav-item"><a class="nav-link"
+						href="" data-toggle="modal" data-target="#modalLogin">Login <i
 							class="fas fa-door-open"></i>
 					</a></li>
-					<li  th:if="${anonimo}" class="nav-item" ><a class="nav-link"
+					<li th:if="${anonimo}" class="nav-item"><a class="nav-link"
 						th:href="@{/usuarios/registrarse}">Registrarse <i
 							class="fas fa-user-plus"></i></a></li>
-	</div>
-					
-						</li>
-				</ul>
 			</div>
+
+			</li>
+			</ul>
+		</div>
 		</div>
 	</nav>
 
@@ -261,6 +271,11 @@
 		<script src="#" th:src="@{/js/fontawesome.min.js}"></script>
 		<script src="#" th:src="@{/js/regular.min.js}"></script>
 		<script src="#" th:src="@{/js/solid.min.js}"></script>
+
+		<script src="#" th:src="@{/js/jquery.scrollex.min.js}"></script>
+		<script src="#" th:src="@{/js/skel.min.js}"></script>
+		<script src="#" th:src="@{/js/util.js}"></script>
+		<script src="#" th:src="@{/js/main.js}"></script>
 	</div>
 </body>
 </html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+<title th:text="${titulo}"></title>
+
+<link rel="stylesheet" href="#" />
+</head>
+<body>
+	<div th:if="${isUser}">
+		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
+	</div>
+	<div th:if="${isNoUser}">
+		<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
+	</div>
+
+	<br />
+	<div class="container">
+		<h1 class="text-center">
+			Administrar Categoria de <span th:text="${name_bib}"></span>
+		</h1>
+	</div>
+	<hr>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="row">
+					<div class="col-4">
+						<button type="button" class="btn btn-success" data-toggle="modal"
+							data-target="#crearCategoria">Crear Categoria</button>
+					</div>
+					<div class="modal" id="crearCategoria" tabindex="-1" role="dialog"
+						aria-labelledby="crearCategoriaLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="crearCategoriaLabel">Nueva
+										Categoria</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form action="#" th:action="${crearCategoria}"
+										th:object="${categoriaModel}" method="post"
+										id="formCrearCategoria">
+										<div class="form-group">
+											<label>Nombre de la categoria: </label> <input type="text"
+												placeholder="nombre de categoria" class="form-control"
+												th:field="*{nombre_categoria}">
+										</div>
+										<div class="form-group">
+											<label>Descripcion categoria: </label>
+											<textarea rows="3" cols="" class="form-control"
+												th:field="*{descripcion_categoria}"></textarea>
+										</div>
+										<div class="form-group">
+											<label>(Opcional)Categoria Padre </label> <select>
+												<option value="">categoria padre</option>
+												<div th:each="categoria:${categorias}">
+													<option value="${categoria.id}"
+														th:text="${categoria.nombre_categoria}"></option>
+												</div>
+											</select>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Close</button>
+									<button type="submit" class="btn btn-primary"
+										form="formCrearCategoria">Crear Categoria</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12">
+				<div class="row">
+					<div class="col-5 offset-7">
+						<form action="">
+							<input type="text" placeholder="buscar"> <input
+								type="submit" value="buscar" class="btn btn-primary">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div th:if="${exito}">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${fracaso}">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${fracaso}"></p>
+			</div>
+		</div>
+		<div class="row">
+			<div th:if="${categorias}">
+				<div th:each="categoria:${categorias}">
+					<div class="col-12 my-3 bg-info">
+						<p th:text="${categoria.nombre_categoria}"></p>
+						<p th:text="${categoria.descripcion_categoria}"></p>
+					</div>
+				</div>
+			</div>
+			<div th:unless="${categorias}">Esta biblioteca aun no tiene
+				categorias</div>
+		</div>
+	</div>
+
+	<footer th:replace="fragmentos/plantilla :: footer"></footer>
+
+	<div th:replace="fragmentos/plantilla :: login"></div>
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
