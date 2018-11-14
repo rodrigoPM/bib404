@@ -2,6 +2,7 @@ package com.bib404.system_bib404.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,13 +27,24 @@ public class CategoriaServiceImpl implements CategoriaService{
 	@Override
 	public CategoriaModel addCategoria(CategoriaModel categoriaModel) {
 		// TODO Auto-generated method stub
-		if (listAllCategorias().size()==0) {
+		
+		//ver si no hay registros, 
+		if(categoriaRepository.countCategoria().intValue()==0) {//no hay registros
 			categoriaModel.setId(1);
-		}else {
-			categoriaModel.setId(listAllCategorias().size()+1);
+		}else {//ya hay registros
+			categoriaModel.setId(categoriaRepository.lastID().intValue() +1);
 		}
-		Categoria categoria=categoriaRepository.save(categoriaConverter.convertCategoriaModel2Categoria(categoriaModel));
-		return categoriaConverter.convertCategoria2CategoriaModel(categoria);
+		
+		if(categoriaModel.getCategoria()==null){//si no es subcategoria
+			int codigoSuceso=categoriaRepository.saveSimple(categoriaModel.getId(), 
+					categoriaModel.getNombre_categoria(), categoriaModel.getDescripcion_categoria());
+			System.out.println("codigo:"+codigoSuceso);
+			return findByID(categoriaModel.getId());
+		}else { //es subcategoria
+			int codigoSuceso=categoriaRepository.saveComplex(categoriaModel.getId(), 
+					categoriaModel.getNombre_categoria(), categoriaModel.getCategoria().getId(),categoriaModel.getDescripcion_categoria());
+			return findByID(categoriaModel.getId());
+		}
 	}
 
 	@Override
@@ -44,6 +56,14 @@ public class CategoriaServiceImpl implements CategoriaService{
 			categoriaModels.add(categoriaConverter.convertCategoria2CategoriaModel(categoria));
 		}
 		return categoriaModels;
+	}
+
+	@Override
+	public CategoriaModel findByID(int id_cat) {
+		// TODO Auto-generated method stub
+		Optional<Categoria> categoria=categoriaRepository.findById(id_cat);
+		CategoriaModel categoriaModel=categoriaConverter.convertCategoria2CategoriaModel(categoria.get());
+		return categoriaModel;
 	}
 
 }

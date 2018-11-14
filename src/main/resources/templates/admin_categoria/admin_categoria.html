@@ -54,15 +54,15 @@
 											<textarea rows="3" cols="" class="form-control"
 												th:field="*{descripcion_categoria}"></textarea>
 										</div>
-										<div class="form-group">
-											<label>(Opcional)Categoria Padre </label> <select>
-												<option value="">categoria padre</option>
-												<div th:each="categoria:${categorias}">
-													<option value="${categoria.id}"
-														th:text="${categoria.nombre_categoria}"></option>
-												</div>
-											</select>
-										</div>
+<!-- 										<div class="form-group"> -->
+<!-- 											<label>(Opcional)Categoria Padre </label> <select th:field="*{categoria}"> -->
+<!-- 												<option value="">categoria padre</option> -->
+<!-- 												<div th:each="categoria:${categorias}"> -->
+<!-- 													<option value="${categoria.id}" -->
+<!-- 														th:text="${categoria.nombre_categoria}"></option> -->
+<!-- 												</div> -->
+<!-- 											</select> -->
+<!-- 										</div> -->
 									</form>
 								</div>
 								<div class="modal-footer">
@@ -102,8 +102,8 @@
 			<div th:if="${categorias}">
 				<div th:each="categoria:${categorias}">
 					<div class="col-12 my-3 bg-info">
-						<p th:text="${categoria.nombre_categoria}"></p>
-						<p th:text="${categoria.descripcion_categoria}"></p>
+<!-- 						<p th:text="${categoria.nombre_categoria}"></p> -->
+<!-- 						<p th:text="${categoria.descripcion_categoria}"></p> -->
 					</div>
 				</div>
 			</div>

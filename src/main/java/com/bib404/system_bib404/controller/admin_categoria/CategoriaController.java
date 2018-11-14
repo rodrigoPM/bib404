@@ -44,6 +44,16 @@ public class CategoriaController {
 		mav.addObject("categoriaModel", new CategoriaModel());
 		if(categoria.listAllCategorias().size()>0) {
 			mav.addObject("categorias", categoria.listAllCategorias());
+			System.out.println("tantas catgorias:"+categoria.listAllCategorias().size());
+			for(CategoriaModel catM:categoria.listAllCategorias()) {
+				try {
+					System.out.println("Ok, veamos: "+catM.getNombre_categoria());
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println("algo anda mal en tostring");
+				}
+				
+			}
 		}
 		
 		HttpSession session = request.getSession();
@@ -67,10 +77,15 @@ public class CategoriaController {
 	
 	@PostMapping("/nueva")
 	public String crearCategoria(@ModelAttribute(name="categoriaModel") CategoriaModel categoriaModel,@PathVariable("id_bib") int id_bib,HttpServletRequest request ) {
+		HttpSession session = request.getSession();
+		System.out.println("crear nueva categoria");
+		System.out.println(categoriaModel.toString());
 		if(null != categoria.addCategoria(categoriaModel)) {
-			request.setAttribute("addCategoria", true);
+			System.out.println("categoria creada");
+			session.setAttribute("addCategoria", true);
 		}else {
-			request.setAttribute("addCategoria", false);
+			session.setAttribute("addCategoria", false);
+			System.out.println("fallo categoria");
 		}
 		String redirect="redirect:/bib404/"+id_bib+"/dashboard/categorias";
 		return redirect;

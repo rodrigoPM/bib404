@@ -67,4 +67,12 @@ public class CategoriaModel {
 		this.categoria=null;
 	}
 
+	@Override
+	public String toString() {
+		return "CategoriaModel [id=" + id + ", nombre_categoria=" + nombre_categoria + ", descripcion_categoria="
+				+ descripcion_categoria + ", recurso_bib=" + recurso_bib + ", categoria=" + categoria + "]";
+	}
+	
+	
+
 }

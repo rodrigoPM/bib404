@@ -8,4 +8,5 @@ public interface CategoriaService {
 	
 	public abstract CategoriaModel addCategoria(CategoriaModel categoriaModel);
 	public abstract List<CategoriaModel> listAllCategorias();
+	public abstract CategoriaModel findByID(int id_cat);
 }
