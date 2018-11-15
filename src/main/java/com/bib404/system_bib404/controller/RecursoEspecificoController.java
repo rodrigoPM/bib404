@@ -22,7 +22,7 @@ import com.bib404.system_bib404.Repository.ConsultasRE;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.model.RecursoEspecificoModel;
 import com.bib404.system_bib404.service.RecursoEspecificoService;
-//import com.bib404.system_bib404.entity.QRecursoEspecifico;
+import com.bib404.system_bib404.entity.QRecursoEspecifico;
 @Controller
 @RequestMapping("/recursoEspecifico")
 public class RecursoEspecificoController {
