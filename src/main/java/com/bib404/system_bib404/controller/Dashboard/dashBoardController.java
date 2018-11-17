@@ -1,4 +1,4 @@
-package com.bib404.system_bib404.controller;
+package com.bib404.system_bib404.controller.Dashboard;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -75,7 +75,7 @@ public class dashBoardController {
 			Usuario user =(Usuario) session.getAttribute(Template.USER);
 			mav.addObject("user",user);
 			mav.addObject("bib",usuarioImp.findBibByUser(user.getUsername()));
-			mav.setViewName("registrarAdmin");
+			mav.setViewName(Template.REGISTRAR_ADMIN);
 			mav.addObject("usuario", new Usuario());
 			mav.addObject("bibliotecas", usuarioImp.listBibliotecas());
 			Date fecha = new Date();

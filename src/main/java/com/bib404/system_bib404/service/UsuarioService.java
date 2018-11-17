@@ -9,6 +9,7 @@ import com.bib404.system_bib404.entity.Biblioteca;
 import com.bib404.system_bib404.entity.Departamento;
 import com.bib404.system_bib404.entity.Municipio;
 import com.bib404.system_bib404.entity.Usuario;
+import com.bib404.system_bib404.model.Graf;
 
 
 
@@ -54,7 +55,10 @@ public interface UsuarioService {
 
 	public abstract Biblioteca findBibByUser(String username);
 
+	public abstract Biblioteca findBibByCode(String name);
 
-	Biblioteca findBibByCode(String name);
+	public abstract ArrayList<Graf> findBibByDate(String id, int value);
+
+	public abstract ArrayList<Graf> findBibByYear(String id, int multiplicador, int resta, int hasta);
 	
 }

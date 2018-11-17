@@ -23,6 +23,7 @@ import com.bib404.system_bib404.entity.Biblioteca;
 import com.bib404.system_bib404.entity.Departamento;
 import com.bib404.system_bib404.entity.Municipio;
 import com.bib404.system_bib404.entity.Usuario;
+import com.bib404.system_bib404.model.Graf;
 import com.bib404.system_bib404.service.UsuarioService;
 
 
@@ -130,7 +131,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 			java.util.Date f =usuario.getFecha_nacimiento();
 			java.util.Date f2 =usuario.getFecha_registro();
 			SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
-
 			String f3 = formateador.format(f);
 			String f4 = formateador.format(f2);
 			String fecha_nacimiento = "TO_TIMESTAMP(\'"+f3+" "+f.getHours()+":"+f.getMinutes()+":34.149409100', 'YYYY-MM-DD HH24:MI:SS.FF')";			
@@ -222,7 +222,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 		try {
 			List<Biblioteca> mun = listBibliotecas();
 			int id = mun.size() + 1;
-			String sql = "INSERT INTO BIBLIOTECA (ID, CODIGO_BIBLIOTECA, NOMBRE_BIBLIOTECA, MUNICIPIO_ID) VALUES ("+id+", \'"+bib.getCodigo_biblioteca()+"\', \'"+bib.getNombre_biblioteca()+"\', "+id_municipio+")";
+			java.util.Date f2 = new java.util.Date();
+			SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+			String f4 = formateador.format(f2);
+			String fecha_registro = "TO_TIMESTAMP(\'"+f4+" "+f2.getHours()+":"+f2.getMinutes()+":34.149409100', 'YYYY-MM-DD HH24:MI:SS.FF')";
+			String sql = "INSERT INTO BIBLIOTECA (ID, CODIGO_BIBLIOTECA, NOMBRE_BIBLIOTECA, MUNICIPIO_ID,FECHA_REGISTRO) VALUES ("+id+", \'"+bib.getCodigo_biblioteca()+"\', \'"+bib.getNombre_biblioteca()+"\', "+id_municipio+", "+fecha_registro+")";
 			Statement sentencia;
 			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			v = sentencia.executeUpdate(sql);
@@ -328,6 +332,73 @@ public class UsuarioServiceImpl implements UsuarioService{
 		cerrar();
 		return us;
 	}
+	
+
+	@Override
+	public ArrayList<Graf> findBibByDate(String id, int value) {
+		conectar();
+		ResultSet r = null;
+		ArrayList<Graf> us = new ArrayList<Graf>();
+		try {
+			String sql2="select TO_NUMBER(TO_CHAR((TO_DATE("+id+",\'YYYYMMDD\') +rownum-1 -"+(value - 1)+" ),\'YYYYMMDD\')) from DUAL CONNECT BY LEVEL <= "+value;
+			Statement sentencia;
+			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			r= sentencia.executeQuery(sql2);
+			while (r.next()) {
+				ResultSet r2 = null;
+				int val = r.getInt(1);
+				String sql ="SELECT count(id),TO_DATE("+val+",'YYYYMMDD') as dias FROM BIBLIOTECA WHERE TO_NUMBER(to_char(fecha_registro,\'YYYYMMDD\')) = "+val;
+				Statement sentencia2;
+				sentencia2 = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+				r2= sentencia2.executeQuery(sql);
+				while (r2.next()) {
+					us.add(new Graf(r2.getInt(1), r2.getDate(2)));
+				}
+			}
+			getConexion().commit();
+			sentencia.close();
+		} catch (SQLException e) {
+			System.out.println("Ocurrio una excepcion: "+e.getMessage());
+		}
+		cerrar();
+		return us;
+	}
+	
+	
+
+	@Override
+	public ArrayList<Graf> findBibByYear(String id, int multiplicador, int resta, int hasta) {
+		conectar();
+		ResultSet r = null;
+		ArrayList<Graf> us = new ArrayList<Graf>();
+		try {
+			String sql2="select TO_NUMBER(TO_CHAR((TO_DATE("+id+",\'YYYYMMDD\') + rownum*"+multiplicador+" -1 - "+(resta - 1)+" ),\'YYYYMMDD\')), TO_NUMBER(TO_CHAR((TO_DATE("+id+",\'YYYYMMDD\') + rownum*"+multiplicador+" -1 - "+(resta - 1 -multiplicador)+" ),\'YYYYMMDD\')) from DUAL CONNECT BY LEVEL <= "+hasta;
+			Statement sentencia;
+			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			r= sentencia.executeQuery(sql2);
+			while (r.next()) {
+				ResultSet r2 = null;
+				int val = r.getInt(1);
+				int val2 = r.getInt(2);
+				System.out.println("fecha inicial: "+val+"fecha final: "+val2);
+				String sql ="select count(id),TO_DATE("+val+",\'YYYYMMDD\') as dias from biblioteca where to_number(to_char(fecha_registro,\'YYYYMMDD\')) > "+val+" and to_number(to_char(fecha_registro,\'YYYYMMDD\')) <= "+val2;
+				Statement sentencia2;
+				sentencia2 = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+				r2= sentencia2.executeQuery(sql);
+				while (r2.next()) {
+					us.add(new Graf(r2.getInt(1), r2.getDate(2)));
+				}
+			}
+			getConexion().commit();
+			sentencia.close();
+		} catch (SQLException e) {
+			System.out.println("Ocurrio una excepcion: "+e.getMessage());
+		}
+		cerrar();
+		return us;
+	}
+		
+	
 	
 	@Override
 	public Biblioteca findBibByCode(String name) {

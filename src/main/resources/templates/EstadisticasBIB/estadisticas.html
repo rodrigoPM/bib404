@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+    <meta charset="utf-8"/>
+
+    <title>Estadisticas de BIB404</title>
+	
+	<link rel="stylesheet" href="#" />
+ 	
+  </head>
+  <body>
+	<nav th:replace="fragmentos/plantilla :: navbar-admin"></nav> 
+	<div class="container">
+	<br>
+	<div th:replace="fragmentos/plantilla :: titulo"></div> 
+	
+	<p th:each="bib : ${bibliotecas}">
+		<span th:text="${bib.nombre_biblioteca}"></span>
+		<span th:text="${bib.codigo_biblioteca}"></span>
+		<span th:text="${bib.fecha_registro}"></span>
+	</p>
+	
+	
+	<p th:each="g : ${graf}">
+		<span th:text="${g.fecha}"></span>
+		<span th:text="${g.cantidad}"></span>
+	</p>
+	
+	
+	</div>
+	
+	
+	
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
+</html>

@@ -28,7 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.constant.Url;
-import com.bib404.system_bib404.controller.UsuarioController;
+import com.bib404.system_bib404.controller.registrar_iniciar_Sesion.UsuarioController;
 import com.bib404.system_bib404.entity.Biblioteca;
 import com.bib404.system_bib404.entity.Municipio;
 import com.bib404.system_bib404.entity.Usuario;
@@ -142,7 +142,7 @@ public class IndexBib404Controller {
 			model.addAttribute("fecha_actual", fecha_actual);
 			model.addAttribute("municipios", usuarioImp.listMunicipiosOrderByNombre());
 			model.addAttribute("departamentos", usuarioImp.listDpto());
-			return "super";
+			return Template.REGISTRAR_SUPER;
 		}else {
 			return "redirect:/index";
 		}

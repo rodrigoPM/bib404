@@ -8,8 +8,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.bib404.system_bib404.entity.QDetalleRecurso;
-//import com.bib404.system_bib404.entity.QRecursoBibliotecario;
-//import com.bib404.system_bib404.entity.QRecursoEspecifico;
+import com.bib404.system_bib404.entity.QRecursoBibliotecario;
+import com.bib404.system_bib404.entity.QRecursoEspecifico;
 import com.bib404.system_bib404.entity.RecursoEspecifico;
 import com.querydsl.jpa.impl.JPAQuery;
 

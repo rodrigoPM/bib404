@@ -1,5 +1,6 @@
 package com.bib404.system_bib404.entity;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
@@ -40,6 +43,10 @@ public class Biblioteca {
 	@JoinColumn(name = "municipio_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Municipio municipio;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "fecha_registro")
+	private Date fecha_registro;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "bib_recurso_bib", joinColumns = { @JoinColumn(name = "biblioteca_id") }, inverseJoinColumns = {
@@ -49,6 +56,20 @@ public class Biblioteca {
 	public int getId() {
 		return id;
 	}
+	
+	
+
+	public Date getFecha_registro() {
+		return fecha_registro;
+	}
+
+
+
+	public void setFecha_registro(Date fecha_registro) {
+		this.fecha_registro = fecha_registro;
+	}
+
+
 
 	public void setId(int id) {
 		this.id = id;
@@ -94,6 +115,7 @@ public class Biblioteca {
 		this.codigo_biblioteca = codigo_biblioteca;
 		this.municipio = municipio;
 		this.recurso_bib = recurso_bib;
+		this.fecha_registro=new Date();
 	}
 
 	public Biblioteca() {
