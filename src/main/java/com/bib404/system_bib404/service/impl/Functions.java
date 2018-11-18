@@ -34,6 +34,23 @@ public class Functions implements Funciones{
 			return false;
 		}
 	}
+	
+
+	//Funcion que verifica si el usuario es un superusuario es decir el administrador del sistema bib404
+	@Override
+	public boolean isSuperUserBIB404(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute(Template.USER)!=null) {
+			Usuario user = (Usuario) session.getAttribute(Template.USER);
+			if (user.getRol().compareToIgnoreCase(Template.SUPER_SUPERUSUARIO)==0) {
+				return true;
+			}else {
+				return false;
+			}
+		}else {
+			return false;
+		}
+	}
 
 	//funcion que verifica si el usuario es un administrador de una biblioteca
 	@Override

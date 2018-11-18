@@ -13,4 +13,5 @@ public interface Funciones {
 	public abstract boolean pertenece_biblioteca(int id_user, int id_bib, HttpServletRequest request);
 	public abstract boolean isAnyUser(HttpServletRequest request);
 	public abstract boolean userInBib(int id_user, int id_bib);
+	public abstract boolean isSuperUserBIB404(HttpServletRequest request);
 }

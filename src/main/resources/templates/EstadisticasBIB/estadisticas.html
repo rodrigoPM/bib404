@@ -1,36 +1,126 @@
 <!DOCTYPE html>
 <html>
-  <head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
-    <meta charset="utf-8"/>
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+<meta charset="utf-8" />
 
-    <title>Estadisticas de BIB404</title>
-	
-	<link rel="stylesheet" href="#" />
- 	
-  </head>
-  <body>
-	<nav th:replace="fragmentos/plantilla :: navbar-admin"></nav> 
+<title>Estadisticas de BIB404</title>
+
+<link rel="stylesheet" href="#" />
+<div th:replace="fragmentos/plantilla :: scripts"></div>
+<script src="#" th:src="@{/js/Chart.js}"></script>
+<script src="#" th:src="@{/js/utils.js}"></script>
+</head>
+<body>
+	<nav th:replace="fragmentos/plantilla :: navbar-admin"></nav>
 	<div class="container">
-	<br>
-	<div th:replace="fragmentos/plantilla :: titulo"></div> 
+		<br>
+		<div th:replace="fragmentos/plantilla :: titulo"></div>
+		<div th:replace="fragmentos/plantilla :: personal-graf"></div>
 	
-	<p th:each="bib : ${bibliotecas}">
-		<span th:text="${bib.nombre_biblioteca}"></span>
-		<span th:text="${bib.codigo_biblioteca}"></span>
-		<span th:text="${bib.fecha_registro}"></span>
-	</p>
+	<canvas id="myChart"></canvas>
 	
+	<script th:inline="javascript">
+	var lab=[];
+	var dat=[];
+	[# th:each="g : ${graf}"]
+		var fecha = [(${g.formato})];
+	   	lab.push(fecha);
+	   	dat.push([(${g.cantidad})]);
+	[/]
+		
+	var ctx = document.getElementById("myChart").getContext('2d');
+	var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: lab,
+	        datasets: [{
+	            label: 'cantidad de bibliotecas creadas, eje x ='+ [[${tipo}]],
+	            data: dat,
+	            backgroundColor: [
+
+	                'rgba(129, 234, 173, 0.2)',
+	                'rgba(81, 197, 161, 0.2)',
+	                'rgba(26, 245, 243, 0.2)',
+
+	                'rgba(245, 109, 26, 0.2)',
+	                'rgba(245, 178, 26, 0.2)',
+	                'rgba(232, 245, 26, 0.2)',
+
+	                'rgba(179, 26, 245, 0.2)',
+	                'rgba(80, 245, 26, 0.2)',
+	                'rgba(245, 26, 224, 0.2)',
+
+	                'rgba(73, 245, 26, 0.2)',
+	                'rgba(26, 245, 217, 0.2)',
+	                'rgba(212, 229, 136, 0.2)',
+
+	                'rgba(161, 167, 135, 0.2)',
+	                'rgba(37, 121, 123, 0.2)',
+	                'rgba(37, 54, 123, 0.2)',
+
+	                'rgba(177, 187, 224, 0.2)',
+	                'rgba(35, 100, 23, 0.2)',
+	                'rgba(23, 34, 100, 0.2)',
+	            ],
+	            borderColor: [
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	    	scales: {
+	    	yAxes: [{
+	    		barPercentage: 1,
+	    		  gridLines: {
+	    		        display: false
+	    		      }
+	    		    }],
+	    		    ticks: {
+	    		        min: 1,
+	    		        max: 200,
+	    		        stepSize: 1
+	    		      },
+	    	xAxes: [{
+	    		  gridLines: {
+	    			  zeroLineColor: "black",
+	    		      zeroLineWidth: 1
+	    		     },
+	    		     ticks: {
+	    		        min: 0,
+	    		        max: 200,
+	    		        stepSize: 1
+	    		      },
+	    		      scaleLabel: {
+	    		        display: true,
+	    		        labelString: "Fechas en que se agregaron las bibliotecas"
+	    		      }
+	    		    }]
+	    		  },
+	    		  elements: {
+	    		    rectangle: {
+	    		      borderSkipped: 'left',
+	    		    }
+	    		  }
+	    }
+	});
 	
-	<p th:each="g : ${graf}">
-		<span th:text="${g.fecha}"></span>
-		<span th:text="${g.cantidad}"></span>
-	</p>
-	
-	
-	</div>
-	
-	
-	
-	<div th:replace="fragmentos/plantilla :: scripts"></div>
+	</script>
+
 </body>
 </html>

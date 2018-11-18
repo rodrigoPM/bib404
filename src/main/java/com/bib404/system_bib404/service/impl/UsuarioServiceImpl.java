@@ -380,7 +380,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 				ResultSet r2 = null;
 				int val = r.getInt(1);
 				int val2 = r.getInt(2);
-				System.out.println("fecha inicial: "+val+"fecha final: "+val2);
 				String sql ="select count(id),TO_DATE("+val+",\'YYYYMMDD\') as dias from biblioteca where to_number(to_char(fecha_registro,\'YYYYMMDD\')) > "+val+" and to_number(to_char(fecha_registro,\'YYYYMMDD\')) <= "+val2;
 				Statement sentencia2;
 				sentencia2 = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);

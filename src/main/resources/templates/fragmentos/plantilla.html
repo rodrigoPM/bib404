@@ -134,12 +134,58 @@
 					<a class="btn btn-info" th:href="@{/estadisicas/BIB404/ultimomes3}">Ultimos 3 meses</a>
 				</div>
 				<div class="col-sm-3">
-					<button class="btn btn-info">Personalizado</button>
+					<a class="btn btn-info" data-toggle="modal" data-target="#modalGrafica" href="">Personalizado</a>
 				</div>
 			</div>
 		</div>
 	</div>
 
+
+	<div th:fragment="personal-graf">
+		<div class="modal fade" id="modalGrafica" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Seleccione los parametros</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<form method="get" th:action="@{/estadisicas/BIB404/personal}">
+					<div class="modal-body">
+						<div class="form-group">
+							<div class="form-inline">
+							<label>fecha inicio: </label>
+							<input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required="true" placeholder="fecha de inicio" min="1950-01-01" th:max="*{fecha_actual}" th:value="*{fecha_inicial}"> 
+							</div>
+							<div class="form-inline">
+							<label>fecha final:</label>
+							<input type="date" class="form-control" id="fecha_final" name="fecha_final" required="true" placeholder="fecha final" min="1950-01-01" th:max="*{fecha_actual}" th:value="*{fecha_actual}"> 
+							</div>
+							<div class="form-inline">
+							<label>unidad de tiempo</label>
+							<select class="form-control" required="true" id="opcion" name="opcion">
+								<option value="">Seleccione</option>
+								<option value="1">dias</option>
+								<option value="5">semanas</option>
+								<option value="12">meses</option>
+							</select>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+					<input type="submit" value="aceptar" class="btn btn-success">
+						<button type="button"
+							class="btn btn-fill btn-danger btn-wd btn-sm"
+							data-dismiss="modal">Cerrar</button>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 

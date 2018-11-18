@@ -36,14 +36,14 @@ public class dashBoardController {
 	@GetMapping("/admin")
 	public ModelAndView index(HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView();
-		if (funtions.isSuperUser(request)) {
+		if (funtions.isSuperUserBIB404(request)) {
 			HttpSession session = request.getSession();
 			Usuario user =(Usuario) session.getAttribute(Template.USER);
 			mav.addObject("user",user);
 			mav.addObject("bib",usuarioImp.findBibByUser(user.getUsername()));
 			mav.setViewName(Template.dashBoard);
 		}else {
-			if (funtions.isAdmin(request)) {
+			if (funtions.isAdmin(request) || funtions.isSuperUser(request)) {
 				HttpSession session = request.getSession();
 				Usuario user =(Usuario) session.getAttribute(Template.USER);
 				mav.addObject("user",user);

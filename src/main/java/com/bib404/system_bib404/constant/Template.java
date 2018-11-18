@@ -32,4 +32,5 @@ public class Template {
 	public static final String dashAd="Dashboard/GestionarBIB";
 	public static final String estadisticas="EstadisticasBIB/estadisticas";
 	public static final String CONTRA="password";
+	public static final String SUPER_SUPERUSUARIO="SUPER_SUPERUSER";
 }
