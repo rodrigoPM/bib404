@@ -28,7 +28,8 @@ public class RecursoBibliotecarioController {
 	@GetMapping("/verRecurso")
 	public ModelAndView verEspecifico(@RequestParam(name = "id", required = false) int id, HttpServletRequest request, Model model) {
         ModelAndView modelAndView = new ModelAndView(Template.RECURSOSESPECIFICOS);
-        modelAndView.addObject("recursosEspecificos", consultas.findJoin(id));        
+        modelAndView.addObject("recursosEspecificos", consultas.findJoin(id));
+        modelAndView.addObject("recursoBib", consultas.ver(id));
         return modelAndView;
 	}
 }
