@@ -40,6 +40,23 @@ public class Categoria {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Categoria categoria;
 
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "biblioteca_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Biblioteca biblioteca;
+
+//atributos auxiliares
+	private int idCatForanea;
+
+public int getIdCatForanea(){
+	return idCatForanea;
+}
+
+public void setIdCategoriaForanea(int idCat){
+	this.idCatForanea=idCat;
+}
+//fin atributos auxiliares
+
 	public int getId() {
 		return id;
 	}
@@ -79,6 +96,14 @@ public class Categoria {
 		this.categoria = categoria;
 	}
 
+	public Biblioteca getBiblioteca() {
+		return biblioteca;
+	}
+
+	public void setBiblioteca(Biblioteca biblioteca) {
+		this.biblioteca = biblioteca;
+	}
+
 	public String getDescripcion_categoria() {
 		return descripcion_categoria;
 	}
@@ -88,13 +113,25 @@ public class Categoria {
 	}
 
 	public Categoria(int id, String nombre_categoria, String descripcion_categoria,
-			Set<RecursoBibliotecario> recurso_bib, Categoria categoria) {
+			Set<RecursoBibliotecario> recurso_bib, Categoria categoria, Biblioteca biblioteca) {
 		super();
 		this.id = id;
 		this.nombre_categoria = nombre_categoria;
 		this.descripcion_categoria = descripcion_categoria;
 		this.recurso_bib = recurso_bib;
 		this.categoria = categoria;
+		this.biblioteca=biblioteca;
+	}
+	public Categoria(int id, String nombre_categoria, String descripcion_categoria,
+			Set<RecursoBibliotecario> recurso_bib, Categoria categoria, Biblioteca biblioteca,int idCatForanea) {
+		super();
+		this.id = id;
+		this.nombre_categoria = nombre_categoria;
+		this.descripcion_categoria = descripcion_categoria;
+		this.recurso_bib = recurso_bib;
+		this.categoria = categoria;
+		this.biblioteca=biblioteca;
+		this.idCatForanea=idCatForanea;
 	}
 
 	public Categoria() {

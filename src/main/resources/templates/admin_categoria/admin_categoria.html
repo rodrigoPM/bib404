@@ -54,22 +54,24 @@
 											<textarea rows="3" cols="" class="form-control"
 												th:field="*{descripcion_categoria}"></textarea>
 										</div>
-<!-- 										<div class="form-group"> -->
-<!-- 											<label>(Opcional)Categoria Padre </label> <select th:field="*{categoria}"> -->
-<!-- 												<option value="">categoria padre</option> -->
-<!-- 												<div th:each="categoria:${categorias}"> -->
-<!-- 													<option value="${categoria.id}" -->
-<!-- 														th:text="${categoria.nombre_categoria}"></option> -->
-<!-- 												</div> -->
-<!-- 											</select> -->
-<!-- 										</div> -->
+ 										<div class="form-group">
+ 											<label>(Opcional)Categoria Padre </label> <select th:field="*{idCatForanea}" class="form-control">
+												<option value="-1">categoria padre</option>
+ 												<div th:each="categoria:${categorias}">
+ 													<option th:value="${categoria.id}"
+														th:text="${categoria.nombre_categoria}"></option>
+ 												</div>
+ 											</select>
+ 										</div>
 									</form>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">Close</button>
-									<button type="submit" class="btn btn-primary"
-										form="formCrearCategoria">Crear Categoria</button>
+									<div class="row">
+										<div class="col-6">
+											<button type="submit" class="btn btn-primary"
+												form="formCrearCategoria">Crear Categoria</button>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -89,27 +91,58 @@
 		</div>
 		<hr>
 		<div class="row">
-			<div th:if="${exito}">
+			<div th:if="${exito}" class="col-12">
 				<p class="m-0 alert alert-success text-center font-weight-bold"
 					th:text="${exito}"></p>
 			</div>
-			<div th:if="${fracaso}">
+			<div th:if="${fracaso}" class="col-12">
 				<p class="m-0 alert alert-danger text-center font-weight-bold"
 					th:text="${fracaso}"></p>
 			</div>
 		</div>
-		<div class="row">
-			<div th:if="${categorias}">
-				<div th:each="categoria:${categorias}">
-					<div class="col-12 my-3 bg-info">
-<!-- 						<p th:text="${categoria.nombre_categoria}"></p> -->
-<!-- 						<p th:text="${categoria.descripcion_categoria}"></p> -->
-					</div>
+			<div th:if="${categorias}" class="row">
+				<div th:each="categoria:${categorias}" class="col-12 my-3 bg-info">
+						<div class="row">
+							<div class="col-4">
+								<p>imagen</p>
+							</div>
+							<div class="col-8">
+								<div class="row">
+									<div class="col-12">
+											<p th:text="${categoria.nombre_categoria}"></p>
+									</div>
+									<div class="col-12">
+										<p th:text="${categoria.descripcion_categoria}"></p>
+									</div>
+									<!-- <div class="col-12">
+										<p>Subcategaria?:</p>
+									</div> -->
+									<div class="col-12">
+										<div class="row">
+											<div class="col-6">
+												<form action="#" th:action="${borrarCategoria}" method="post"
+												th:object="${objectAux}" class="row">
+												<select th:field="*{id_object}" class="d-none">
+													<option th:value="${categoria.id}"></option>
+												</select>
+													<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
+												</form>
+											</div>
+											<div class="col-6">
+												<form class="row">
+													<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 				</div>
 			</div>
 			<div th:unless="${categorias}">Esta biblioteca aun no tiene
-				categorias</div>
-		</div>
+				categorias
+			</div>
 	</div>
 
 	<footer th:replace="fragmentos/plantilla :: footer"></footer>

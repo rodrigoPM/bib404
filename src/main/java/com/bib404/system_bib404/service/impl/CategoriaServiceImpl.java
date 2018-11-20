@@ -16,54 +16,56 @@ import com.bib404.system_bib404.service.CategoriaService;
 
 @Service("categoriaServiceImpl")
 public class CategoriaServiceImpl implements CategoriaService{
-	
+
 	@Autowired
 	@Qualifier("categoriaRepository")
 	private CategoriaRepository categoriaRepository;
 	@Autowired
 	@Qualifier("categoriaConverter")
 	private CategoriaConverter categoriaConverter;
-	
+
 	@Override
-	public CategoriaModel addCategoria(CategoriaModel categoriaModel) {
+	public Categoria addCategoria(Categoria categoria) {
 		// TODO Auto-generated method stub
-		
-		//ver si no hay registros, 
-		if(categoriaRepository.countCategoria().intValue()==0) {//no hay registros
-			categoriaModel.setId(1);
-		}else {//ya hay registros
-			categoriaModel.setId(categoriaRepository.lastID().intValue() +1);
+		Categoria cat=categoriaRepository.save(categoria);
+		return cat;
+	}
+
+@Override
+public boolean deleteCategoria(int id_cat){
+	if(findByID(id_cat)!=null){
+		categoriaRepository.delete(findByID(id_cat));
+		if (!existsById(id_cat)) {
+			return true;
+		}else{
+			return false;
 		}
-		
-		if(categoriaModel.getCategoria()==null){//si no es subcategoria
-			int codigoSuceso=categoriaRepository.saveSimple(categoriaModel.getId(), 
-					categoriaModel.getNombre_categoria(), categoriaModel.getDescripcion_categoria());
-			System.out.println("codigo:"+codigoSuceso);
-			return findByID(categoriaModel.getId());
-		}else { //es subcategoria
-			int codigoSuceso=categoriaRepository.saveComplex(categoriaModel.getId(), 
-					categoriaModel.getNombre_categoria(), categoriaModel.getCategoria().getId(),categoriaModel.getDescripcion_categoria());
-			return findByID(categoriaModel.getId());
-		}
+	}else{
+		return false;
+	}
+}
+
+@Override
+public boolean existsById(int id_cat){
+	return categoriaRepository.existsById(id_cat);
+}
+
+	@Override
+	public List<Categoria> listAllCategorias(int id_bib) {
+		// TODO Auto-generated method stub
+		List<Categoria> categorias=categoriaRepository.findByBibliotecaId(id_bib);
+		return categorias;
 	}
 
 	@Override
-	public List<CategoriaModel> listAllCategorias() {
+	public Categoria findByID(int id_cat) {
 		// TODO Auto-generated method stub
-		List<Categoria> categorias=categoriaRepository.findAll();
-		List<CategoriaModel> categoriaModels=new ArrayList<CategoriaModel>();
-		for(Categoria categoria:categorias) {
-			categoriaModels.add(categoriaConverter.convertCategoria2CategoriaModel(categoria));
+		try {
+			Optional<Categoria> categoria=categoriaRepository.findById(id_cat);
+			return categoria.get();
+		} catch(Exception e) {
+			return null;
 		}
-		return categoriaModels;
-	}
-
-	@Override
-	public CategoriaModel findByID(int id_cat) {
-		// TODO Auto-generated method stub
-		Optional<Categoria> categoria=categoriaRepository.findById(id_cat);
-		CategoriaModel categoriaModel=categoriaConverter.convertCategoria2CategoriaModel(categoria.get());
-		return categoriaModel;
 	}
 
 }
