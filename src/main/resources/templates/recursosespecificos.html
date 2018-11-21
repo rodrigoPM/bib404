@@ -36,7 +36,21 @@
 	<div class="container">	
 		<h1>Detalles del recurso</h1>
 		<br/>
-		<div th:each="recursoEspecifico : ${recursosEspecificos}">
+			<table class="table" border="2">
+				<thead class="thead">
+					<tr>
+						<th>Imagen</th>
+						<th>Descripcion del recurso</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr >
+                        <td th:text="${recursoBib.imagen_recurso_bibl}"></td>
+						<td th:text="${recursoBib.descripcion_recurso_bib}"></td>
+					</tr>												
+				</tbody>
+			</table>
+		<!--<div th:each="recursoEspecifico : ${recursosEspecificos}">
 			<table class="table" border="2">
 				<thead class="thead">
 					<tr>
@@ -51,28 +65,31 @@
 					</tr>												
 				</tbody>
 			</table>
-            <p>
+            <!-- <p>
                 <strong>Editorial: </strong>
                 <span th:text="${recursoEspecifico.editorial.nombre_editorial} "></span>
                 <span th:text="${recursoEspecifico.editorial.anio_publicacion}"></span>
-            </p>
+            </p>-->
 			<table class="table" border="2">
 				<thead class="thead">
 					<tr>
 						<th>Formato</th>
 						<th>Codigo</th>
 						<th>Edicion</th>
+						<th>Editorial</th>
 						<th>Volumen</th>
 						<th>Consulta</th>
 						<th>Estado</th>
 						<th>Accion</th>
 					</tr>
 				</thead>
+				<div th:each="recursoEspecifico : ${recursosEspecificos}">
 				<tbody>
 					<tr>
                         <td th:text="${recursoEspecifico.formato_recurso.nombre_formato}"></td>
 						<td th:text="${recursoEspecifico.codigo_rec_esp}"></td>
 						<td th:text="${recursoEspecifico.edicion_recurso}"></td>
+						<td th:text="${recursoEspecifico.editorial.nombre_editorial}"></td>
 						<td th:text="${recursoEspecifico.volumen_recurso}"></td>
 						<td th:text="${recursoEspecifico.consulta_interna}==true ? 'interna' : 'externa'"></td>		
 						<td th:text="${recursoEspecifico.prestado}==true ? 'no disponible' : 'disponible'"></td>														

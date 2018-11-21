@@ -48,17 +48,5 @@ public class RecursoEspecificoController {
         modelAndView.addObject("recursosEspecificos", recursoEspecificoService.listAllRecursoEspecificos());
         
         return modelAndView;
-    }    
-    
-    @GetMapping("/mostrarPorId")
-    public ModelAndView showRecursoEspecificosById(@RequestParam(name = "id", required = false) int id,HttpServletRequest request) {
-    	
-    	
-       RecursoEspecificoModel recursosEspecificos=new RecursoEspecificoModel();
-       recursosEspecificos=recursoEspecificoService.findById(id);
-       ModelAndView modelAndView = new ModelAndView(Template.RECURSOSESPECIFICOS);
-        modelAndView.addObject("recursosEspecificos", recursosEspecificos);
-        
-        return modelAndView;	
-    }   
+    }     
 }

@@ -80,6 +80,14 @@ public ModelAndView listPrestamos(Model model, HttpServletRequest request)  thro
 	
 	return mav;
 }
+@RequestMapping("/gestion_usuario")
+public ModelAndView listPrestamo(Model model, HttpServletRequest request)  throws ServletException, IOException  {
+	ModelAndView mav = new ModelAndView(Template.GESTION_USUARIO);
+	/*mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
+	model.addAttribute("prestado", 1);*/
+	
+	return mav;
+}
 @GetMapping("/perfil")
 public String redirectPerfilForm(Model model,@ModelAttribute(name="username") String username,HttpServletRequest request) {
 

@@ -3,9 +3,9 @@ server:
         whitelabel:
             enabled: false
     port: 91
-    
+
 spring:
-  datasource: 
+  datasource:
     url: jdbc:oracle:thin:@localhost:1521:orcl
     username: C##_bib404
     password: too115
