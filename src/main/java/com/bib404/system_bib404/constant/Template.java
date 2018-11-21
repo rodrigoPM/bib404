@@ -12,6 +12,9 @@ public class Template {
 	//administrar categoria
 	public static final String CATEGORIA="admin_categoria/admin_categoria";
 	
+	//gestionar usuario
+	public static final String GESTION_USUARIO = "gestionar_usuario/crear_usuario";
+	
 	public static final String INDEX_ANONIMO= "index_anonimo";
 	public static final String REGISTRAR = "registrar_iniciar_Sesion/registrase";
 	public static final String REGISTRAR_ADMIN = "registrar_iniciar_Sesion/registrarAdmin";
