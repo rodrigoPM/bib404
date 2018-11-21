@@ -76,6 +76,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public List<Usuario> listUsuario() {
 		return usuarioRep.findAll();
 	}
+	@Override
+	public List<Usuario> listUsuarioBib(int id_bib) {
+		return usuarioRep.findByBibliotecaId(id_bib);
+	}
 	
 	@Override
 	public List<Departamento> listDpto() {

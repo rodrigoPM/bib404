@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.bib404.system_bib404.entity.Biblioteca;
+import com.bib404.system_bib404.entity.Categoria;
 import com.bib404.system_bib404.entity.Departamento;
 import com.bib404.system_bib404.entity.Municipio;
 import com.bib404.system_bib404.entity.Usuario;
@@ -18,6 +19,8 @@ public interface UsuarioService {
 	public abstract Usuario getUserId(long id);
 	
 	public abstract List<Usuario> listUsuario();
+	
+	public abstract List<Usuario> listUsuarioBib(int id_bib);
 	
 	public abstract void removeUser(Usuario usuario);
 	

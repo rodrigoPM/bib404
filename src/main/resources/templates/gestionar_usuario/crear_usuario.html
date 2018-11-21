@@ -17,7 +17,7 @@
 	<br />
 	<div class="container">
 		<h1 class="text-center">
-			Usuarios de <!--<span th:text="${name_bib}"></span>-->
+			Usuarios de la Biblioteca: <span th:text="${name_bib}"></span>
 		</h1>
 	</div>
 	<hr>
@@ -97,7 +97,7 @@
 			
 		</div>
 			<div class="row">
-				<div class="col-12 my-3 bg-info">
+				<div th:each="usuario: ${usuarios}" class="col-12 my-3 bg-info">
 						<div class="row">
 							<div class="col-4">
 								<p>imagen</p>
@@ -105,13 +105,15 @@
 							<div class="col-8">
 								<div class="row">
 									<div class="col-12">
-											<p >Nombre de usuario:</p>
+											<strong>Usuario: </strong>
+											<p th:text="${usuario.nombre}">Nombre de usuario:</p>
 									</div>
 									<div class="col-12">
-										<p >Zona Geografica:</p>
+										<strong>Zona Geografica: </strong>
+										<p th:text="${usuario.municipio.nombre_municipio}"></p>
 									</div>
 									<div class="col-12">
-										Activo:
+										<strong>Activo: </strong>
 										<input type="radio" name="" value=""> Si
   										<input type="radio" name="" value=""> No<br>
 									</div>
@@ -137,11 +139,11 @@
 						</div>
 				</div>
 			</div>
-			<!--
-			<div th:unless="${categorias}">Esta biblioteca aun no tiene
-				categorias
+			
+			<div th:unless="${usuarios}">Esta biblioteca no tiene
+				usuarios
 			</div>
-			-->
+			
 	</div>
 
 	<footer th:replace="fragmentos/plantilla :: footer"></footer>
