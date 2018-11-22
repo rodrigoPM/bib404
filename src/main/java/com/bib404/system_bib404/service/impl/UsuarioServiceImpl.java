@@ -250,6 +250,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public void removeUser(Usuario usuario) {
 		usuarioRep.delete(usuario);
 	}
+	@Override
+	public void deleteUser(int id) {
+		Usuario usuario=findById(id);
+		usuarioRep.delete(usuario);
+	}
 
 	@Override
 	public Usuario updateUser(Usuario usuario) {

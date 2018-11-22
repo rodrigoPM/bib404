@@ -26,8 +26,8 @@
 			<div class="col-12">
 				<div class="row">
 					<div class="col-4">
-						<button type="button" class="btn btn-success" data-toggle="modal"
-							data-target="#crearCategoria">Crear Usuario</button>
+						<a class="btn btn-success" th:href="@{/usuarios/registrarse}">
+							Crear Usuario</a>
 					</div>
 					<div class="modal" id="crearCategoria" tabindex="-1" role="dialog"
 						aria-labelledby="crearCategoriaLabel" aria-hidden="true">
@@ -94,7 +94,10 @@
 		</div>
 		<hr>
 		<div class="row">
-			
+			<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
 		</div>
 			<div class="row">
 				<div th:each="usuario: ${usuarios}" class="col-12 my-3 bg-info">
@@ -113,21 +116,39 @@
 										<p th:text="${usuario.municipio.nombre_municipio}"></p>
 									</div>
 									<div class="col-12">
-										<strong>Activo: </strong>
-										<input type="radio" name="" value=""> Si
-  										<input type="radio" name="" value=""> No<br>
+										<div th:if="${usuario.enable}">
+											<strong>Activo</strong>
+											<!--  <input type="radio" name="" value=""> Si
+  											<input type="radio" name="" value=""> No<br>-->
+  										</div>
+  										<div th:unless="${usuario.enable}">
+											<strong>Inactivo</strong>
+  										</div>
 									</div>
 									<!-- <div class="col-12">
 										<p>Subcategaria?:</p>
 									</div> -->
 									<div class="col-12">
 										<div class="row">
-											<div class="col-6">
-												
-													<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
-												
+											<div th:if="${usuario.enable}" class="col-4">
+												<a th:href="@{/desactivar_usuario?id=__${usuario.id}__&id_bib=__${usuario.biblioteca.id}__}" method="post"
+												class="row">
+													<input type="submit" name="" value="Desactivar" class="btn btn-warning col-12">
+												</a>
 											</div>
-											<div class="col-6">
+											<div th:unless="${usuario.enable}" class="col-4">
+												<a th:href="@{/activar_usuario?id=__${usuario.id}__&id_bib=__${usuario.biblioteca.id}__}" method="post"
+												class="row">
+													<input type="submit" name="" value="Activar" class="btn btn-warning col-12">
+												</a>
+											</div>
+											<div class="col-4">
+												<a th:href="@{/eliminar_usuario?id=__${usuario.id}__&id_bib=__${usuario.biblioteca.id}__}" method="post"
+												class="row">
+													<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
+												</a>
+											</div>
+											<div class="col-4">
 												<form class="row">
 													<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
 												</form>

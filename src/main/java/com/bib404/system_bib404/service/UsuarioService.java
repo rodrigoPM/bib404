@@ -23,6 +23,7 @@ public interface UsuarioService {
 	public abstract List<Usuario> listUsuarioBib(int id_bib);
 	
 	public abstract void removeUser(Usuario usuario);
+	public abstract void deleteUser(int id);
 	
 	public abstract Usuario updateUser(Usuario usuario);
 	
