@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+<title th:text="${titulo}"></title>
+
+<link rel="stylesheet" href="#" />
+</head>
+<body>
+	<div th:if="${isUser}">
+		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
+	</div>
+	<div th:if="${isNoUser}">
+		<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
+	</div>
+
+
+  <div class="container">
+    <h1 class="text-center">
+      Gesionar Bibliotecas de BIB404
+    </h1>
+    <div class="row d-flex justify-content-end">
+      <div class="col-6 d-flex justify-content-end offset-6">
+        <form action="">
+          <input type="text" placeholder="termino de busqueda">
+          <input type="submit" class="btn btn-primary">
+        </form>
+      </div>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col-12 h2 text-center">Listado de Biblitecas en el sistema</div>
+    </div>
+    <hr>
+    <div class="row">
+			<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${fracaso}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${fracaso}"></p>
+			</div>
+		</div>
+    <div th:if="${bibliotecas}" class="row">
+      <div th:each="biblioteca:${bibliotecas}" class="col-12 my-3 bg-info">
+          <div class="row">
+            <div class="col-4">
+              <p>imagen</p>
+            </div>
+            <div class="col-8">
+              <div class="row">
+                <div class="col-12">
+                     <p th:text="${biblioteca.nombre_biblioteca}"></p>
+                </div>
+                <div class="col-12">
+                  <p th:text="${biblioteca.codigo_biblioteca}"></p>
+                </div>
+                <div class="col-12">
+                  <p>Municipio: <span th:text="${biblioteca.municipio.nombre_municipio}"></span></p>
+                </div>
+                <div class="col-12">
+                  <p>Fecha registro: <span th:text="${biblioteca.fecha_registro}"></span></p>
+                </div>
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-6">
+                      <form action="#" th:action="${borrarBiblioteca}" method="post"
+                      th:object="${objectAux}" class="row">
+                      <select th:field="*{id_object}" class="d-none">
+                        <option th:value="${biblioteca.id}"></option>
+                      </select>
+                        <input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
+                      </form>
+                    </div>
+                    <div class="col-6">
+                      <form class="row">
+                        <input type="submit" name="" value="Editar" class="btn btn-warning col-12">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div th:unless="${bibliotecas}" class="alert alert-info font-weight-bold text-center">No hay ninguna biblioteca registrada en el sistema
+    </div>
+  </div>
+
+
+
+  <footer th:replace="fragmentos/plantilla :: footer"></footer>
+  <div th:replace="fragmentos/plantilla :: login"></div>
+  <div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>

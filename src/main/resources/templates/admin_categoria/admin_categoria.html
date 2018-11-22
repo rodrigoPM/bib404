@@ -12,8 +12,8 @@
 	<div th:if="${isNoUser}">
 		<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
 	</div>
-
-	<br />
+	<!-- <div class="" th:replace="fragmentos/plantilla :: navbar-admin-local"></div>
+	<br /> -->
 	<div class="container">
 		<h1 class="text-center">
 			Administrar Categoria de <span th:text="${name_bib}"></span>
@@ -140,7 +140,7 @@
 						</div>
 				</div>
 			</div>
-			<div th:unless="${categorias}">Esta biblioteca aun no tiene
+			<div th:unless="${categorias}" class="alert alert-info font-weight-bold text-center">Esta biblioteca aun no tiene
 				categorias
 			</div>
 	</div>
