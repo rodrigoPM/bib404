@@ -5,18 +5,19 @@
 
 <link rel="stylesheet" href="#" />
 </head>
-<body>
+<body> 
 	<div th:if="${isUser}">
 		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
 	</div>
 	<div th:if="${isNoUser}">
 		<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
 	</div>
-	<!-- <div class="" th:replace="fragmentos/plantilla :: navbar-admin-local"></div>
-	<br /> -->
+	
+
+	<br />
 	<div class="container">
 		<h1 class="text-center">
-			Administrar Categoria de <span th:text="${name_bib}"></span>
+			Usuarios de la Biblioteca: <span th:text="${name_bib}"></span>
 		</h1>
 	</div>
 	<hr>
@@ -25,21 +26,22 @@
 			<div class="col-12">
 				<div class="row">
 					<div class="col-4">
-						<button type="button" class="btn btn-success" data-toggle="modal"
-							data-target="#crearCategoria">Crear Categoria</button>
+						<a class="btn btn-success" th:href="@{/usuarios/registrarse}">
+							Crear Usuario</a>
 					</div>
 					<div class="modal" id="crearCategoria" tabindex="-1" role="dialog"
 						aria-labelledby="crearCategoriaLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="crearCategoriaLabel">Nueva
-										Categoria</h5>
+									<h5 class="modal-title" id="crearCategoriaLabel">Nuevo
+										Usuario</h5>
 									<button type="button" class="close" data-dismiss="modal"
 										aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
+								<!--  
 								<div class="modal-body">
 									<form action="#" th:action="${crearCategoria}"
 										th:object="${categoriaModel}" method="post"
@@ -73,6 +75,7 @@
 										</div>
 									</div>
 								</div>
+								-->
 							</div>
 						</div>
 					</div>
@@ -95,13 +98,9 @@
 				<p class="m-0 alert alert-success text-center font-weight-bold"
 					th:text="${exito}"></p>
 			</div>
-			<div th:if="${fracaso}" class="col-12">
-				<p class="m-0 alert alert-danger text-center font-weight-bold"
-					th:text="${fracaso}"></p>
-			</div>
 		</div>
-			<div th:if="${categorias}" class="row">
-				<div th:each="categoria:${categorias}" class="col-12 my-3 bg-info">
+			<div class="row">
+				<div th:each="usuario: ${usuarios}" class="col-12 my-3 bg-info">
 						<div class="row">
 							<div class="col-4">
 								<p>imagen</p>
@@ -109,26 +108,47 @@
 							<div class="col-8">
 								<div class="row">
 									<div class="col-12">
-											<p th:text="${categoria.nombre_categoria}"></p>
+											<strong>Usuario: </strong>
+											<p th:text="${usuario.nombre}">Nombre de usuario:</p>
 									</div>
 									<div class="col-12">
-										<p th:text="${categoria.descripcion_categoria}"></p>
+										<strong>Zona Geografica: </strong>
+										<p th:text="${usuario.municipio.nombre_municipio}"></p>
+									</div>
+									<div class="col-12">
+										<div th:if="${usuario.enable}">
+											<strong>Activo</strong>
+											<!--  <input type="radio" name="" value=""> Si
+  											<input type="radio" name="" value=""> No<br>-->
+  										</div>
+  										<div th:unless="${usuario.enable}">
+											<strong>Inactivo</strong>
+  										</div>
 									</div>
 									<!-- <div class="col-12">
 										<p>Subcategaria?:</p>
 									</div> -->
 									<div class="col-12">
 										<div class="row">
-											<div class="col-6">
-												<form action="#" th:action="${borrarCategoria}" method="post"
-												th:object="${objectAux}" class="row">
-												<select th:field="*{id_object}" class="d-none">
-													<option th:value="${categoria.id}"></option>
-												</select>
-													<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
-												</form>
+											<div th:if="${usuario.enable}" class="col-4">
+												<a th:href="@{/desactivar_usuario?id=__${usuario.id}__&id_bib=__${usuario.biblioteca.id}__}" method="post"
+												class="row">
+													<input type="submit" name="" value="Desactivar" class="btn btn-warning col-12">
+												</a>
 											</div>
-											<div class="col-6">
+											<div th:unless="${usuario.enable}" class="col-4">
+												<a th:href="@{/activar_usuario?id=__${usuario.id}__&id_bib=__${usuario.biblioteca.id}__}" method="post"
+												class="row">
+													<input type="submit" name="" value="Activar" class="btn btn-warning col-12">
+												</a>
+											</div>
+											<div class="col-4">
+												<a th:href="@{/eliminar_usuario?id=__${usuario.id}__&id_bib=__${usuario.biblioteca.id}__}" method="post"
+												class="row">
+													<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
+												</a>
+											</div>
+											<div class="col-4">
 												<form class="row">
 													<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
 												</form>
@@ -140,9 +160,11 @@
 						</div>
 				</div>
 			</div>
-			<div th:unless="${categorias}" class="alert alert-info font-weight-bold text-center">Esta biblioteca aun no tiene
-				categorias
+			
+			<div th:unless="${usuarios}">Esta biblioteca no tiene
+				usuarios
 			</div>
+			
 	</div>
 
 	<footer th:replace="fragmentos/plantilla :: footer"></footer>
@@ -150,3 +172,4 @@
 	<div th:replace="fragmentos/plantilla :: login"></div>
 	<div th:replace="fragmentos/plantilla :: scripts"></div>
 </body>
+</html>

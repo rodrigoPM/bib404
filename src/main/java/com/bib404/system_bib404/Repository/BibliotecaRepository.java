@@ -10,4 +10,5 @@ import com.bib404.system_bib404.entity.Biblioteca;
 
 @Repository("bibliotecaRepository")
 public interface BibliotecaRepository extends JpaRepository<Biblioteca, Serializable>{
+  
 }

@@ -76,6 +76,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public List<Usuario> listUsuario() {
 		return usuarioRep.findAll();
 	}
+	@Override
+	public List<Usuario> listUsuarioBib(int id_bib) {
+		return usuarioRep.findByBibliotecaId(id_bib);
+	}
 	
 	@Override
 	public List<Departamento> listDpto() {
@@ -244,6 +248,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public void removeUser(Usuario usuario) {
+		usuarioRep.delete(usuario);
+	}
+	@Override
+	public void deleteUser(int id) {
+		Usuario usuario=findById(id);
 		usuarioRep.delete(usuario);
 	}
 
