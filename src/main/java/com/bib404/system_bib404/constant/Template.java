@@ -14,6 +14,7 @@ public class Template {
 	
 	//gestionar usuario
 	public static final String GESTION_USUARIO = "gestionar_usuario/crear_usuario";
+	public static final String GESTION_USUARIO_PERFIL = "gestion_perfil";
 	
 	public static final String INDEX_ANONIMO= "index_anonimo";
 	public static final String REGISTRAR = "registrar_iniciar_Sesion/registrase";

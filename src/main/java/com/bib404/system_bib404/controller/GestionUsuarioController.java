@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bib404.system_bib404.constant.Template;
+import com.bib404.system_bib404.entity.Categoria;
 import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.PrestamoModel;
+import com.bib404.system_bib404.service.EncriptadoPass;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 
@@ -35,6 +37,10 @@ public class GestionUsuarioController {
 	@Autowired
 	@Qualifier("bibliotecaServiceImpl")
 	private BibliotecaServiceImpl bibliotecaServiceImpl;
+	
+	@Autowired
+	@Qualifier("encriptadoPass")
+	private EncriptadoPass encriptado;
 
 	@RequestMapping("/bib404/{id_bib}/gestion_usuario")
 	public ModelAndView listUsuarios(@PathVariable("id_bib") int id_bib, Model model, HttpServletRequest request)  throws ServletException, IOException  {
@@ -83,4 +89,46 @@ public class GestionUsuarioController {
 		return listUsuarios(id_bib, model, request);
 		
 	}
+	@GetMapping("/editar_usuario")
+	public ModelAndView editarUsuario(@RequestParam(name="id", required=false)int id, @RequestParam(name="id_bib") int id_bib, Model model,
+			@ModelAttribute(name="usuario") Usuario usuario, HttpServletRequest request) throws ServletException, IOException  {
+		Usuario user= new Usuario();
+		if(id!=0) {
+			user=usuarioServiceImpl.findById(id);
+			
+			
+			model.addAttribute("exito", "Se editó correctamente el usuario");
+		}
+		ModelAndView mav = new ModelAndView(Template.GESTION_USUARIO_PERFIL);
+		model.addAttribute("user", user);
+
+		return mav;
+		
+	}
+	@PostMapping("/adduser")
+	public ModelAndView addUser(Model model, @RequestParam(name="id") int id, @RequestParam(name="id_bib") int id_bib,
+			@ModelAttribute("username") String username,@ModelAttribute("password") String password, HttpServletRequest request)  throws ServletException, IOException  {
+			Usuario user=new Usuario();
+			user=usuarioServiceImpl.findById(id);
+			user.setUsername(username);
+			user.setPassword(password);
+			String pass = encriptado.Encriptar(user.getPassword());
+			user.setPassword(pass);
+			Usuario user2=usuarioServiceImpl.updateUser(user);
+			
+			model.addAttribute("exito", "Se editó correctamente el usuario");
+			
+			if (user2!=null) {
+				HttpSession sesion = request.getSession();
+				sesion.setAttribute("usuario", user);
+				model.addAttribute("exito", "Se editó correctamente el usuario");
+				return listUsuarios(id_bib, model, request);
+			}else {
+				System.out.println("Usuario repetido");
+				model.addAttribute("exito", "No se pudo editar el usuario");
+				return listUsuarios(id_bib, model, request);
+			}
+		
+	}
+
 }

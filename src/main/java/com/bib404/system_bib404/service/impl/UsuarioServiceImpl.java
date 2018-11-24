@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,8 +23,10 @@ import com.bib404.system_bib404.constant.Conexion;
 import com.bib404.system_bib404.entity.Biblioteca;
 import com.bib404.system_bib404.entity.Departamento;
 import com.bib404.system_bib404.entity.Municipio;
+import com.bib404.system_bib404.entity.Prestamo;
 import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.Graf;
+import com.bib404.system_bib404.model.PrestamoModel;
 import com.bib404.system_bib404.service.UsuarioService;
 
 
@@ -79,6 +82,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public List<Usuario> listUsuarioBib(int id_bib) {
 		return usuarioRep.findByBibliotecaId(id_bib);
+	}
+	@Override
+	public List<Usuario> listUsuarioBibs(int id_bib) {
+		List<Usuario> prestamos=usuarioRep.findByBibliotecaId(id_bib);
+		List<Usuario> valprestamos= prestamos.stream().filter(x -> x.getUsername()=="USER_ROLE").collect(Collectors.toList());
+		List<Usuario> usuario2=new ArrayList<Usuario>();
+		for(Usuario prestamo:valprestamos) {
+			usuario2.add(prestamo);
+		}
+		return valprestamos;
 	}
 	
 	@Override
