@@ -79,19 +79,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public List<Usuario> listUsuario() {
 		return usuarioRep.findAll();
 	}
+
 	@Override
 	public List<Usuario> listUsuarioBib(int id_bib) {
-		return usuarioRep.findByBibliotecaId(id_bib);
-	}
-	@Override
-	public List<Usuario> listUsuarioBibs(int id_bib) {
-		List<Usuario> prestamos=usuarioRep.findByBibliotecaId(id_bib);
-		List<Usuario> valprestamos= prestamos.stream().filter(x -> x.getUsername()=="USER_ROLE").collect(Collectors.toList());
-		List<Usuario> usuario2=new ArrayList<Usuario>();
-		for(Usuario prestamo:valprestamos) {
-			usuario2.add(prestamo);
+		List<Usuario> usuarios=usuarioRep.findByBibliotecaId(id_bib);
+		List<Usuario> resultado=usuarios.stream().filter(x -> x.getRol().equals("USER_ROLE")).collect(Collectors.toList());
+		List<Usuario> variable=new ArrayList<Usuario>();
+		for(Usuario prestamo:resultado) {
+			variable.add(prestamo);
 		}
-		return valprestamos;
+		return variable;
 	}
 	
 	@Override

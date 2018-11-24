@@ -44,7 +44,6 @@ public class GestionUsuarioController {
 
 	@RequestMapping("/bib404/{id_bib}/gestion_usuario")
 	public ModelAndView listUsuarios(@PathVariable("id_bib") int id_bib, Model model, HttpServletRequest request)  throws ServletException, IOException  {
-		
 		ModelAndView mav = new ModelAndView(Template.GESTION_USUARIO);
 		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());
 		if(usuarioServiceImpl.listUsuarioBib(id_bib).size()>0) {
