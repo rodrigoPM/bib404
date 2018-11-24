@@ -31,6 +31,7 @@ import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.PerfilModel;
 import com.bib404.system_bib404.service.EncriptadoPass;
 import com.bib404.system_bib404.service.impl.Functions;
+import com.bib404.system_bib404.service.impl.MensajeImp;
 import com.bib404.system_bib404.service.impl.SolicitudImpl;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 
@@ -53,6 +54,9 @@ public class SolicitarBib {
 	@Qualifier("encriptadoPass")
 	private EncriptadoPass encriptado;	
 	
+	@Autowired
+	@Qualifier("mensajeImp")
+	private MensajeImp mensajeImp;
 	
 	@GetMapping("/biblioteca")
 	public ModelAndView index(@RequestParam(name="res", required=false, defaultValue="NULL") String res,HttpServletRequest request)  throws ServletException, IOException  {
@@ -213,12 +217,13 @@ public class SolicitarBib {
 					retornar ="redirect:/solicitar/recibir?res=error";
 				}else {
 					solicitudImpl.eliminar(id_sol);
+					String mensaje = "Un gusto en saludarle, por este medio le enviamos sus nuevas credenciales para su biblioteca \nUsuario:"+solicitud.getUsuario()+"\npassword:"+solicitud.getContra()+"\n deseandole un feliz dia, nos despedimos, att: BIB404";
+					mensajeImp.sendMsj(mensaje,"Aceptacion de solicitud de biblioteca", solicitud.getCorreo());
 					retornar ="redirect:/solicitar/recibir?res=exito";
 				}
 				
-			}else {
+			}else 
 				retornar ="redirect:/solicitar/recibir?res=error";
-			}
 		}else {
 			retornar ="redirect:/solicitar/new_bib?id="+id+"&nm=error";
 		}
