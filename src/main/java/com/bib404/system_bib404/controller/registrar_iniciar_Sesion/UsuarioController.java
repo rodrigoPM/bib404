@@ -28,9 +28,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.service.EncriptadoPass;
+import com.bib404.system_bib404.service.impl.Functions;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 
 @Controller
@@ -43,6 +45,10 @@ public class UsuarioController extends HttpServlet{
 	@Autowired
 	@Qualifier("encriptadoPass")
 	private EncriptadoPass encriptado;	
+
+	@Autowired
+	@Qualifier("Functions")
+	private Functions funtions;
 	
 	@RequestMapping("/listUser")
 	public ModelAndView getAllUser(HttpServletRequest request)  throws ServletException, IOException  {
@@ -55,7 +61,7 @@ public class UsuarioController extends HttpServlet{
 	public String registrarse(@RequestParam(name="error", required=false, defaultValue="NULL") String nm, Model model,HttpServletRequest request)  throws ServletException, IOException  {
 		model.addAttribute("titulo","BIB404-registrarse");
 		HttpSession session = request.getSession();
-		if(session.getAttribute(Template.USER)==null) {
+		if(session.getAttribute(Constante.USER)==null) {
 			if(nm.compareToIgnoreCase("user")==0) {
 				model.addAttribute("valor","Error username, ocupado");
 				model.addAttribute("error",1);
@@ -88,7 +94,7 @@ public class UsuarioController extends HttpServlet{
 		String pass = encriptado.Encriptar(usuario.getPassword());
 		usuario.setPassword(pass);
 		usuario.setFecha_registro(new Date());
-		usuario.setRol(Template.USUARIO_SIMPLE);
+		usuario.setRol(Constante.USUARIO_SIMPLE);
 		int id_numicipio = Integer.parseInt(mun);
 		int id_biblioteca = Integer.parseInt(bib);
 		int val = 0;
@@ -118,7 +124,7 @@ public class UsuarioController extends HttpServlet{
 		String pass = encriptado.Encriptar(usuario.getPassword());
 		usuario.setPassword(pass);
 		usuario.setFecha_registro(new Date());
-		usuario.setRol(Template.ADMIN);
+		usuario.setRol(Constante.ADMIN);
 		int id_numicipio = Integer.parseInt(mun);
 		int id_biblioteca = Integer.parseInt(bib);
 		int val = 0;
@@ -139,8 +145,6 @@ public class UsuarioController extends HttpServlet{
 	}
 	
 	
-	
-	
 	@PostMapping("/logcheck")
 	public String loginCheck(@ModelAttribute("username") String username,@ModelAttribute("password") String password, HttpServletRequest request)  throws ServletException, IOException {
 		Usuario user = usuarioImp.findBy(username);
@@ -151,6 +155,9 @@ public class UsuarioController extends HttpServlet{
 			System.out.println("username= " +username+"=="+user.getUsername()+" password= " +password+"=="+encriptado.Desencriptar(user.getPassword()));
 			if (username.compareToIgnoreCase(user.getUsername()) == 0 && password.compareToIgnoreCase(encriptado.Desencriptar(user.getPassword()))==0 && sesion.getAttribute("usuario")==null) {
 				sesion.setAttribute("usuario", user);
+				if (funtions.isSuperUserBIB404(request)) {
+					return "redirect:/DashBoard/admin";
+				}
 				return "redirect:/";
 			}else {
 				return "redirect:/?error=user";
@@ -162,8 +169,8 @@ public class UsuarioController extends HttpServlet{
 	public String logout(@RequestParam(name="error", required=false, defaultValue="NULL") String name, Model model,HttpServletRequest request)  throws ServletException, IOException  {
 		model.addAttribute("titulo","BIB404-registrarse");
 		HttpSession session = request.getSession();
-		if(session.getAttribute(Template.USER)!=null) {
-			session.setAttribute(Template.USER, null);
+		if(session.getAttribute(Constante.USER)!=null) {
+			session.setAttribute(Constante.USER, null);
 			session.invalidate();
 		}
 		return "redirect:/index";

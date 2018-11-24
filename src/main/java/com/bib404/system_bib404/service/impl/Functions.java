@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.service.Funciones;
@@ -23,9 +24,9 @@ public class Functions implements Funciones{
 	@Override
 	public boolean isSuperUser(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute(Template.USER)!=null) {
-			Usuario user = (Usuario) session.getAttribute(Template.USER);
-			if (user.getRol().compareToIgnoreCase(Template.SUPER_USUARIO)==0) {
+		if (session.getAttribute(Constante.USER)!=null) {
+			Usuario user = (Usuario) session.getAttribute(Constante.USER);
+			if (user.getRol().compareToIgnoreCase(Constante.SUPER_USUARIO)==0) {
 				return true;
 			}else {
 				return false;
@@ -40,9 +41,9 @@ public class Functions implements Funciones{
 	@Override
 	public boolean isSuperUserBIB404(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute(Template.USER)!=null) {
-			Usuario user = (Usuario) session.getAttribute(Template.USER);
-			if (user.getRol().compareToIgnoreCase(Template.SUPER_SUPERUSUARIO)==0) {
+		if (session.getAttribute(Constante.USER)!=null) {
+			Usuario user = (Usuario) session.getAttribute(Constante.USER);
+			if (user.getRol().compareToIgnoreCase(Constante.SUPER_SUPERUSUARIO)==0) {
 				return true;
 			}else {
 				return false;
@@ -56,9 +57,9 @@ public class Functions implements Funciones{
 	@Override
 	public boolean isAdmin(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute(Template.USER)!=null) {
-			Usuario user = (Usuario) session.getAttribute(Template.USER);
-			if (user.getRol().compareToIgnoreCase(Template.ADMIN)==0) {
+		if (session.getAttribute(Constante.USER)!=null) {
+			Usuario user = (Usuario) session.getAttribute(Constante.USER);
+			if (user.getRol().compareToIgnoreCase(Constante.ADMIN)==0) {
 				return true;
 			}else {
 				return false;
@@ -72,10 +73,10 @@ public class Functions implements Funciones{
 	@Override
 	public boolean isUser(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute(Template.USER)!=null) {
-			Usuario user = (Usuario) session.getAttribute(Template.USER);
+		if (session.getAttribute(Constante.USER)!=null) {
+			Usuario user = (Usuario) session.getAttribute(Constante.USER);
 			System.out.println(user.getRol());
-			if (user.getRol().compareToIgnoreCase(Template.USUARIO_SIMPLE)==0) {
+			if (user.getRol().compareToIgnoreCase(Constante.USUARIO_SIMPLE)==0) {
 				return true;
 			}else {
 				return false;
@@ -90,7 +91,7 @@ public class Functions implements Funciones{
 	@Override
 	public boolean isAnyUser(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute(Template.USER)!=null) {
+		if (session.getAttribute(Constante.USER)!=null) {
 			return true;
 		}else {
 			return false;
@@ -101,8 +102,8 @@ public class Functions implements Funciones{
 	@Override
 	public boolean pertenece_biblioteca(int id_user, int id_bib, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (session.getAttribute(Template.USER)!=null) {
-			Usuario user = (Usuario) session.getAttribute(Template.USER);
+		if (session.getAttribute(Constante.USER)!=null) {
+			Usuario user = (Usuario) session.getAttribute(Constante.USER);
 			System.out.println(user.getBiblioteca().getNombre_biblioteca()+"   id: "+user.getBiblioteca().getId());
 			if (user.getBiblioteca().getId()==id_bib && user.getId()==id_user) {
 				return true;

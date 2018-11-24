@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.service.impl.Functions;
@@ -38,14 +39,14 @@ public class dashBoardController {
 		ModelAndView mav = new ModelAndView();
 		if (funtions.isSuperUserBIB404(request)) {
 			HttpSession session = request.getSession();
-			Usuario user =(Usuario) session.getAttribute(Template.USER);
+			Usuario user =(Usuario) session.getAttribute(Constante.USER);
 			mav.addObject("user",user);
 			mav.addObject("bib",usuarioImp.findBibByUser(user.getUsername()));
 			mav.setViewName(Template.dashBoard);
 		}else {
 			if (funtions.isAdmin(request) || funtions.isSuperUser(request)) {
 				HttpSession session = request.getSession();
-				Usuario user =(Usuario) session.getAttribute(Template.USER);
+				Usuario user =(Usuario) session.getAttribute(Constante.USER);
 				mav.addObject("user",user);
 				mav.addObject("bib",usuarioImp.findBibByUser(user.getUsername()));
 				mav.setViewName(Template.dashAd);
@@ -72,7 +73,7 @@ public class dashBoardController {
 					mav.addObject("error",false);
 			}
 			HttpSession session = request.getSession();
-			Usuario user =(Usuario) session.getAttribute(Template.USER);
+			Usuario user =(Usuario) session.getAttribute(Constante.USER);
 			mav.addObject("user",user);
 			mav.addObject("bib",usuarioImp.findBibByUser(user.getUsername()));
 			mav.setViewName(Template.REGISTRAR_ADMIN);

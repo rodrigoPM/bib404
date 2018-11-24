@@ -236,6 +236,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		try {
 			List<Biblioteca> mun = listBibliotecas();
 			int id = mun.size() + 1;
+			v=id;
 			java.util.Date f2 = new java.util.Date();
 			SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
 			String f4 = formateador.format(f2);
@@ -243,10 +244,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 			String sql = "INSERT INTO BIBLIOTECA (ID, CODIGO_BIBLIOTECA, NOMBRE_BIBLIOTECA, MUNICIPIO_ID,FECHA_REGISTRO) VALUES ("+id+", \'"+bib.getCodigo_biblioteca()+"\', \'"+bib.getNombre_biblioteca()+"\', "+id_municipio+", "+fecha_registro+")";
 			Statement sentencia;
 			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			v = sentencia.executeUpdate(sql);
+			sentencia.executeUpdate(sql);
 			sentencia.close();
 			getConexion().commit();
-			v=id;
 		} catch (SQLException e) {
 			System.out.println("DB");
 		}
