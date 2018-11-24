@@ -7,6 +7,8 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
+import com.bib404.system_bib404.entity.Autor;
+import com.bib404.system_bib404.entity.QAutor;
 import com.bib404.system_bib404.entity.QDetalleRecurso;
 import com.bib404.system_bib404.entity.QRecursoBibliotecario;
 import com.bib404.system_bib404.entity.QRecursoEspecifico;
@@ -19,6 +21,7 @@ public class ConsultasRE {
 	private QRecursoEspecifico qRecursoEspecifico=QRecursoEspecifico.recursoEspecifico;
 	private QDetalleRecurso qDetalleRecurso=QDetalleRecurso.detalleRecurso;
 	private QRecursoBibliotecario qRecursoBibliotecario=QRecursoBibliotecario.recursoBibliotecario;
+	private QAutor qAutor=QAutor.autor;
 	@PersistenceContext
 	private EntityManager em;
 	
@@ -38,5 +41,4 @@ public class ConsultasRE {
 				.where(qRecursoBibliotecario.id.eq(id)).fetchOne();
 		return rb;
 	}
-
 }

@@ -40,7 +40,7 @@ import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 @Controller
 @RequestMapping(Url.INDEX_BIB404) // --> /
 public class IndexBib404Controller {
-	
+
 	@Autowired
 	@Qualifier("usuarioServiceImpl")
 	private UsuarioServiceImpl usuarioImp;
@@ -52,59 +52,59 @@ public class IndexBib404Controller {
 	@Autowired
 	@Qualifier("Functions")
 	private Functions funtions;
-	
+
 	@Autowired
 	@Qualifier("encriptadoPass")
-	private EncriptadoPass encriptado;	
-	
-	
+	private EncriptadoPass encriptado;
+
+
 	@GetMapping("/")
 	public ModelAndView indexAnonimo(HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.INDEX_BIB404);
 		mav.addObject("titulo", "System BIB404");
 		mav.addObject("urlHome", "/");
 		HttpSession sesion = request.getSession();
-		
+
 		if(sesion.getAttribute(Template.USER)==null) {
 			mav.addObject("anonimo", true);
 		}else {
 			mav.addObject("user2", true);
-			
+
 			if (sesion.getAttribute("userup")==null)
 			{
-			
+
 			mav.addObject("user", sesion.getAttribute(Template.USER));
 			}
 			else {
-				
+
 				mav.addObject("user", sesion.getAttribute("userup"));
-				
+
 			}
-			
-			
+
+
 		}
-		if(bibliotecaService.listAllBibs().size() >0) {
+		if(bibliotecaService.listAllBibliotecas().size() >0) {
 			mav.addObject("bib", true);
-			mav.addObject("bibliotecas", bibliotecaService.listAllBibs());
+			mav.addObject("bibliotecas", bibliotecaService.listAllBibliotecas());
 		}else {
 			mav.addObject("bib", false);
 		}
-		
-		
+
+
 		return mav;
 	}
-	
+
 	@GetMapping("{id_bib}")
 	public String redirectBib(@PathVariable("id_bib") int id_bib) {
 		return "redirect:/bib404/"+id_bib;
 	}
-	
-	
-	
+
+
+
 	@GetMapping("/index")
 	public String indexUsuario(HttpServletRequest request, Model model)  throws ServletException, IOException  {
 		HttpSession sesion = request.getSession();
-		model.addAttribute("titulo","BIB404");		
+		model.addAttribute("titulo","BIB404");
 		if(sesion.getAttribute(Template.USER)==null) {
 			return "redirect:/";
 		}else {
@@ -114,8 +114,8 @@ public class IndexBib404Controller {
 		}
 
 	}
-	
-	
+
+
 	@GetMapping("/biblioteca")
 	public String registrarse(@RequestParam(name="error", required=false, defaultValue="NULL") String nm, Model model,HttpServletRequest request)  throws ServletException, IOException  {
 		model.addAttribute("titulo","BIB404-registrarse");
@@ -147,7 +147,7 @@ public class IndexBib404Controller {
 			return "redirect:/index";
 		}
 	}
-	
+
 	@PostMapping("/addSuper")
 	public String redireccionSuper(@Valid @ModelAttribute("usuario") Usuario usuario,@ModelAttribute("mun") String mun,HttpServletRequest request)  throws ServletException, IOException {
 		String pass = encriptado.Encriptar(usuario.getPassword());
@@ -166,7 +166,7 @@ public class IndexBib404Controller {
 		}else {
 			val = usuarioImp.addUser(usuario, id_numicipio, id_biblioteca);
 		}
-		
+
 		if (val==1) {
 			HttpSession sesion = request.getSession();
 			sesion.setAttribute("usuario", usuario);
@@ -175,9 +175,9 @@ public class IndexBib404Controller {
 			return "redirect:/biblioteca?error=user";
 		}
 	}
-	
-	
-	
+
+
+
 	@GetMapping("/bibliotecaS")
 	public String biblioteca(HttpServletRequest request, Model model)  throws ServletException, IOException  {
 		String bib ="biblioteca";
@@ -186,20 +186,20 @@ public class IndexBib404Controller {
 			List<Municipio> municipios = usuarioImp.listMunicipiosOrderByNombre();
 			model.addAttribute("biblioteca",new Biblioteca());
 			model.addAttribute("municipios",municipios);
-			model.addAttribute("user", session.getAttribute(Template.USER));			
+			model.addAttribute("user", session.getAttribute(Template.USER));
 		}else {
 			return "redirect:/";
 		}
 		return bib;
 	}
-	
+
 
 	@PostMapping("/addBib")
 	public String insertBib(HttpServletRequest request,@Valid @ModelAttribute("biblioteca") Biblioteca bib, @ModelAttribute("mun") String mun_id)throws ServletException, IOException   {
 		String ret="";
 		Log log = LogFactory.getLog(UsuarioController.class);
 		log.info(""+bib.getId());
-		
+
 		if (funtions.isSuperUser(request)) {
 			HttpSession session = request.getSession();
 			log.info(bib.getNombre_biblioteca());
@@ -215,11 +215,11 @@ public class IndexBib404Controller {
 				ret ="redirect:/DashBoard/admin";
 			}
 		}else {
-			
+
 		}
 		return ret;
-	}	
-	
-	
-	
+	}
+
+
+
 }

@@ -35,7 +35,7 @@
 	<nav th:replace="fragmentos/plantilla :: navbar-user"></nav> 
 	<div class="container">	
 		<h1>Detalles del recurso</h1>
-		<br/>
+		<br/>			 
 			<table class="table" border="2">
 				<thead class="thead">
 					<tr>
@@ -50,31 +50,12 @@
 					</tr>												
 				</tbody>
 			</table>
-		<!--<div th:each="recursoEspecifico : ${recursosEspecificos}">
-			<table class="table" border="2">
-				<thead class="thead">
-					<tr>
-						<th>Imagen</th>
-						<th>Descripcion del recurso</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr >
-                        <td th:text="${recursoEspecifico.detalle_recurso.recurso_bib.imagen_recurso_bibl}"></td>
-						<td th:text="${recursoEspecifico.detalle_recurso.recurso_bib.descripcion_recurso_bib}"></td>
-					</tr>												
-				</tbody>
-			</table>
-            <!-- <p>
-                <strong>Editorial: </strong>
-                <span th:text="${recursoEspecifico.editorial.nombre_editorial} "></span>
-                <span th:text="${recursoEspecifico.editorial.anio_publicacion}"></span>
-            </p>-->
 			<table class="table" border="2">
 				<thead class="thead">
 					<tr>
 						<th>Formato</th>
 						<th>Codigo</th>
+						<th>Autor</th>
 						<th>Edicion</th>
 						<th>Editorial</th>
 						<th>Volumen</th>
@@ -88,6 +69,7 @@
 					<tr>
                         <td th:text="${recursoEspecifico.formato_recurso.nombre_formato}"></td>
 						<td th:text="${recursoEspecifico.codigo_rec_esp}"></td>
+						<td></td>
 						<td th:text="${recursoEspecifico.edicion_recurso}"></td>
 						<td th:text="${recursoEspecifico.editorial.nombre_editorial}"></td>
 						<td th:text="${recursoEspecifico.volumen_recurso}"></td>

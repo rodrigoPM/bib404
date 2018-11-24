@@ -44,8 +44,13 @@ public class CategoriaController {
 
 	@RequestMapping("")
 	public ModelAndView adminCategoria(@PathVariable("id_bib") int id_bib,HttpServletRequest request) {
+		if(!biblioteca.existsBibById(id_bib)){
+			ModelAndView mav =new ModelAndView("redirect:/");
+			return mav;
+		}
 		ModelAndView mav =new ModelAndView(Template.CATEGORIA);
 		mav.addObject("titulo", "Categorias");
+		mav.addObject("url_categoria", "/bib404/"+id_bib+"/dashboard/categorias");
 		mav.addObject("name_bib", biblioteca.findById(id_bib).getNombre_biblioteca());
 		mav.addObject("crearCategoria", "/bib404/"+id_bib+"/dashboard/categorias/nueva"); //action del form crear categoria
 		mav.addObject("borrarCategoria", "/bib404/"+id_bib+"/dashboard/categorias/borrar"); //action del form eliminar categoria
@@ -53,7 +58,6 @@ public class CategoriaController {
 		mav.addObject("objectAux", new ObjectAux());
 		if(categoria.listAllCategorias(id_bib).size()>0) {
 			mav.addObject("categorias", categoria.listAllCategorias(id_bib));
-			System.out.println("id cat primera:"+categoria.listAllCategorias(id_bib).get(1).getId());
 		}
 
 		HttpSession session = request.getSession();

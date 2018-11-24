@@ -2,8 +2,7 @@ server:
     error:
         whitelabel:
             enabled: false
-    port: 91
-
+    port: 90
 spring:
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:orcl
