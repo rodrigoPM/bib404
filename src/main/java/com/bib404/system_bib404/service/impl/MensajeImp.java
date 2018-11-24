@@ -39,7 +39,7 @@ public class MensajeImp implements Mensaje{
 	        transport.close();
 	    }
 	    catch (MessagingException me) {
-	        me.printStackTrace();   //Si se produce un error
+	        System.out.println("Error: "+me.getMessage());   //Si se produce un error
 	    }
 		
 		
