@@ -18,6 +18,7 @@ public class MensajeImp implements Mensaje{
 
 	@Override
 	public void sendMsj(String mensaje, String asunto, String destino) {
+		
 		String remitente = "BIB404G02@gmail.com";  
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
