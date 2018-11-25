@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.bib404.system_bib404.Repository.PrestamoRepository;
 import com.bib404.system_bib404.component.PrestamoConverter;
 import com.bib404.system_bib404.entity.Prestamo;
+import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.PrestamoModel;
 import com.bib404.system_bib404.service.PrestamoService;
 
@@ -75,6 +76,16 @@ public class PrestamoServiceImpl implements PrestamoService{
 			prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
 		}
 		return prestamoModels;
+	}
+	@Override
+	public List<Prestamo> listPrestadosEspecificos(int id_user) {
+		List<Prestamo> prestamos=prestamoRepository.findByUsuarioId(id_user);
+		List<Prestamo> resultado=prestamos.stream().filter(x -> !x.getRecursoEspecifico().getFormato_recurso().getNombre_formato().equals("fisico")).collect(Collectors.toList());
+		List<Prestamo> variable=new ArrayList<Prestamo>();
+		for(Prestamo prestamo:resultado) {
+			variable.add(prestamo);
+		}
+		return variable;
 	}
 
 

@@ -16,7 +16,7 @@ public class PrestamoModel {
 	private int estado;
 	private Date fecha_devolucion;
 	private Usuario usuario;
-	private Set<RecursoEspecifico> recurso_especifico;
+	private RecursoEspecifico recurso_especifico;
 	public int getId() {
 		return id;
 	}
@@ -65,14 +65,15 @@ public class PrestamoModel {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	public Set<RecursoEspecifico> getRecurso_especifico() {
+	public RecursoEspecifico getRecursoEspecifico() {
 		return recurso_especifico;
 	}
-	public void setRecurso_especifico(Set<RecursoEspecifico> recurso_especifico) {
+	public void setRecursoEspecifico(RecursoEspecifico recurso_especifico) {
 		this.recurso_especifico = recurso_especifico;
 	}
+	
 	public PrestamoModel(int id, Date fecha_prestamo, Date fecha_entrega, int cantidad_recurso_bib, boolean mora,
-			int estado, Date fecha_devolucion, Usuario usuario, Set<RecursoEspecifico> recurso_especifico) {
+			int estado, Date fecha_devolucion, Usuario usuario, RecursoEspecifico recurso_especifico) {
 		super();
 		this.id = id;
 		this.fecha_prestamo = fecha_prestamo;

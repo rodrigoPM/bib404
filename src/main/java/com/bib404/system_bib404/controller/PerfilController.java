@@ -73,15 +73,6 @@ private EncriptadoPass encriptado;
 @Qualifier("perfilConverter")
 private PerfilConverter perfilconverter;
 
-@RequestMapping("/digitales")
-public ModelAndView listPrestamos(Model model, HttpServletRequest request)  throws ServletException, IOException  {
-	ModelAndView mav = new ModelAndView(Template.DIGITALES);
-	/*mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
-	model.addAttribute("prestado", 1);*/
-	
-	return mav;
-}
-
 @GetMapping("/perfil")
 public String redirectPerfilForm(Model model,@ModelAttribute(name="username") String username,HttpServletRequest request) {
 

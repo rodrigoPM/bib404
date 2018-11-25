@@ -19,7 +19,6 @@ public class RecursoEspecificoConverter {
         		recursoEspecificoModel.getFormato_recurso(),
         		recursoEspecificoModel.getEditorial(),
         		recursoEspecificoModel.getDetalle_recurso(),
-        		recursoEspecificoModel.getPrestamo(),
         		recursoEspecificoModel.getAutor()
         		);
     }
@@ -34,7 +33,6 @@ public class RecursoEspecificoConverter {
         		recursoEspecifico.getFormato_recurso(),
         		recursoEspecifico.getEditorial(),
         		recursoEspecifico.getDetalle_recurso(),
-        		recursoEspecifico.getPrestamo(),
         		recursoEspecifico.getAutor()
         		);
     }

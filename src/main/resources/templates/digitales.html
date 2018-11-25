@@ -99,30 +99,14 @@
 	<div class="container">
 
 		<h2>MIS RECURSOS DIGITALES</h2>
-		<div class="card">
+		
 		<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
   			<h5 class="card-header">Nombre de Categoria</h5>
   		</div>
+  		<div class="card">
   			<div class="card-body">
-  			<div class="panel">
-    			<div class="card">
-    			<div class="containeru">
-    			<div class="image">
-				  	<img class="card-img-top" th:src="@{/imgs/libro.jpg}" style="height:200px; opacity: 1;
-  						width:200px; display: block; transition: .5s ease; backface-visibility: hidden">
-  						</div>
-  						<div class="middle">
-    						<div class="text">Autor:Disney Editorial: La Ceiba</div>
-  						</div>
-  					</div>
-				  <div class="card-body">
-				    <h4 class="card-title">El Libro de la Selva</h4>
-				    <!--<p class="card-text">Some example text.</p>
-				    <a href="#" class="btn btn-primary">See Profile</a>-->
-				  </div>
-				</div>
-  			</div>
-  			<div class="panel">
+  			
+  			<div th:each="prestamo: ${prestamos}"  class="panel">
     			<div class="card">
 				  	<div class="containeru">
     			<div class="image">
@@ -130,34 +114,20 @@
   						width:200px; display: block; transition: .5s ease; backface-visibility: hidden">
   						</div>
   						<div class="middle">
-    						<div class="text">Autor:Disney Editorial: La Ceiba</div>
+  							<div class="text">
+  								<strong>Editorial: </strong>
+    							<p th:text="${prestamo.recursoEspecifico.editorial.nombre_editorial}"></p>
+    						</div>
   						</div>
   					</div>
 				  <div class="card-body">
-				    <h4 class="card-title">El Libro de la Selva</h4>
+				    <h4 th:text="${prestamo.recursoEspecifico.detalle_recurso.recurso_bib.nombre_recurso_bib}" class="card-title"></h4>
 				    <!--<p class="card-text">Some example text.</p>
 				    <a href="#" class="btn btn-primary">See Profile</a>-->
 				  </div>
 				</div>
   			</div>
-  			<div class="panel">
-    			<div class="card">
-				  	<div class="containeru">
-    				<div class="image">
-				  	<img class="card-img-top" th:src="@{/imgs/libro.jpg}" style="height:200px; opacity: 1;
-  						width:200px; display: block; transition: .5s ease; backface-visibility: hidden">
-  						</div>
-  						<div class="middle">
-    						<div class="text">Autor:Disney Editorial: La Ceiba</div>
-  						</div>
-  					</div>
-				  <div class="card-body">
-				    <h4 class="card-title">El Libro de la Selva</h4>
-				    <!--<p class="card-text">Some example text.</p>
-				    <a href="#" class="btn btn-primary">See Profile</a>-->
-				  </div>
-				</div>
-  			</div>
+  			
   			</div>
   			
 		</div>

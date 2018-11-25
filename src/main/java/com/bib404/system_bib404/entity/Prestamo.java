@@ -56,8 +56,13 @@ public class Prestamo {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Usuario usuario;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "prestamo")
-	private Set<RecursoEspecifico> recurso_especifico = new HashSet<>();
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "recurso_especifico_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private RecursoEspecifico recurso_especifico;
+	
+	//@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "prestamo")
+	//private Set<RecursoEspecifico> recurso_especifico = new HashSet<>();
 
 	public int getId() {
 		return id;
@@ -122,17 +127,24 @@ public class Prestamo {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	public RecursoEspecifico getRecursoEspecifico() {
+		return recurso_especifico;
+	}
 
+	public void setRecursoEspecifico(RecursoEspecifico recurso_especifico) {
+		this.recurso_especifico = recurso_especifico;
+	}
+/*
 	public Set<RecursoEspecifico> getRecurso_especifico() {
 		return recurso_especifico;
 	}
 
 	public void setRecurso_especifico(Set<RecursoEspecifico> recurso_especifico) {
 		this.recurso_especifico = recurso_especifico;
-	}
+	}*/
 
 	public Prestamo(int id, Date fecha_prestamo, Date fecha_entrega, int cantidad_recurso_bib, boolean mora, int estado,
-			Date fecha_devolucion, Usuario usuario, Set<RecursoEspecifico> recurso_especifico) {
+			Date fecha_devolucion, Usuario usuario, RecursoEspecifico recurso_especifico) {
 		super();
 		this.id = id;
 		this.fecha_prestamo = fecha_prestamo;

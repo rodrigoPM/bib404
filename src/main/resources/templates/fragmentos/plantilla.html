@@ -265,7 +265,7 @@
 						<div class="dropdown-menu" aria-labelledby="dropdownUser ">
 							<a class="dropdown-item"
 								th:href="@{/perfil?username=__${user.username}__}">Ver
-								perfil</a> <a class="dropdown-item" href="#">Mis Digitales</a> <a
+								perfil</a> <a class="dropdown-item" th:href="@{/ver_digitales?id_user=__${user.id}__}">Mis Digitales</a> <a
 								class="dropdown-item" th:href="@{/usuarios/logout}">Cerrar
 								Sesión</a>
 						</div></li>
