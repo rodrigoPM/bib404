@@ -60,13 +60,27 @@
 						</div>
 						
 						<div class="form-group">
-								<label for="recursofisico" class="col-form-label">Recurso bibliotecario fisico</label>
-								<input type="text" class="form-control" id="{fisico_recurso_bib}" name="{fisico_recurso_bib}" th:fields="*{fisico_recurso_bib}" required="true"> 
+								<label for="recursofisico" class="col-form-label"> cantidad de Recurso bibliotecario digital</label>
+								<input type="number" class="form-control"  id="digital_recurso_bib" OnClick="sumar()"  name="digital_recurso_bib"  th:fields="*{fisico_recurso_bib}" min="0" step="1"  required="true" > 
 							</div>
+							<div class="form-group">
+								<select id="mun" name="mun"  class="form-control" required="true" >
+			        <option th:each="muni : ${municipios}" 
+			        	th:value="${muni.id}"
+			        	th:text="${muni.nombre_municipio}"
+			       th:selected="${muni.id}==*{municipio.id}" ></option>
+			      </select>
+							</div>	
+								<div class="form-group">
+								<label for="recursodigital" class="col-form-label">cantidad de Recurso bibliotecario fisico</label>
+								<input type="number" class="form-control"  id="fisico_recurso_bib" OnClick="sumar()"  name="fisico_recurso_bib" th:fields="*{fisico_recurso_bib}" min="0" step="1" required="true"  > 
+							</div>
+					
 					
 							<div class="form-group">
 								<label for="Total" class="col-form-label">cantidad </label>
-								<input type="number" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" required="true"> 
+								<input type="text" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" readonly="readonly" required="true"> 
+								<span id="total_recurso_bib"></span>
 							</div>
 							
 							<div class="form-group">
@@ -82,7 +96,7 @@
 						<div class="modal-footer">
 							<input type="hidden" name="sbmName" value="sbmGuardarCuenta">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCerrarMdlGuardar">Cerrar</button>
-							<input type="submit" id="btnGuardar" value="Guardar" class="btn btn-success">
+							<input type="submit" id="btnGuardar" value="Guardar" class="btn btn-success" disabled >
 							<div class="alert alert-success" role="alert" id="respuestaGuardar"></div>
 						</div>
 					</form>
@@ -115,6 +129,8 @@
 									<td></td>
 									<td></td>
 									<td></td>
+									<td></td>
+									
 									<td><button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#mdlEditar_${recursoList.id}">Editar</button></td>
 									<td><button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#mdlEliminar_${recursoList.id}" id="btnEliminarCuenta_{{cuentasList.id}}">Eliminar</button></td>
 									<input type="hidden" th:value="${recursoList.id}" name="cuenta_${recursoList.id}" id="cuenta_${recursoList.id}">
@@ -139,29 +155,7 @@
 								  	</div>
 								</div>
 								
-								<script type="text/javascript">
-									$(document).ready(function(){
-										$("#btnEliminarCuenta_*{recursoList.id}").on('click', function(e){
-										    var a = "${recursoList.id}";
-										    var cuentaID = $("#cuenta_"+a+"").serialize();
-										    $.ajax({
-										    	url: "eliminarCuenta/"+a+"",
-										    	type: "POST",
-										    	data: "",
-										    	success: function(data){
-									    			$.ajax({
-														url:"/",
-														type:"POST",
-														data:"",
-														success:function(response){
-															$("#content").html(response);
-														},
-													});
-										    	}
-										    });
-										});
-									});
-								</script>
+								
 						</tbody>
 						</table>
 	
@@ -174,11 +168,23 @@
 		<script src="#" th:src="@{/js/fontawesome.min.js}"></script>
 		<script src="#" th:src="@{/js/regular.min.js}"></script>
 		<script src="#" th:src="@{/js/solid.min.js}"></script>
-
 		<script src="#" th:src="@{/js/jquery.scrollex.min.js}"></script>
 		<script src="#" th:src="@{/js/skel.min.js}"></script>
 		<script src="#" th:src="@{/js/util.js}"></script>
 		<script src="#" th:src="@{/js/main.js}"></script>
+		<script src="#" th:src="@{/js/deshabilitar.js}"></script>
+	<script type="text/javascript">
+	
+	function sumar() {
+
+		 a= document.getElementById("fisico_recurso_bib").value;
+		 b=document.getElementById("digital_recurso_bib").value;
+		 c=parseInt(a)+parseInt(b);
+		 document.getElementById("total_recurso_bib").value=c;
+		}
+	
+	
+	</script>
 	
 	</div>
 </body>

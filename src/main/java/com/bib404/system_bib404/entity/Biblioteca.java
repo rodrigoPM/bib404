@@ -48,10 +48,6 @@ public class Biblioteca {
 	@Column(name = "fecha_registro")
 	private Date fecha_registro;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "bib_recurso_bib", joinColumns = { @JoinColumn(name = "biblioteca_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "recurso_bib_id") })
-	private Set<RecursoBibliotecario> recurso_bib = new HashSet<>();
 
 	public int getId() {
 		return id;
@@ -99,22 +95,14 @@ public class Biblioteca {
 		this.municipio = municipio;
 	}
 
-	public Set<RecursoBibliotecario> getRecurso_bib() {
-		return recurso_bib;
-	}
-
-	public void setRecurso_bib(Set<RecursoBibliotecario> recurso_bib) {
-		this.recurso_bib = recurso_bib;
-	}
-
 	public Biblioteca(int id, String nombre_biblioteca, @Size(min = 5, max = 30) String codigo_biblioteca,
-			Municipio municipio, Set<RecursoBibliotecario> recurso_bib) {
+			Municipio municipio) {
 		super();
 		this.id = id;
 		this.nombre_biblioteca = nombre_biblioteca;
 		this.codigo_biblioteca = codigo_biblioteca;
 		this.municipio = municipio;
-		this.recurso_bib = recurso_bib;
+
 		this.fecha_registro=new Date();
 	}
 
@@ -125,7 +113,7 @@ public class Biblioteca {
 	@Override
 	public String toString() {
 		return "Biblioteca [id=" + id + ", nombre_biblioteca=" + nombre_biblioteca + ", codigo_biblioteca="
-				+ codigo_biblioteca + ", municipio=" + municipio + ", recurso_bib=" + recurso_bib + "]";
+				+ codigo_biblioteca + ", municipio=" + municipio + "]";
 	}
 	
 }

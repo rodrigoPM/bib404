@@ -48,9 +48,13 @@ public class RecursoBibliotecario {
 	@Column(name = "total_recurso_bib")
 	private String total_recurso_bib;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "recurso_bib")
-	private Set<Biblioteca> biblioteca = new HashSet<>();
 
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "biblioteca_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Biblioteca biblioteca;
+	
+	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "tipo_recurso_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -63,7 +67,7 @@ public class RecursoBibliotecario {
 
 	public RecursoBibliotecario(int id, String nombre_recurso_bib, String descripcion_recurso_bib,
 			String sinopsis_recurso_bib, String imagen_recurso_bibl, String digital_recurso_bib,
-			String fisico_recurso_bib, String total_recurso_bib, Set<Biblioteca> biblioteca, TipoRecurso tipo_recurso,
+			String fisico_recurso_bib, String total_recurso_bib, Biblioteca biblioteca, TipoRecurso tipo_recurso,
 			Set<Categoria> categoria) {
 		super();
 		this.id = id;
@@ -143,11 +147,13 @@ public class RecursoBibliotecario {
 		this.total_recurso_bib = total_recurso_bib;
 	}
 
-	public Set<Biblioteca> getBiblioteca() {
+
+
+	public Biblioteca getBiblioteca() {
 		return biblioteca;
 	}
 
-	public void setBiblioteca(Set<Biblioteca> biblioteca) {
+	public void setBiblioteca(Biblioteca biblioteca) {
 		this.biblioteca = biblioteca;
 	}
 

@@ -30,7 +30,7 @@ public class BibliotecaConverter {
 		biblioteca.setCodigo_biblioteca(bibliotecaModel.getCodigo_biblioteca());
 		biblioteca.setMunicipio(municipio.convertMunicipioModel2Municipio(bibliotecaModel.getMunicipio()));
 		
-		biblioteca.setRecurso_bib(bibliotecaModel.getRecurso_bib());
+		//biblioteca.setRecurso_bib(bibliotecaModel.getRecurso_bib());
 
 		return biblioteca;
 	}
@@ -42,7 +42,7 @@ public class BibliotecaConverter {
 		bibliotecaModel.setCodigo_biblioteca(biblioteca.getCodigo_biblioteca());
 		bibliotecaModel.setMunicipio(municipio.convertMunicipio2MunicipioModel(biblioteca.getMunicipio()));
 
-		bibliotecaModel.setRecurso_bib(biblioteca.getRecurso_bib());
+//		bibliotecaModel.setRecurso_bib(biblioteca.getRecurso_bib());
 
 		return bibliotecaModel;
 	}
