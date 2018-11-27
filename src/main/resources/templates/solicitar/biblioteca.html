@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+    <meta charset="utf-8"/>
+
+    <title>Solicitar Biblioteca</title>
+	
+	<link rel="stylesheet" href="#" />
+ 	
+  </head>
+  <body>
+  	<div th:if="${us}">
+		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
+	</div>
+	<div th:if="${anonimo}">
+		<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
+	</div>
+	<div class="container">
+		<section class="bg-light" id="portfolio" style="margin-top:25px;">
+      		<div class="container">
+		      	<div class="row">
+		          <div class="col-lg-12 text-center">
+					<div th:if="${exito}">
+						<h2 class="section-heading text-uppercase alert-success">Solicitud enviada con exito</h2>
+					</div>
+					<div th:if="${error}">
+						<h2 class="section-heading text-uppercase alert-danger">Error en al enviar solicitud, intentelo de nuevo!!!!</h2>
+					</div>
+		            <h2 class="section-heading text-uppercase">Solicitar Biblioteca</h2>
+		          </div>
+		          <div class="col-lg-12">
+		          <br><br>
+		          	<form action="" th:action="@{/solicitar/addSolicitud}" th:objects="*{solicitud}" method="post">
+		          		<div class="form-inline">
+		          			<label class="col-lg-4">Nombre Biblioteca: </label>
+		          			<input type="text" required="required" th:fields="*{nombre_biblioteca}" id="nombre_biblioteca" name="nombre_biblioteca"  class="form-control col-lg-6" placeholder="Ingrese el nombre de la biblioteca">
+		          		</div><br>
+		          		<div class="form-inline">
+		          			<label class="col-lg-4">Municipio de biblioteca: </label>
+		          			<select required="required" class="form-control  col-lg-6" id="mun" name="mun">
+		          				<option value="">None</option>
+		          				<option th:each="muni : ${municipios}" th:value="${muni.id}" th:text="${muni.nombre_municipio}"></option>
+		          			</select>
+		          		</div><br>
+		          		<div class="form-inline">
+		          			<label class="col-lg-4">Usuario deseado: </label>
+		          			<input type="text" required="required" th:fields="*{usuario}" name="usuario" id="usuario" class="form-control col-lg-6"  placeholder="Ingrese el nombre de la biblioteca">
+		          		</div><br>
+		          		<div class="form-inline">
+		          			<label class="col-lg-4">Correo: </label>
+		          			<input type="email" required="required" th:fields="*{correo}" name="correo" id="correo" class="form-control col-lg-6" placeholder="Ingrese el nombre de la biblioteca">
+		          		</div><br>
+		          		<div class=" col-lg-12 text-center">
+		          			<input type="submit" class="btn btn-success center" value="enviar solicitud">
+		          		</div>
+		          	</form>
+		          </div>
+		        </div>
+      		</div>
+      	</section>
+	</div>
+	<div th:replace="fragmentos/plantilla :: login"></div>
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
+</html>

@@ -19,7 +19,6 @@ public class RecursoEspecificoModel {
 	private FormatoRecurso formato_recurso;
 	private Editorial editorial;
 	private DetalleRecurso detalle_recurso;
-	private Set<Prestamo> prestamo = new HashSet<>();
 	private Set<Autor> autor = new HashSet<>();
 
 	public int getId() {
@@ -85,14 +84,14 @@ public class RecursoEspecificoModel {
 	public void setDetalle_recurso(DetalleRecurso detalle_recurso) {
 		this.detalle_recurso = detalle_recurso;
 	}
-
+/*
 	public Set<Prestamo> getPrestamo() {
 		return prestamo;
 	}
 
 	public void setPrestamo(Set<Prestamo> prestamo) {
 		this.prestamo = prestamo;
-	}
+	}*/
 
 	public String getCodigo_rec_esp() {
 		return codigo_rec_esp;
@@ -112,7 +111,7 @@ public class RecursoEspecificoModel {
 
 	public RecursoEspecificoModel(int id, boolean consulta_interna, int volumen_recurso, int edicion_recurso,
 			boolean prestado, String codigo_rec_esp, FormatoRecurso formato_recurso, Editorial editorial,
-			DetalleRecurso detalle_recurso, Set<Prestamo> prestamo, Set<Autor> autor) {
+			DetalleRecurso detalle_recurso, Set<Autor> autor) {
 		super();
 		this.id = id;
 		this.consulta_interna = consulta_interna;
@@ -123,7 +122,6 @@ public class RecursoEspecificoModel {
 		this.formato_recurso = formato_recurso;
 		this.editorial = editorial;
 		this.detalle_recurso = detalle_recurso;
-		this.prestamo = prestamo;
 		this.autor = autor;
 	}
 

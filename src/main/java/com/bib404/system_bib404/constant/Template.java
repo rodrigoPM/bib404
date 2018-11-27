@@ -17,30 +17,42 @@ public class Template {
 
 	//gestionar usuario
 	public static final String GESTION_USUARIO = "gestionar_usuario/crear_usuario";
+	public static final String GESTION_USUARIO_PERFIL = "gestion_perfil";
 
-	public static final String INDEX_ANONIMO= "index_anonimo";
+	
+	//registrar / iniciar sesion
 	public static final String REGISTRAR = "registrar_iniciar_Sesion/registrase";
 	public static final String REGISTRAR_ADMIN = "registrar_iniciar_Sesion/registrarAdmin";
 	public static final String REGISTRAR_SUPER = "registrar_iniciar_Sesion/super";
+	
+	// index
 	public static final String INDEX_USER = "index_usuario";
+	public static final String INDEX_ANONIMO= "index_anonimo";
+	
 	public static final String USUARIOS = "usuarios";
-	public static final String USUARIO_SIMPLE ="USER_ROLE";
-	public static final String USER ="usuario";
 	public static final String AUTORIZAR ="autorizar";
 	public static final String DENEGADOS ="denegados";
 	public static final String PERFIL ="perfil";
 	public static final String EDITAR="editar";
 	public static final String RECURSOSESPECIFICOS = "ver_prestar_recurso/recursosespecificos";
 	public static final String DIGITALES = "digitales";
-	public static final String SUPER_USUARIO = "SUPERUSUARIO";
-	public static final String ADMIN = "ADMIN";
+	
+	//Dasboard
 	public static final String dashBoard="Dashboard/GestionarBIB404";
 	public static final String dashAd="Dashboard/GestionarBIB";
+	
+	//Estadisticas
 	public static final String estadisticas="EstadisticasBIB/estadisticas";
 	public static final String CONTRA="password";
-	public static final String SUPER_SUPERUSUARIO="SUPER_SUPERUSER";
 	public static final String GESTION="gestionar_recursos_bib/gestionbib";
 	
+<<<<<<< HEAD
 	public static final String GESTION_ADMIN="gestionar_admin/gestionar_admin";
 	
+=======
+	//Solicitar nueva biblioteca
+	public static final String solicitar = "/solicitar/biblioteca";
+	public static final String recibir = "/solicitar/recibir";
+	public static final String aceptar = "/solicitar/aceptar";
+>>>>>>> a5539049b11aa05f0c2962d378ef69a5a135e4ae
 }

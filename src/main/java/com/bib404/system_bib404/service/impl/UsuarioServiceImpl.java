@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,8 +23,10 @@ import com.bib404.system_bib404.constant.Conexion;
 import com.bib404.system_bib404.entity.Biblioteca;
 import com.bib404.system_bib404.entity.Departamento;
 import com.bib404.system_bib404.entity.Municipio;
+import com.bib404.system_bib404.entity.Prestamo;
 import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.Graf;
+import com.bib404.system_bib404.model.PrestamoModel;
 import com.bib404.system_bib404.service.UsuarioService;
 
 
@@ -76,9 +79,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public List<Usuario> listUsuario() {
 		return usuarioRep.findAll();
 	}
+
 	@Override
 	public List<Usuario> listUsuarioBib(int id_bib) {
-		return usuarioRep.findByBibliotecaId(id_bib);
+		List<Usuario> usuarios=usuarioRep.findByBibliotecaId(id_bib);
+		List<Usuario> resultado=usuarios.stream().filter(x -> x.getRol().equals("USER_ROLE")).collect(Collectors.toList());
+		List<Usuario> variable=new ArrayList<Usuario>();
+		for(Usuario prestamo:resultado) {
+			variable.add(prestamo);
+		}
+		return variable;
 	}
 	
 	@Override
@@ -226,6 +236,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		try {
 			List<Biblioteca> mun = listBibliotecas();
 			int id = mun.size() + 1;
+			v=id;
 			java.util.Date f2 = new java.util.Date();
 			SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
 			String f4 = formateador.format(f2);
@@ -233,10 +244,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 			String sql = "INSERT INTO BIBLIOTECA (ID, CODIGO_BIBLIOTECA, NOMBRE_BIBLIOTECA, MUNICIPIO_ID,FECHA_REGISTRO) VALUES ("+id+", \'"+bib.getCodigo_biblioteca()+"\', \'"+bib.getNombre_biblioteca()+"\', "+id_municipio+", "+fecha_registro+")";
 			Statement sentencia;
 			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			v = sentencia.executeUpdate(sql);
+			sentencia.executeUpdate(sql);
 			sentencia.close();
 			getConexion().commit();
-			v=id;
 		} catch (SQLException e) {
 			System.out.println("DB");
 		}

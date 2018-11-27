@@ -17,6 +17,7 @@ public class PrestamoConverter {
 		prestamo.setMora(prestamoModel.isMora());
 		prestamo.setEstado(prestamoModel.getEstado());
 		prestamo.setUsuario(prestamoModel.getUsuario());
+		prestamo.setRecursoEspecifico(prestamoModel.getRecursoEspecifico());
 		prestamo.setId(prestamoModel.getId());
 		
 		return prestamo;
@@ -30,6 +31,7 @@ public class PrestamoConverter {
 		prestamoModel.setMora(prestamo.isMora());
 		prestamoModel.setEstado(prestamo.getEstado());
 		prestamoModel.setUsuario(prestamo.getUsuario());
+		prestamoModel.setRecursoEspecifico(prestamo.getRecursoEspecifico());
 		prestamoModel.setId(prestamo.getId());
 		
 		return prestamoModel;

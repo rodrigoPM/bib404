@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+	<title th:text="${titulo}"></title>
+	
+	<link rel="stylesheet" href="#" />
+	<script src="js/deshabilitar.js"></script>
+</head>
+
+<body>
+<nav th:replace="fragmentos/plantilla :: navbar-user"></nav> 
+<h1 class="text-center" >Editar Perfil de   <span th:text="${user.username}">   </span>  </h1>
+<h1 class="text-center"> <img src="#" th:src="@{/imgs/default-avatar.png}"
+															class="picture-src" id="wizardPicturePreview" title="" />
+														     </h1>
+	<div class="container">
+		<div th:if="${error}">
+			<div class="alert alert-danger" role="alert">
+			  <strong th:text="*{valor}" ></strong> 
+			</div>
+		</div>
+				<form th:action="@{/adduser?id=__${user.id}__&id_bib=__${user.biblioteca.id}__}" th:method="post">
+							<div class="form-group">
+							
+								<label for="user">usuario</label> <input type="text"
+									class="form-control" id="username" name="username"
+									aria-describedby="username" placeholder="username">
+								<small id="emailHelp" class="form-text text-muted">Ingrese
+									el username</small>
+							</div>
+							<div class="form-group">
+								<label for="password1">Password</label> <input type="password"
+									class="form-control" id="password" name="password"
+									placeholder="Password">
+							</div>
+							<button type="submit" class="btn btn-fill btn-info btn-wd btn-sm">Editar</button>
+						</form>		
+		</div>
+	
+	<div th:replace="fragmentos/plantilla :: login"></div>
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
+</html>

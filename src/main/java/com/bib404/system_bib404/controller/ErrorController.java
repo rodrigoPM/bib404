@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 
 @Controller
@@ -20,7 +21,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
 		model.addAttribute("titulo","BIB404");
 		model.addAttribute("urlHome","/");
 		HttpSession sesion = request.getSession();
-		if (sesion.getAttribute(Template.USER)==null) {
+		if (sesion.getAttribute(Constante.USER)==null) {
 			model.addAttribute("authF",true);
 		}else {
 			model.addAttribute("authT", true);

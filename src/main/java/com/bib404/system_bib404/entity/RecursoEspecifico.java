@@ -51,10 +51,10 @@ public class RecursoEspecifico {
 	@JoinColumn(name = "detalle_recurso_id", nullable = false)
 	private DetalleRecurso detalle_recurso;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "prestamo_recurso_esp", joinColumns = {
-			@JoinColumn(name = "prestamo_id") }, inverseJoinColumns = { @JoinColumn(name = "recurso_esp_id") })
-	private Set<Prestamo> prestamo = new HashSet<>();
+	//@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	//@JoinTable(name = "prestamo_recurso_esp", joinColumns = {
+			//@JoinColumn(name = "prestamo_id") }, inverseJoinColumns = { @JoinColumn(name = "recurso_esp_id") })
+	//private Set<Prestamo> prestamo = new HashSet<>();
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "recurso_esp_autor", joinColumns = {
@@ -124,14 +124,14 @@ public class RecursoEspecifico {
 	public void setDetalle_recurso(DetalleRecurso detalle_recurso) {
 		this.detalle_recurso = detalle_recurso;
 	}
-
+/*
 	public Set<Prestamo> getPrestamo() {
 		return prestamo;
 	}
 
 	public void setPrestamo(Set<Prestamo> prestamo) {
 		this.prestamo = prestamo;
-	}
+	}*/
 
 	public String getCodigo_rec_esp() {
 		return codigo_rec_esp;
@@ -151,7 +151,7 @@ public class RecursoEspecifico {
 
 	public RecursoEspecifico(int id, boolean consulta_interna, int volumen_recurso, int edicion_recurso,
 			boolean prestado, String codigo_rec_esp, FormatoRecurso formato_recurso, Editorial editorial,
-			DetalleRecurso detalle_recurso, Set<Prestamo> prestamo, Set<Autor> autor) {
+			DetalleRecurso detalle_recurso, Set<Autor> autor) {
 		super();
 		this.id = id;
 		this.consulta_interna = consulta_interna;
@@ -162,7 +162,6 @@ public class RecursoEspecifico {
 		this.formato_recurso = formato_recurso;
 		this.editorial = editorial;
 		this.detalle_recurso = detalle_recurso;
-		this.prestamo = prestamo;
 		this.autor = autor;
 	}
 

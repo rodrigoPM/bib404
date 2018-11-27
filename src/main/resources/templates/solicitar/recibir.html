@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+    <meta charset="utf-8"/>
+
+    <title>Solicitudes pendientes</title>
+	
+	<link rel="stylesheet" href="#" />
+ 	
+  </head>
+  <body>
+  	<nav th:replace="fragmentos/plantilla :: navbar-admin"></nav> 
+	<div class="container">
+		<section class="bg-light" id="portfolio" style="margin-top:25px;">
+      		<div class="container">
+		      	<div class="row">
+		          <div class="col-lg-12 text-center">
+					<div th:if="${exito}">
+						<h2 class="section-heading text-uppercase alert-success">Solicitud actualizada con exito</h2>
+					</div>
+					<div th:if="${error}">
+						<h2 class="section-heading text-uppercase alert-danger">Solicitud eliminada!!!</h2>
+					</div>
+		            <h2 class="section-heading text-uppercase">Solicitudes de bibliotecas pendientes</h2>
+		          </div>
+		          <div class="col-lg-12">
+		          <br><br>
+		          <table class="table table-striped">
+					<thead class="thead">
+						<tr>
+							<th>Usuario</th>
+							<th>nombre biblioteca</th>
+							<th>Correo</th>
+							<th>Municipio</th>
+							<th>Accion</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="sol: ${solicitudes}">
+							<th> <span th:text="${sol.usuario}"> </span></th>
+							<th> <span th:text="${sol.nombre_biblioteca}"> </span></th>
+							<th> <span th:text="${sol.correo}"> </span></th>
+							<th> <span th:text="${sol.id_municipio}"> </span></th>
+							<th>
+								<a href="#" th:href="@{/solicitar/recibir?denegado=__${sol.id}__}">
+								<button type="button" class="btn btn-danger">Denegar</button></a>
+								<a href="#" th:href="@{/solicitar/recibir?aceptado=__${sol.id}__}">
+								<button type="button" class="btn btn-success">aceptar</button></a>
+							</th>
+						</tr>
+					</tbody>
+		          </table>
+		          </div>
+		        </div>
+      		</div>
+      	</section>
+	</div>
+	<div th:replace="fragmentos/plantilla :: login"></div>
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
+</html>

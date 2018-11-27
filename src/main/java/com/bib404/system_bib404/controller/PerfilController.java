@@ -31,6 +31,7 @@ import com.bib404.system_bib404.Repository.PerfilRepository;
 import com.bib404.system_bib404.Repository.UsuarioRepository;
 import com.bib404.system_bib404.Repository.actualizarPerfil;
 import com.bib404.system_bib404.component.PerfilConverter;
+import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.controller.registrar_iniciar_Sesion.UsuarioController;
 import com.bib404.system_bib404.entity.Municipio;
@@ -72,15 +73,6 @@ private EncriptadoPass encriptado;
 @Qualifier("perfilConverter")
 private PerfilConverter perfilconverter;
 
-@RequestMapping("/digitales")
-public ModelAndView listPrestamos(Model model, HttpServletRequest request)  throws ServletException, IOException  {
-	ModelAndView mav = new ModelAndView(Template.DIGITALES);
-	/*mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
-	model.addAttribute("prestado", 1);*/
-	
-	return mav;
-}
-
 @GetMapping("/perfil")
 public String redirectPerfilForm(Model model,@ModelAttribute(name="username") String username,HttpServletRequest request) {
 
@@ -88,7 +80,7 @@ public String redirectPerfilForm(Model model,@ModelAttribute(name="username") St
 	
 	HttpSession sesion = request.getSession();
 	Usuario user=actPerfil.buscarusuario(username);
-	if(sesion.getAttribute(Template.USER)==null) {
+	if(sesion.getAttribute(Constante.USER)==null) {
 		return "redirect:/";
 	}else {
 		
@@ -96,7 +88,7 @@ public String redirectPerfilForm(Model model,@ModelAttribute(name="username") St
 		if (sesion.getAttribute("userup")==null)
 		{
 		
-		model.addAttribute("user", sesion.getAttribute(Template.USER));
+		model.addAttribute("user", sesion.getAttribute(Constante.USER));
 		}
 		else {
 			
@@ -129,7 +121,7 @@ public String editar(@ModelAttribute("username") String username,@ModelAttribute
 	
    user=actPerfil.buscarusuario(username);
 	String fechanacimiento=formateador.format(user.getFecha_nacimiento());
-	if(sesion.getAttribute(Template.USER)==null) {
+	if(sesion.getAttribute(Constante.USER)==null) {
 		return "redirect:/";
 	}else {
 		
@@ -137,7 +129,7 @@ public String editar(@ModelAttribute("username") String username,@ModelAttribute
 		if (sesion.getAttribute("userup")==null)
 		{
 		
-		model.addAttribute("user", sesion.getAttribute(Template.USER));
+		model.addAttribute("user", sesion.getAttribute(Constante.USER));
 		}
 		else {
 			
@@ -204,7 +196,7 @@ public String cambiar(@ModelAttribute("username") String username, Model model, 
 	Usuario user=new Usuario();
 	
 	   user=actPerfil.buscarusuario(username);
-	   if(sesion.getAttribute(Template.USER)==null) {
+	   if(sesion.getAttribute(Constante.USER)==null) {
 			return "redirect:/";
 		}else {
 			
@@ -212,7 +204,7 @@ public String cambiar(@ModelAttribute("username") String username, Model model, 
 			if (sesion.getAttribute("userup")==null)
 			{
 			
-			model.addAttribute("user", sesion.getAttribute(Template.USER));
+			model.addAttribute("user", sesion.getAttribute(Constante.USER));
 			if (sesion.getAttribute("test")!=null)
 			{
 			model.addAttribute("valor","Error password incorrecto o los campos no coinciden");
