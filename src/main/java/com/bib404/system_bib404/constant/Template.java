@@ -40,4 +40,7 @@ public class Template {
 	public static final String CONTRA="password";
 	public static final String SUPER_SUPERUSUARIO="SUPER_SUPERUSER";
 	public static final String GESTION="gestionar_recursos_bib/gestionbib";
+	
+	public static final String GESTION_ADMIN="gestionar_admin/gestionar_admin";
+	
 }

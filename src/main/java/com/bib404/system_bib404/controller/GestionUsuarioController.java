@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bib404.system_bib404.Repository.ConsultasRE;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.PrestamoModel;
@@ -28,6 +29,10 @@ import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 @RequestMapping("/")
 public class GestionUsuarioController {
 	
+    @Autowired
+    @Qualifier("consultasRE")
+    ConsultasRE consultas;
+    
 	@Autowired
 	@Qualifier("usuarioServiceImpl")
 	private UsuarioServiceImpl usuarioServiceImpl;
@@ -44,9 +49,15 @@ public class GestionUsuarioController {
 		if(usuarioServiceImpl.listUsuarioBib(id_bib).size()>0) {
 			mav.addObject("usuarios", usuarioServiceImpl.listUsuarioBib(id_bib));
 		}
-		
-		return mav;
+				return mav;
 	}
+	@RequestMapping("/bib404/gestionar_admin")
+	public ModelAndView listAdmin(HttpServletRequest request, Model model) {
+        ModelAndView modelAndView = new ModelAndView(Template.GESTION_ADMIN);
+        modelAndView.addObject("administradores", consultas.obtenerAdmins());
+        return modelAndView;
+	}
+	
 	@GetMapping("/eliminar_usuario")
 	public ModelAndView eliminarUsuario(@RequestParam(name="id") int id, @RequestParam(name="id_bib") int id_bib, Model model, HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.GESTION_USUARIO);

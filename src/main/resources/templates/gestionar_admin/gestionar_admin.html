@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+<title th:text="${titulo}"></title>
+
+<link rel="stylesheet" href="#" />
+</head>
+<body>
+	<div class="container">
+		<h1 class="text-center">
+			Administradores de bibliotecas
+		</h1>
+	</div>
+	<hr>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="row">
+					<div class="col-4">
+					<a th:href="@{/DashBoard/insertAdmin}">
+						<button type="button" class="btn btn-success" data-toggle="modal"
+							data-target="#crearCategoria">Crear administrador</button>
+					</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-12">
+				<div class="row">
+					<div class="col-5 offset-7">
+						<form action="">
+							<input type="text" placeholder="buscar"> <input
+								type="submit" value="buscar" class="btn btn-primary">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${fracaso}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${fracaso}"></p>
+			</div>
+		</div>
+			<div th:if="${administradores}" class="row">
+				<div th:each="admin:${administradores}" class="col-12 my-3 bg-info">
+						<div class="row">
+							<div class="col-4">
+								<p>imagen</p>
+							</div>
+							<div class="col-8">
+								<div class="row">
+									<div class="col-12">
+											<p th:text="${admin.nombre}"></p>
+									</div>
+									<div class="col-12">
+										<div class="row">
+											<div class="col-6">
+												<form class="row">
+													<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+			<div th:unless="${administradores}" class="alert alert-info font-weight-bold text-center">
+			No se ha registrado ningun administrador de biblioteca
+			</div>
+	</div>
+
+	<footer th:replace="fragmentos/plantilla :: footer"></footer>
+
+	<div th:replace="fragmentos/plantilla :: login"></div>
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>

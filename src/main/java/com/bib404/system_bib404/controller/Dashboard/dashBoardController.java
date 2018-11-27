@@ -60,7 +60,7 @@ public class dashBoardController {
 	@GetMapping("/insertAdmin")
 	public ModelAndView register(@RequestParam(name="error", required=false, defaultValue="NULL") String nm, HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView();
-		if (funtions.isSuperUser(request)) {
+		if (funtions.isSuperUserBIB404(request)) {
 			if(nm.compareToIgnoreCase("user")==0) {
 				mav.addObject("valor","Error username, ocupado");
 				mav.addObject("error",1);
