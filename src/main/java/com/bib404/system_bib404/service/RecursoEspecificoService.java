@@ -14,11 +14,10 @@ public interface RecursoEspecificoService {
     RecursoEspecificoModel findById(int id);
 
     void removeRecursoEspecifico(int id);
-    
-//    //getionar rec esp
-//    public abstract RecursoEspecifico addRecEsp(RecursoEspecifico recursoEspecifico);
-//    public abstract List<RecursoEspecifico> listAllRecEsp(int id_rb);
-    
-    
-}
 
+//    //getionar rec esp listAllRecEsp
+//    public abstract RecursoEspecifico addRecEsp(RecursoEspecifico recursoEspecifico);
+    public abstract List<RecursoEspecifico> listAllRecEsp(int id_rb);
+
+
+}

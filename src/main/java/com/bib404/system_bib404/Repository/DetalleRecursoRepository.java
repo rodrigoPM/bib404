@@ -14,5 +14,5 @@ import com.bib404.system_bib404.entity.DetalleRecurso;
 
 @Repository("detalleRecursoRepository")
 public interface DetalleRecursoRepository extends JpaRepository<DetalleRecurso, Serializable>{
-
+    List<DetalleRecurso> findByRecursoBibId(int recurso_bib_id);
 }

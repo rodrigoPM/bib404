@@ -18,7 +18,129 @@
 			Gestionar Recursos Especificos de <span th:text="${name_bib}"></span>
 		</h1>
 	</div>
+	<hr>
 	<div class="container">
+
+
+		<div class="row">
+			<div class="col-12">
+				<div class="row">
+					<div class="col-4">
+						<button type="button" class="btn btn-success" data-toggle="modal"
+							data-target="#crearRecEsp">Crear Recurso Especifico</button>
+					</div>
+					<div class="modal" id="crearRecEsp" tabindex="-1" role="dialog"
+						aria-labelledby="crearRecEspLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="crearRecEspLabel">Nuevo Recurso Especifico</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form action="#" th:action="${crearRecEsp}"
+										th:object="${recEspModel}" method="post"
+										id="formCrearRecEsp">
+										<div class="form-group">
+											<label>Volumen: </label> <input type="text"
+												placeholder="nombre de categoria" class="form-control"
+												th:field="*{volumen_recurso}">
+										</div>
+										<div class="form-group">
+											<label>Edicion: </label><input type="text"
+												placeholder="nombre de categoria" class="form-control"
+												th:field="*{edicion_recurso}">
+										</div>
+										<div class="form-group">
+											<label>Codigo del recurso: </label><input type="text"
+												placeholder="nombre de categoria" class="form-control"
+												th:field="*{codigo_rec_esp}">
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<div class="row">
+										<div class="col-6">
+											<button type="submit" class="btn btn-primary"
+												form="formCrearRecEsp">Registrar Recurso Esp</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-12">
+				<div class="row">
+					<div class="col-5 offset-7">
+						<form action="">
+							<input type="text" placeholder="buscar"> <input
+								type="submit" value="buscar" class="btn btn-primary">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${fracaso}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${fracaso}"></p>
+			</div>
+		</div>
+		<div th:if="${recEsps}" class="row">
+			<div th:each="recEsp:${recEsps}" class="col-12 my-3 bg-info">
+					<div class="row">
+						<div class="col-4">
+							<p>imagen</p>
+						</div>
+						<div class="col-8">
+							<div class="row">
+								<div class="col-12">
+									<span>consulta interna:</span> <p th:text="${recEsp.consulta_interna}"></p>
+								</div>
+								<div class="col-12">
+									<span>volumen recurso:</span><p th:text="${recEsp.volumen_recurso}"></p>
+								</div>
+								<!-- <div class="col-12">
+									<p>Subcategaria?:</p>
+								</div> -->
+								<div class="col-12">
+									<div class="row">
+										<div class="col-6">
+											<form action="#" th:action="${borrarRecEsp}" method="post"
+											th:object="${objectAux}" class="row">
+											<select th:field="*{id_object}" class="d-none">
+												<option th:value="${recEsp.id}"></option>
+											</select>
+												<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
+											</form>
+										</div>
+										<div class="col-6">
+											<form class="row">
+												<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+		<div th:unless="${recEsps}" class="alert alert-info font-weight-bold text-center">El recurso bibliotecario aun no
+			cuente con recursos especificos.
+		</div>
+
+
 	</div>
 
 	<footer th:replace="fragmentos/plantilla :: footer"></footer>

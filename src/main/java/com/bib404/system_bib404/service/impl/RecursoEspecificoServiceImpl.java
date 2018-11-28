@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import com.bib404.system_bib404.Repository.RecursoEspecificoRepository;
 import com.bib404.system_bib404.component.RecursoEspecificoConverter;
 import com.bib404.system_bib404.entity.RecursoEspecifico;
+import com.bib404.system_bib404.entity.DetalleRecurso;
 import com.bib404.system_bib404.model.RecursoEspecificoModel;
 import com.bib404.system_bib404.service.RecursoEspecificoService;
+import com.bib404.system_bib404.service.impl.DetalleRecursoServiceImpl;
 
 @Service("recursoEspecificoServiceImpl")
 public class RecursoEspecificoServiceImpl implements RecursoEspecificoService {
@@ -24,12 +26,15 @@ public class RecursoEspecificoServiceImpl implements RecursoEspecificoService {
     @Qualifier("recursoEspecificoConverter")
     RecursoEspecificoConverter recursoEspecificoConverter;
 
+    @Autowired
+    @Qualifier("detalleRecursoServiceImpl")
+    private DetalleRecursoServiceImpl dRec;
 
     @Override
     public RecursoEspecificoModel addRecursoEspecifico(RecursoEspecificoModel recursoEspecificoModel) {
         return recursoEspecificoConverter.convertRecursoEspecifico2RecursoEspecificoModel(recursoEspecificoRepository.save(recursoEspecificoConverter.convertRecursoEspecificoModel2RecursoEspecifico(recursoEspecificoModel)));
     }
-    
+
     @Override
     public List<RecursoEspecificoModel> listAllRecursoEspecificos() {
         List<RecursoEspecificoModel> recursoEspecificosList = new ArrayList<>();
@@ -52,5 +57,17 @@ public class RecursoEspecificoServiceImpl implements RecursoEspecificoService {
         }
 
     }
-}
 
+
+
+
+    @Override
+    public List<RecursoEspecifico> listAllRecEsp(int rb) {
+      List<DetalleRecurso> dRec_rbs=dRec.listAllDetalleRecurso(rb);
+      List<RecursoEspecifico> recEsp=new ArrayList<RecursoEspecifico>();
+      for(DetalleRecurso dr:dRec_rbs){
+        recEsp.add(dr.getRecurso_especifico());
+      }
+      return recEsp;
+    }
+}

@@ -39,17 +39,17 @@ public class DetalleRecurso {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "fecha_ingreso_r_e")
 	private Date fecha_ingreso_r_e;
-		
+
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "detalle_recurso")
 	private RecursoEspecifico recurso_especifico;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "recurso_bib_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private RecursoBibliotecario recurso_bib;
+	private RecursoBibliotecario recursoBib;
 
 	public DetalleRecurso(int id, int total_rec_bib, int total_dig_rec_bib, int total_fis_rec_bib,
-			Date fecha_ingreso_r_e, RecursoEspecifico recurso_especifico, RecursoBibliotecario recurso_bib) {
+			Date fecha_ingreso_r_e, RecursoEspecifico recurso_especifico, RecursoBibliotecario recursoBib) {
 		super();
 		this.id = id;
 		this.total_rec_bib = total_rec_bib;
@@ -57,7 +57,7 @@ public class DetalleRecurso {
 		this.total_fis_rec_bib = total_fis_rec_bib;
 		this.fecha_ingreso_r_e = fecha_ingreso_r_e;
 		this.recurso_especifico = recurso_especifico;
-		this.recurso_bib = recurso_bib;
+		this.recursoBib = recursoBib;
 	}
 
 	public int getId() {
@@ -109,11 +109,11 @@ public class DetalleRecurso {
 	}
 
 	public RecursoBibliotecario getRecurso_bib() {
-		return recurso_bib;
+		return recursoBib;
 	}
 
-	public void setRecurso_bib(RecursoBibliotecario recurso_bib) {
-		this.recurso_bib = recurso_bib;
+	public void setRecurso_bib(RecursoBibliotecario recursoBib) {
+		this.recursoBib = recursoBib;
 	}
 
 	public DetalleRecurso() {

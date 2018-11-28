@@ -1,11 +1,14 @@
 package com.bib404.system_bib404.controller.gestionar_recursos_esp;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,10 +18,16 @@ import com.bib404.system_bib404.entity.RecursoEspecifico;
 import com.bib404.system_bib404.model.ObjectAux;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
 import com.bib404.system_bib404.service.impl.RecursoBibliotecarioServiceImpl;
+import com.bib404.system_bib404.service.impl.RecursoEspecificoServiceImpl;
+import com.bib404.system_bib404.service.impl.Functions;
 
 @Controller
 @RequestMapping(Url.GESTION_REC_ESP) //--> /bib404/{id_bib}/{id_rb}/recurso_especifico
 public class RecursoEspController {
+
+	@Autowired
+	@Qualifier("Functions")
+	private Functions funcion;
 
 	@Autowired
 	@Qualifier("bibliotecaServiceImpl")
@@ -27,6 +36,11 @@ public class RecursoEspController {
 	@Autowired
 	@Qualifier("recursoBibliotecarioServiceImpl")
 	private RecursoBibliotecarioServiceImpl rb;
+
+	@Autowired
+	@Qualifier("recursoEspecificoServiceImpl")
+	private RecursoEspecificoServiceImpl re;
+
 
 	@RequestMapping("")
 	public ModelAndView gestionRecursoEspecifico(@PathVariable("id_bib") int id_bib,@PathVariable("id_rb") int id_rb,HttpServletRequest request) {
@@ -44,6 +58,9 @@ public class RecursoEspController {
 		mav.addObject("recEspModel", new RecursoEspecifico());
 		mav.addObject("objectAux", new ObjectAux());
 
+		if(re.listAllRecEsp(id_rb).size()>0) {
+			mav.addObject("recEsps", re.listAllRecEsp(id_rb));
+		}
 
 		if(funcion.isAnyUser(request)) {
 			mav.addObject("isUser", true);
@@ -54,6 +71,14 @@ public class RecursoEspController {
 		return mav;
 	}
 
-
-
+	@PostMapping("/nueva")
+	public String crearRecEsp(@ModelAttribute(name="recEspModel") RecursoEspecifico rec_esp,@PathVariable("id_bib") int id_bib,
+																			@PathVariable("id_rb") int id_rb,HttpServletRequest request ) {
+			return "redirect:/";
+	}
+	@PostMapping("/borrar")
+	public String borrarRecEsp(@ModelAttribute(name="objectAux") ObjectAux ox,@PathVariable("id_bib") int id_bib,
+																			@PathVariable("id_rb") int id_rb,HttpServletRequest request ){
+			return "redirect:/";
+	}
 }

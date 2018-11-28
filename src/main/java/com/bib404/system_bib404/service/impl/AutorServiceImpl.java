@@ -12,7 +12,7 @@ import com.bib404.system_bib404.Repository.AutorRepository;
 import com.bib404.system_bib404.entity.Autor;
 import com.bib404.system_bib404.service.AutorService;
 
-@Service("categoriaServiceImpl")
+@Service("autorServiceImpl")
 public class AutorServiceImpl implements AutorService{
 
 }
