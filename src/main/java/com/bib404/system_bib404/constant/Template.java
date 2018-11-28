@@ -45,11 +45,12 @@ public class Template {
 	public static final String estadisticas="EstadisticasBIB/estadisticas";
 	public static final String CONTRA="password";
 	public static final String GESTION="gestionar_recursos_bib/gestionbib";
-	
+
 	public static final String GESTION_ADMIN="gestionar_admin/gestionar_admin";
 	
 	//Solicitar nueva biblioteca
 	public static final String solicitar = "/solicitar/biblioteca";
 	public static final String recibir = "/solicitar/recibir";
 	public static final String aceptar = "/solicitar/aceptar";
+
 }

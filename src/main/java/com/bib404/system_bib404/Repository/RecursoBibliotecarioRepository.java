@@ -16,9 +16,6 @@ import com.bib404.system_bib404.entity.RecursoBibliotecario;
 @Repository("recursoBibliotecarioRepository")
 public interface RecursoBibliotecarioRepository extends JpaRepository<RecursoBibliotecario, Serializable>{
 	
-	@Modifying
-	@Transactional(readOnly=false)
-	@Query(value="select rb.* from BIB_RECURSO_BIB brb inner join RECURSO_BIB rb on rb.id=brb.recurso_bib_id where brb.biblioteca_id= ?", nativeQuery=true)
-	List<RecursoBibliotecario> findAllRBofBib(int id_bib);
+	List<RecursoBibliotecario> findByBibliotecaId(int bibliotecaId);
 	
 }
