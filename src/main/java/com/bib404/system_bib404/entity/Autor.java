@@ -28,9 +28,6 @@ public class Autor {
 	@Column(name = "apellido_autor")
 	private String apellido_autor;
 
-	@Column(name = "nacionalidad_autor")
-	private String nacionalidad_autor;
-
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "autor")
 	private Set<RecursoEspecifico> recurso_especifico = new HashSet<>();
 
@@ -58,14 +55,6 @@ public class Autor {
 		this.apellido_autor = apellido_autor;
 	}
 
-	public String getNacionalidad_autor() {
-		return nacionalidad_autor;
-	}
-
-	public void setNacionalidad_autor(String nacionalidad_autor) {
-		this.nacionalidad_autor = nacionalidad_autor;
-	}
-
 	public Set<RecursoEspecifico> getRecurso_especifico() {
 		return recurso_especifico;
 	}
@@ -74,13 +63,12 @@ public class Autor {
 		this.recurso_especifico = recurso_especifico;
 	}
 
-	public Autor(int id, String nombre_autor, String apellido_autor, String nacionalidad_autor,
+	public Autor(int id, String nombre_autor, String apellido_autor,
 			Set<RecursoEspecifico> recurso_especifico) {
 		super();
 		this.id = id;
 		this.nombre_autor = nombre_autor;
 		this.apellido_autor = apellido_autor;
-		this.nacionalidad_autor = nacionalidad_autor;
 		this.recurso_especifico = recurso_especifico;
 	}
 

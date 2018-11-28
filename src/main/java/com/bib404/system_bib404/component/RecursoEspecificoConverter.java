@@ -17,7 +17,6 @@ public class RecursoEspecificoConverter {
         		recursoEspecificoModel.isPrestado(),
         		recursoEspecificoModel.getCodigo_rec_esp(), 
         		recursoEspecificoModel.getFormato_recurso(),
-        		recursoEspecificoModel.getEditorial(),
         		recursoEspecificoModel.getDetalle_recurso(),
         		recursoEspecificoModel.getAutor()
         		);
@@ -31,7 +30,7 @@ public class RecursoEspecificoConverter {
         		recursoEspecifico.isPrestado(),
         		recursoEspecifico.getCodigo_rec_esp(), 
         		recursoEspecifico.getFormato_recurso(),
-        		recursoEspecifico.getEditorial(),
+        		null,
         		recursoEspecifico.getDetalle_recurso(),
         		recursoEspecifico.getAutor()
         		);

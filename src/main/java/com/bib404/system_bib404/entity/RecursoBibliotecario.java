@@ -62,7 +62,7 @@ public class RecursoBibliotecario {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "recurso_bib_categoria", joinColumns = {
-			@JoinColumn(name = "recurso_bib_id") }, inverseJoinColumns = { @JoinColumn(name = "categoria_id") })
+	@JoinColumn(name = "recurso_bib_id") }, inverseJoinColumns = { @JoinColumn(name = "categoria_id") })
 	private Set<Categoria> categoria = new HashSet<>();
 
 	public RecursoBibliotecario(int id, String nombre_recurso_bib, String descripcion_recurso_bib,

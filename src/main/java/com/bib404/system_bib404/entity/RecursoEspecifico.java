@@ -13,8 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "recurso_esp")
@@ -39,13 +43,11 @@ public class RecursoEspecifico {
 	@Column(name = "codigo_rec_esp")
 	private String codigo_rec_esp;
 	
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "formato_recurso_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private FormatoRecurso formato_recurso;
 
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "editorial_id", nullable = false)
-	private Editorial editorial;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "detalle_recurso_id", nullable = false)
@@ -58,7 +60,7 @@ public class RecursoEspecifico {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "recurso_esp_autor", joinColumns = {
-			@JoinColumn(name = "recurso_esp_id") }, inverseJoinColumns = { @JoinColumn(name = "autor_id") })
+	@JoinColumn(name = "recurso_esp_id") }, inverseJoinColumns = { @JoinColumn(name = "autor_id") })
 	private Set<Autor> autor = new HashSet<>();
 
 	public int getId() {
@@ -109,13 +111,6 @@ public class RecursoEspecifico {
 		this.formato_recurso = formato_recurso;
 	}
 
-	public Editorial getEditorial() {
-		return editorial;
-	}
-
-	public void setEditorial(Editorial editorial) {
-		this.editorial = editorial;
-	}
 
 	public DetalleRecurso getDetalle_recurso() {
 		return detalle_recurso;
@@ -150,7 +145,7 @@ public class RecursoEspecifico {
 	}
 
 	public RecursoEspecifico(int id, boolean consulta_interna, int volumen_recurso, int edicion_recurso,
-			boolean prestado, String codigo_rec_esp, FormatoRecurso formato_recurso, Editorial editorial,
+			boolean prestado, String codigo_rec_esp, FormatoRecurso formato_recurso,
 			DetalleRecurso detalle_recurso, Set<Autor> autor) {
 		super();
 		this.id = id;
@@ -160,7 +155,6 @@ public class RecursoEspecifico {
 		this.prestado = prestado;
 		this.codigo_rec_esp = codigo_rec_esp;
 		this.formato_recurso = formato_recurso;
-		this.editorial = editorial;
 		this.detalle_recurso = detalle_recurso;
 		this.autor = autor;
 	}

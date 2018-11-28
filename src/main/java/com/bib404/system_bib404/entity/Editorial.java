@@ -17,23 +17,16 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity
-@Table(name = "editorial")
 public class Editorial {
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "id", unique = true, nullable = false)
+
 	private int id;
 
-	@Column(name = "nombre_editorial")
+
 	private String nombre_editorial;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "anio_publicacion")
+
 	private Date anio_publicacion;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "editorial")
-	private RecursoEspecifico recurso_especifico;
 
 	public int getId() {
 		return id;
@@ -59,13 +52,6 @@ public class Editorial {
 		this.anio_publicacion = anio_publicacion;
 	}
 
-	public RecursoEspecifico getRecurso_especifico() {
-		return recurso_especifico;
-	}
-
-	public void setRecurso_especifico(RecursoEspecifico recurso_especifico) {
-		this.recurso_especifico = recurso_especifico;
-	}
 
 	public Editorial(int id, String nombre_editorial, Date anio_publicacion) {
 		super();

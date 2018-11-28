@@ -22,9 +22,6 @@ public class FormatoRecurso {
 	@Column(name = "nombre_formato")
 	private String nombre_formato;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "formato_recurso")
-	private RecursoEspecifico recurso_especifico;
-
 	public int getId() {
 		return id;
 	}
@@ -39,14 +36,6 @@ public class FormatoRecurso {
 
 	public void setNombre_formato(String nombre_formato) {
 		this.nombre_formato = nombre_formato;
-	}
-
-	public RecursoEspecifico getRecurso_especifico() {
-		return recurso_especifico;
-	}
-
-	public void setRecurso_especifico(RecursoEspecifico recurso_especifico) {
-		this.recurso_especifico = recurso_especifico;
 	}
 
 	public FormatoRecurso(int id, String nombre_formato) {

@@ -8,7 +8,6 @@ public class Template {
 	//consultar recursos bibliotecarios
 	public static final String INDEX_BIB_X ="consultar_rec_bib/index_bib_x";
 
-
 	//administrar categoria
 	public static final String CATEGORIA="admin_categoria/admin_categoria";
 
@@ -19,6 +18,8 @@ public class Template {
 	public static final String GESTION_USUARIO = "gestionar_usuario/crear_usuario";
 	public static final String GESTION_USUARIO_PERFIL = "gestion_perfil";
 
+	//gestionar recursos especificos
+	public static final String GESTION_REC_ESP="gestionar_rec_esp/gestionar_rec_esp";
 	
 	//registrar / iniciar sesion
 	public static final String REGISTRAR = "registrar_iniciar_Sesion/registrase";
