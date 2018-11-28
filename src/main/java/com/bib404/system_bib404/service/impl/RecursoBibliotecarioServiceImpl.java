@@ -26,13 +26,9 @@ public class RecursoBibliotecarioServiceImpl implements RecursoBibliotecarioServ
 	private RecursoBibliotecarioConverter rbConverter;
 	
 	@Override
-	public List<RecursoBibliotecarioModel> listAllRBOfBib(int id_bib) {
-		List<RecursoBibliotecario> rbs=rbRep.findAllRBofBib(id_bib);
-		List<RecursoBibliotecarioModel> rbModel=new ArrayList<RecursoBibliotecarioModel>();
-		for(RecursoBibliotecario rb:rbs) {
-			rbModel.add(rbConverter.converterRB2RBModel(rb));
-		}
-		return rbModel;
+	public List<RecursoBibliotecario> listAllRBOfBib(int id_bib) {
+		List<RecursoBibliotecario> rbs=rbRep.findByBibliotecaId(id_bib);
+		return rbs;
 	}
 
 }

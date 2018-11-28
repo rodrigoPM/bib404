@@ -58,18 +58,20 @@
 		<p class="alert alert-warning text-center" th:text="${vacio}"></p>
 	</div>
 	<div class="container">
-	<div th:each="rb:${rbs}">
+	<div class="row d-flex justify-content-around"></div>
+	<div th:each="rb:${rbs}" class="col-5 my-4">
 		<div class="card text-white bg-success mb-3 d-inline-block"
 			style="width: 25rem;">
-			<div class="card-header" th:text="${rb.nombre_recurso_bib}"></div>
+			<div class="card-header h2" >
+				<a href="#" th:href="@{/recursoBibliotecario/verRecurso?id=__${rb.id}__}" th:text="${rb.nombre_recurso_bib}" class="text-white">
+							</a>
+			</div>
 			<div class="card-body">
 				<h4 class="card-title">Descripcion:</h4>
 				<p class="card-text" th:text="${rb.descripcion_recurso_bib}"></p>
 			</div>
 		</div>
-							<a href="#" th:href="@{/recursoBibliotecario/verRecurso?id=__${rb.id}__}">
-								<button type="button" class="btn btn-default">Ver recurso</button>
-							</a>
+							
 		</div>
 	</div>
 	
