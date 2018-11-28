@@ -175,8 +175,12 @@
 
 											<div class="col-sm-12 col-sm-offset-1">
 												<div class="form-inline">
-													<label class="col-sm-4">Biblioteca: <span th:text="${bib.nombre_biblioteca}"></span> </label>
-													<input type="number" th:value="${bib.id}" id="bib" name="bib" hidden="" >
+													<label class="col-sm-4">Biblioteca: </label>
+													<select id="bib" name="bib" class="form-control col-sm-6" required="true">
+														<option value="">Seleccione</option>
+														<option th:each="bib : ${bibliotecas}" th:value="${bib.id}"
+															th:text="${bib.nombre_biblioteca}"></option>
+													</select>
 												</div>
 											</div>
 											
