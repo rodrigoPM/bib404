@@ -48,7 +48,6 @@ public class Template {
 
 	public static final String GESTION_ADMIN="gestionar_admin/gestionar_admin";
 	
-
 	//Solicitar nueva biblioteca
 	public static final String solicitar = "/solicitar/biblioteca";
 	public static final String recibir = "/solicitar/recibir";
