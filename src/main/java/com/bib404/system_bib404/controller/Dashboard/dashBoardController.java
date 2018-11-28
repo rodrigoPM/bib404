@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Usuario;
+import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
 import com.bib404.system_bib404.service.impl.Functions;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 
@@ -33,6 +35,10 @@ public class dashBoardController {
 	@Autowired
 	@Qualifier("usuarioServiceImpl")
 	private UsuarioServiceImpl usuarioImp;
+	
+	@Autowired
+	@Qualifier("bibliotecaServiceImpl")
+	private BibliotecaServiceImpl bibImp;
 	
 	@GetMapping("/admin")
 	public ModelAndView index(HttpServletRequest request)  throws ServletException, IOException  {
@@ -88,6 +94,7 @@ public class dashBoardController {
 			mav.addObject("fecha_actual", fecha_actual);
 			mav.addObject("municipios", usuarioImp.listMunicipiosOrderByNombre());
 			mav.addObject("departamentos", usuarioImp.listDpto());
+			mav.addObject("bibliotecas",bibImp.listAllBibliotecas());
 			
 		}else {
 			if (funtions.isAdmin(request)) {

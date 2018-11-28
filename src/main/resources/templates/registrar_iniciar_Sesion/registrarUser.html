@@ -4,9 +4,13 @@
 <title th:text="${titulo}"></title>
 <link rel="stylesheet" href="#" th:href="@{/css/font-awesome.css}" />
 <link rel="stylesheet" href="#" th:href="@{/css/gsdk-bootstrap-wizard.css}" />
+<link rel="stylesheet" href="#" th:href="@{/css/select2.css}" />
+
+
+
 </head>
 <body>
-	<nav th:replace="fragmentos/plantilla :: navbar-admin"></nav>
+	<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
 	<div class="image-container set-full-height">
 	<div th:if="${error}">
 			<div class="alert alert-danger" role="alert">
@@ -19,10 +23,10 @@
 				<div class="col-sm-8 col-sm-offset-2" style="margin-left: 225px;" >
 					<div class="wizard-container">
 						<div class="card wizard-card" data-color="azzure" id="wizardProfile">
-							<form action="#" th:action="@{/usuarios/addAdmin}" th:objects="*{usuario}" th:method="post" enctype="multipart/form-data">
+							<form action="#" th:action="@{/addUser2}" th:objects="*{usuario}" th:method="post" enctype="multipart/form-data">
 								<div class="wizard-header">
 									<h3>
-										<b>Registra un nuevo administrador</b> <br> <small>Por favor
+										<b>Registrate</b> <br> <small>Por favor
 											complete la siguiente informacion</small>
 									</h3>
 								</div>
@@ -108,10 +112,10 @@
 												</div>
 
 												<div class="form-inline">
-													<label class="col-sm-4">Numero de telefono</label> <input type="text"
+													<label class="col-sm-4">Numero de telefono</label> <input type="number"
 														class="form-control col-sm-8" th:fields="*{numero_telefono}"
 														id="numero_telefono" name="numero_telefono"
-														placeholder="numero de telefono">
+														placeholder="numero de telefono" autocomplete="off" maxlength="8" min="20000000" max="79999999" pattern="/^[7|2|6][0-9]{7}$/">
 												</div>
 												<div class="form-inline">
 													<label class="col-sm-4">Lugar de estudio</label> <input type="text"
@@ -154,19 +158,9 @@
 
 											<div class="col-sm-12 col-sm-offset-1">
 												<div class="form-inline">
-													<label class="col-sm-4">Departamento:</label>
-													<select id="dept" name="dept" class="form-control col-sm-6" required="true">
-														<option value="">Seleccione</option>
-														<option th:each="dep : ${departamentos}" th:value="${dep.id}"
-															th:text="${dep.nombre_departamento}"></option>
-													</select>
-												</div>
-											</div>
-											<div class="col-sm-12 col-sm-offset-1">
-												<div class="form-inline">
 													<label class="col-sm-4">Municipio:</label>
-													<select id="mun" name="mun" class="form-control col-sm-6" required="true">
-														<option value="">Seleccione</option>
+													<select id="mun" name="mun" class="busqueda form-control col-sm-6" required="true">
+														<option value="">Seleccione una opcion</option>
 														<option th:each="muni : ${municipios}" th:value="${muni.id}"
 															th:text="${muni.nombre_municipio}"></option>
 													</select>
@@ -175,8 +169,8 @@
 
 											<div class="col-sm-12 col-sm-offset-1">
 												<div class="form-inline">
-													<label class="col-sm-4">Biblioteca: </label>
-													<select id="bib" name="bib" class="form-control col-sm-6" required="true">
+													<label class="col-sm-4">Biblioteca:</label>
+													<select id="bib" name="bib" class="busqueda form-control col-sm-6" required="true">
 														<option value="">Seleccione</option>
 														<option th:each="bib : ${bibliotecas}" th:value="${bib.id}"
 															th:text="${bib.nombre_biblioteca}"></option>
@@ -224,17 +218,20 @@
              BIB404
         </div>
     </div>
-	
 	<div th:replace="fragmentos/plantilla :: login"></div>
 	<div th:replace="fragmentos/plantilla :: scripts"></div>
 	<script src="#" th:src="@{/js/jquery.bootstrap.wizard.js}"></script>
 	<script src="#" th:src="@{/js/gsdk-bootstrap-wizard.js}"></script>
 	<script src="#" th:src="@{/js/bootstrap.min.js}"></script>
 	<script src="#" th:src="@{/js/jquery.validate.min.js}"></script>
-	<script src="#" th:src="@{/js/jquery.scrollex.min.js}"></script>
-	<script src="#" th:src="@{/js/skel.min.js}"></script>
-	<script src="#" th:src="@{/js/util.js}"></script>
-	<script src="#" th:src="@{/js/main.js}"></script>
-
+    <script src="#" th:src="@{/js/select2.js}"></script>
+    <script type="text/javascript">
+	    $(document).ready(function() {
+	    	$('.busqueda').select2({
+	    		width:'50%'
+	    	});
+	        console.log( "Dentro de la funcion!" );
+	    });
+    </script>
 </body>
 </html>

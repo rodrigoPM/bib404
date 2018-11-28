@@ -88,6 +88,38 @@ public class UsuarioController extends HttpServlet{
 			return "redirect:/index";
 		}
 	}
+	@GetMapping("/registrar_usuario")
+	public String registrarUsuario(@RequestParam(name="error", required=false, defaultValue="NULL") String nm, @ModelAttribute("username") String username ,Model model,HttpServletRequest request)  throws ServletException, IOException  {
+		Usuario user = usuarioImp.findBy(username);
+		model.addAttribute("titulo","BIB404-registrarse");
+		HttpSession session = request.getSession();
+		if(session.getAttribute(Constante.USER)!=null) {
+			if(nm.compareToIgnoreCase("user")==0) {
+				model.addAttribute("valor","Error username, ocupado");
+				model.addAttribute("error",1);
+			}else {
+				if(nm.compareToIgnoreCase("fecha")==0) {
+					model.addAttribute("valor","Error fecha, eres demasiado joven :v");
+					model.addAttribute("error",1);
+				}else
+				model.addAttribute("error",false);
+			}
+			model.addAttribute("usuario", new Usuario());
+			model.addAttribute("bibliotecas", usuarioImp.listBibliotecas());
+			Date fecha = new Date();
+			int anio = fecha.getYear() - 4 ;
+			fecha.setYear(anio);
+			SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+			String fecha_actual = formateador.format(fecha);
+			System.out.println(fecha_actual);
+			model.addAttribute("fecha_actual", fecha_actual);
+			model.addAttribute("municipios", usuarioImp.listMunicipiosOrderByNombre());
+			model.addAttribute("departamentos", usuarioImp.listDpto());
+			return Template.REGISTRAR_USUARIO;
+		}else {
+			return "redirect:/index";
+		}
+	}
 	
 	@PostMapping("/addUser")
 	public String redireccion(@Valid @ModelAttribute("usuario") Usuario usuario,@ModelAttribute("bib") String bib ,@ModelAttribute("mun") String mun,HttpServletRequest request)  throws ServletException, IOException {
@@ -115,9 +147,6 @@ public class UsuarioController extends HttpServlet{
 			return "redirect:/usuarios/registrarse?error=user";
 		}
 	}
-	
-	
-
 	
 	@PostMapping("/addAdmin")
 	public String redireccionAdmin(@Valid @ModelAttribute("usuario") Usuario usuario,@ModelAttribute("bib") String bib ,@ModelAttribute("mun") String mun,HttpServletRequest request)  throws ServletException, IOException {

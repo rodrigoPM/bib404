@@ -1,10 +1,12 @@
 package com.bib404.system_bib404.controller;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bib404.system_bib404.Repository.ConsultasRE;
+import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Categoria;
 import com.bib404.system_bib404.entity.Usuario;
@@ -50,9 +53,12 @@ public class GestionUsuarioController {
 	@RequestMapping("/bib404/{id_bib}/gestion_usuario")
 	public ModelAndView listUsuarios(@PathVariable("id_bib") int id_bib, Model model, HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.GESTION_USUARIO);
+		Usuario user= new Usuario();
 		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());
 		if(usuarioServiceImpl.listUsuarioBib(id_bib).size()>0) {
 			mav.addObject("usuarios", usuarioServiceImpl.listUsuarioBib(id_bib));
+			model.addAttribute("user", user);
+			
 		}
 				return mav;
 	}
@@ -129,8 +135,8 @@ public class GestionUsuarioController {
 			model.addAttribute("exito", "Se editó correctamente el usuario");
 			
 			if (user2!=null) {
-				HttpSession sesion = request.getSession();
-				sesion.setAttribute("usuario", user);
+				//HttpSession sesion = request.getSession();
+				//sesion.setAttribute("usuario", user);
 				model.addAttribute("exito", "Se editó correctamente el usuario");
 				return listUsuarios(id_bib, model, request);
 			}else {
@@ -139,6 +145,28 @@ public class GestionUsuarioController {
 				return listUsuarios(id_bib, model, request);
 			}
 		
+	}
+	@PostMapping("/addUser2")
+	public ModelAndView redireccion2(Model model, @Valid @ModelAttribute("usuario") Usuario usuario,@ModelAttribute("bib") String bib ,@ModelAttribute("mun") String mun,HttpServletRequest request)  throws ServletException, IOException {
+		String pass = encriptado.Encriptar(usuario.getPassword());
+		usuario.setPassword(pass);
+		usuario.setFecha_registro(new Date());
+		usuario.setRol(Constante.USUARIO_SIMPLE);
+		int id_numicipio = Integer.parseInt(mun);
+		int id_biblioteca = Integer.parseInt(bib);
+		int val = 0;
+		Date fech = new Date();
+		int anio = fech.getYear() - 4;
+		if(usuario.getFecha_nacimiento().getYear()>anio) {
+			System.out.println(""+usuario.getFecha_nacimiento().getYear());
+			model.addAttribute("error", "Error con la fecha de nacimiento");
+			return listUsuarios(id_biblioteca, model, request);
+		}else {
+			val = usuarioServiceImpl.addUser(usuario, id_numicipio, id_biblioteca);
+		}
+		model.addAttribute("exito", "Se registró correctamente el usuario");
+		return listUsuarios(id_biblioteca, model, request);
+
 	}
 
 }

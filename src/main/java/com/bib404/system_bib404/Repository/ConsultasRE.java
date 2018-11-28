@@ -28,6 +28,7 @@ public class ConsultasRE {
 	@PersistenceContext
 	private EntityManager em;
 	
+	//Devuelve los recursos especificos de un recurso bibliotecario
 	public List<RecursoEspecifico> findJoin(int id) {
 		JPAQuery<RecursoEspecifico> query=new JPAQuery<RecursoEspecifico>(em);
 		List<RecursoEspecifico> res=query.select(qRecursoEspecifico)
@@ -37,6 +38,8 @@ public class ConsultasRE {
 				.where(qRecursoBibliotecario.id.eq(id)).fetch();
 		return res;
 	}
+	
+	//Devuelve un recurso bibliotecario 
 	public RecursoBibliotecario ver(int id) {
 		JPAQuery<RecursoBibliotecario> query=new JPAQuery<RecursoBibliotecario>(em);
 		RecursoBibliotecario rb=query.select(qRecursoBibliotecario)
@@ -44,9 +47,12 @@ public class ConsultasRE {
 				.where(qRecursoBibliotecario.id.eq(id)).fetchOne();
 		return rb;
 	}
+	
+	//Devuelve todos los administradores de bibliotecas
 	public List<Usuario> obtenerAdmins(){
 		JPAQuery<Usuario> query=new JPAQuery<Usuario>(em);
-		List<Usuario> admins=query.select(qUsuario).from(qUsuario).fetch();
+		List<Usuario> admins=query.select(qUsuario).from(qUsuario)
+				.where(qUsuario.rol.eq("ADMIN")).fetch();
 		return admins;
 	}
 }
