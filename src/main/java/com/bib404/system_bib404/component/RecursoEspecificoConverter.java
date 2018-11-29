@@ -18,7 +18,8 @@ public class RecursoEspecificoConverter {
         		recursoEspecificoModel.getCodigo_rec_esp(), 
         		recursoEspecificoModel.getFormato_recurso(),
         		recursoEspecificoModel.getDetalle_recurso(),
-        		recursoEspecificoModel.getAutor()
+        		recursoEspecificoModel.getAutor(),
+        		recursoEspecificoModel.getEditorial()
         		);
     }
     public RecursoEspecificoModel convertRecursoEspecifico2RecursoEspecificoModel(RecursoEspecifico recursoEspecifico){
@@ -30,9 +31,9 @@ public class RecursoEspecificoConverter {
         		recursoEspecifico.isPrestado(),
         		recursoEspecifico.getCodigo_rec_esp(), 
         		recursoEspecifico.getFormato_recurso(),
-        		null,
         		recursoEspecifico.getDetalle_recurso(),
-        		recursoEspecifico.getAutor()
+        		recursoEspecifico.getAutor(),
+        		recursoEspecifico.getEditorial()
         		);
     }
 }

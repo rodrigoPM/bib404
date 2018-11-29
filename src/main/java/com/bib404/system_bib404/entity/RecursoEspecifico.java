@@ -39,6 +39,9 @@ public class RecursoEspecifico {
 
 	@Column(name = "prestado")
 	private boolean prestado;
+	
+	@Column(name = "editorial")
+	private String editorial;
 
 	@Column(name = "codigo_rec_esp")
 	private String codigo_rec_esp;
@@ -94,6 +97,13 @@ public class RecursoEspecifico {
 	public void setEdicion_recurso(int edicion_recurso) {
 		this.edicion_recurso = edicion_recurso;
 	}
+	public String getEditorial() {
+		return editorial;
+	}
+
+	public void setEditorial(String editorial) {
+		this.editorial = editorial;
+	}
 
 	public boolean isPrestado() {
 		return prestado;
@@ -146,7 +156,7 @@ public class RecursoEspecifico {
 
 	public RecursoEspecifico(int id, boolean consulta_interna, int volumen_recurso, int edicion_recurso,
 			boolean prestado, String codigo_rec_esp, FormatoRecurso formato_recurso,
-			DetalleRecurso detalle_recurso, Set<Autor> autor) {
+			DetalleRecurso detalle_recurso, Set<Autor> autor, String editorial) {
 		super();
 		this.id = id;
 		this.consulta_interna = consulta_interna;
@@ -157,6 +167,7 @@ public class RecursoEspecifico {
 		this.formato_recurso = formato_recurso;
 		this.detalle_recurso = detalle_recurso;
 		this.autor = autor;
+		this.editorial = editorial;
 	}
 
 	public RecursoEspecifico() {
