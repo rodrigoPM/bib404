@@ -1,6 +1,7 @@
 package com.bib404.system_bib404.controller;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -57,12 +58,12 @@ public class AutorizarController {
 	}
 	@RequestMapping("/listPrestadosMora")
 	public ModelAndView listPrestadosMora(Model model, HttpServletRequest request)  throws ServletException, IOException  {
-		
+
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		
-		mav.addObject("prestamos", prestamoServiceImpl.listPrestados());
+		mav.addObject("prestamos", prestamoServiceImpl.listPrestadosMora());
 		model.addAttribute("prestado", 3);
-		
+
 		return mav;
 	}
 	@RequestMapping("/listDenegados")
@@ -133,6 +134,7 @@ public class AutorizarController {
 	public ModelAndView recibido(@RequestParam(name="id", required=false)int id, Model model,
 			@ModelAttribute(name="prestamoModel") PrestamoModel prestamoModel, HttpServletRequest request) throws ServletException, IOException  {
 		PrestamoModel prestamo=new PrestamoModel();
+		
 		int val=3;
 		if(id!=0) {
 			prestamo=prestamoServiceImpl.findPrestamoByIdModel(id);

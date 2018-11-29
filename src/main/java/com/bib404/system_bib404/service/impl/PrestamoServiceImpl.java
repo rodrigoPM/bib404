@@ -1,6 +1,7 @@
 package com.bib404.system_bib404.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,7 +56,24 @@ public class PrestamoServiceImpl implements PrestamoService{
 		List<Prestamo> valprestamos= prestamos.stream().filter(x -> x.getEstado()==2).collect(Collectors.toList());
 		List<PrestamoModel> prestamoModels=new ArrayList<PrestamoModel>();
 		for(Prestamo prestamo:valprestamos) {
+			Date fech = new Date();
+			int dias = fech.getDay();
+			if(dias < prestamo.getFecha_entrega().getDay()) {
 			prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
+			}
+		}
+		return prestamoModels;
+	}
+	public List<PrestamoModel> listPrestadosMora() {
+		List<Prestamo> prestamos=prestamoRepository.findAll();
+		List<Prestamo> valprestamos= prestamos.stream().filter(x -> x.getEstado()==2).collect(Collectors.toList());
+		List<PrestamoModel> prestamoModels=new ArrayList<PrestamoModel>();
+		for(Prestamo prestamo:valprestamos) {
+			Date fech = new Date();
+			int dias = fech.getDay();
+			if(dias > prestamo.getFecha_entrega().getDay()) {
+			prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
+			}
 		}
 		return prestamoModels;
 	}
@@ -80,7 +98,7 @@ public class PrestamoServiceImpl implements PrestamoService{
 	@Override
 	public List<Prestamo> listPrestadosEspecificos(int id_user) {
 		List<Prestamo> prestamos=prestamoRepository.findByUsuarioId(id_user);
-		List<Prestamo> resultado=prestamos.stream().filter(x -> !x.getRecursoEspecifico().getFormato_recurso().getNombre_formato().equals("fisico")).collect(Collectors.toList());
+		List<Prestamo> resultado=prestamos.stream().filter(x -> !x.getRecursoEspecifico().getFormato_recurso().getNombre_formato().equals("fisico") && x.getEstado()==2).collect(Collectors.toList());
 		List<Prestamo> variable=new ArrayList<Prestamo>();
 		for(Prestamo prestamo:resultado) {
 			variable.add(prestamo);
