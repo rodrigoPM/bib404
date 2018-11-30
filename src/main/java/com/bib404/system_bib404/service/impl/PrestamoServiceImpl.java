@@ -58,8 +58,8 @@ public class PrestamoServiceImpl implements PrestamoService{
 		for(Prestamo prestamo:valprestamos) {
 			Date fech = new Date();
 			int dias = fech.getDay();
-			if(dias < prestamo.getFecha_entrega().getDay()) {
-			prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
+			if(dias <= prestamo.getFecha_devolucion().getDay()) {
+				prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
 			}
 		}
 		return prestamoModels;
@@ -71,8 +71,10 @@ public class PrestamoServiceImpl implements PrestamoService{
 		for(Prestamo prestamo:valprestamos) {
 			Date fech = new Date();
 			int dias = fech.getDay();
-			if(dias > prestamo.getFecha_entrega().getDay()) {
-			prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
+			if(dias > prestamo.getFecha_devolucion().getDay()) {
+				prestamo.setMora(true);
+				prestamoRepository.save(prestamo);
+				prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
 			}
 		}
 		return prestamoModels;

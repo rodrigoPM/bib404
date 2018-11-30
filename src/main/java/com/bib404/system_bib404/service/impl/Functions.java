@@ -59,7 +59,7 @@ public class Functions implements Funciones{
 		HttpSession session = request.getSession();
 		if (session.getAttribute(Constante.USER)!=null) {
 			Usuario user = (Usuario) session.getAttribute(Constante.USER);
-			if (user.getRol().compareToIgnoreCase(Constante.ADMIN)==0) {
+			if (user.getRol().compareToIgnoreCase(Constante.ADMIN)==0 && user.isEnable()) {
 				return true;
 			}else {
 				return false;
@@ -76,7 +76,7 @@ public class Functions implements Funciones{
 		if (session.getAttribute(Constante.USER)!=null) {
 			Usuario user = (Usuario) session.getAttribute(Constante.USER);
 			System.out.println(user.getRol());
-			if (user.getRol().compareToIgnoreCase(Constante.USUARIO_SIMPLE)==0) {
+			if (user.getRol().compareToIgnoreCase(Constante.USUARIO_SIMPLE)==0 && user.isEnable()) {
 				return true;
 			}else {
 				return false;
