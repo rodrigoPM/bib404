@@ -51,6 +51,7 @@ public class RecursoEspecifico {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private FormatoRecurso formato_recurso;
 
+	private int idFormatoRecurso;
 	
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "detalle_recurso_id", nullable = false)
@@ -120,7 +121,14 @@ public class RecursoEspecifico {
 	public void setFormato_recurso(FormatoRecurso formato_recurso) {
 		this.formato_recurso = formato_recurso;
 	}
+	
+	public int getIdFormatoRecurso() {
+		return idFormatoRecurso;
+	}
 
+	public void setIdFormatoRecurso(int idFormatoRecurso) {
+		this.idFormatoRecurso = idFormatoRecurso;
+	}
 
 	public DetalleRecurso getDetalle_recurso() {
 		return detalle_recurso;

@@ -15,7 +15,7 @@
 
 	<div class="container">
 		<h1 class="text-center">
-			Gestionar Recursos Especificos de <span th:text="${name_bib}"></span>
+			Gestionar Recursos Especificos de <span th:text="${name_rb}"></span>
 		</h1>
 	</div>
 	<hr>
@@ -45,20 +45,32 @@
 										th:object="${recEspModel}" method="post"
 										id="formCrearRecEsp">
 										<div class="form-group">
-											<label>Volumen: </label> <input type="text"
-												placeholder="nombre de categoria" class="form-control"
+											<label>Nombre: </label> <input type="text"
+												placeholder="" class="form-control" th:value="${name_rb}" disabled readOnly>
+										</div>
+										<div class="form-group">
+											<label>Volumen: </label> <input type="number"
+												placeholder="volumen del recurso" class="form-control"
 												th:field="*{volumen_recurso}">
 										</div>
 										<div class="form-group">
-											<label>Edicion: </label><input type="text"
-												placeholder="nombre de categoria" class="form-control"
-												th:field="*{edicion_recurso}">
+											<label>Edicion: </label><input type="number"
+												placeholder="edicion del recurso" class="form-control"
+												th:field="*{edicion_recurso}" value="1">
 										</div>
 										<div class="form-group">
-											<label>Codigo del recurso: </label><input type="text"
-												placeholder="nombre de categoria" class="form-control"
-												th:field="*{codigo_rec_esp}">
+											<label>Editorial: </label> <input type="text"
+												placeholder="editorial" class="form-control"
+												th:field="*{editorial}">
 										</div>
+										<div class="form-group">
+ 											<label>Formato del recurso: </label> <select th:field="*{idFormatoRecurso}" class="form-control">
+ 												<div th:each="formato:${formatos}">
+ 													<option th:value="${formato.id}"
+														th:text="${formato.nombre_formato}"></option>
+ 												</div>
+ 											</select>
+ 										</div>
 									</form>
 								</div>
 								<div class="modal-footer">

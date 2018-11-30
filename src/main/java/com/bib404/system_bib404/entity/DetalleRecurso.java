@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "detalle_recurso")
@@ -35,10 +37,15 @@ public class DetalleRecurso {
 
 	@Column(name = "total_fis_rec_bib")
 	private int total_fis_rec_bib;
-
+ 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "fecha_ingreso_r_e")
 	private Date fecha_ingreso_r_e;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_at", nullable = false, updatable = false)
+	@CreatedDate
+	private Date createdAt;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "detalle_recurso")
 	private RecursoEspecifico recurso_especifico;
@@ -49,7 +56,7 @@ public class DetalleRecurso {
 	private RecursoBibliotecario recursoBib;
 
 	public DetalleRecurso(int id, int total_rec_bib, int total_dig_rec_bib, int total_fis_rec_bib,
-			Date fecha_ingreso_r_e, RecursoEspecifico recurso_especifico, RecursoBibliotecario recursoBib) {
+			Date fecha_ingreso_r_e, RecursoEspecifico recurso_especifico, RecursoBibliotecario recursoBib, Date createdAt) {
 		super();
 		this.id = id;
 		this.total_rec_bib = total_rec_bib;
@@ -58,6 +65,7 @@ public class DetalleRecurso {
 		this.fecha_ingreso_r_e = fecha_ingreso_r_e;
 		this.recurso_especifico = recurso_especifico;
 		this.recursoBib = recursoBib;
+		this.createdAt=createdAt;
 	}
 
 	public int getId() {
@@ -114,6 +122,14 @@ public class DetalleRecurso {
 
 	public void setRecurso_bib(RecursoBibliotecario recursoBib) {
 		this.recursoBib = recursoBib;
+	}
+	
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public DetalleRecurso() {

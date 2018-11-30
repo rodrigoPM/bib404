@@ -2,6 +2,7 @@ package com.bib404.system_bib404.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,7 +59,7 @@ public class RecursoEspecificoServiceImpl implements RecursoEspecificoService {
 
     }
 
-
+// metdos utilizandos las entidades
 
 
     @Override
@@ -69,5 +70,41 @@ public class RecursoEspecificoServiceImpl implements RecursoEspecificoService {
         recEsp.add(dr.getRecurso_especifico());
       }
       return recEsp;
+    }
+
+    @Override
+    public RecursoEspecifico addRecEsp(RecursoEspecifico re) {
+        RecursoEspecifico rec_esp=recursoEspecificoRepository.save(re);
+        return rec_esp;
+    }
+
+    @Override
+    public RecursoEspecifico findRecEspById(int id_re) {
+        try {
+            Optional<RecursoEspecifico> rec_esp=recursoEspecificoRepository.findById(id_re);
+            return rec_esp.get();
+        } catch (Exception e) {
+            //TODO: handle exception
+            return null;
+        }
+    }
+
+    @Override
+    public boolean existsById(int id_re) {
+        return recursoEspecificoRepository.existsById(id_re);
+    }
+
+    @Override
+    public boolean deleteRecEsp(int id_re) {
+        if (findRecEspById(id_re)!=null) {
+            recursoEspecificoRepository.delete(findRecEspById(id_re));
+            if (!existsById(id_re)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;   
+        }
     }
 }

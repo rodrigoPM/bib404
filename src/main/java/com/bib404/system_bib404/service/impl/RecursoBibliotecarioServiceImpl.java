@@ -32,9 +32,14 @@ public class RecursoBibliotecarioServiceImpl implements RecursoBibliotecarioServ
 	}
 
 	@Override
-	public boolean existsRBById(int id_rb) {
+	public boolean existsById(int id_rb) {
 		// TODO Auto-generated method stub
 		return rbRep.existsById(id_rb);
+	}
+
+	@Override
+	public RecursoBibliotecario findById(int id_rb) {
+		return rbRep.findById(id_rb).get();
 	}
 
 }

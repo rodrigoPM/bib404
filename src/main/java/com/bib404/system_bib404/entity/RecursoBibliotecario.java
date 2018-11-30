@@ -40,13 +40,13 @@ public class RecursoBibliotecario {
 	private String imagen_recurso_bibl;
 
 	@Column(name = "digital_recurso_bib")
-	private String digital_recurso_bib;
+	private boolean digital_recurso_bib;
 
 	@Column(name = "fisico_recurso_bib")
-	private String fisico_recurso_bib;
+	private boolean fisico_recurso_bib;
 
 	@Column(name = "total_recurso_bib")
-	private String total_recurso_bib;
+	private int total_recurso_bib;
 
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -66,8 +66,8 @@ public class RecursoBibliotecario {
 	private Set<Categoria> categoria = new HashSet<>();
 
 	public RecursoBibliotecario(int id, String nombre_recurso_bib, String descripcion_recurso_bib,
-			String sinopsis_recurso_bib, String imagen_recurso_bibl, String digital_recurso_bib,
-			String fisico_recurso_bib, String total_recurso_bib, Biblioteca biblioteca, TipoRecurso tipo_recurso,
+			String sinopsis_recurso_bib, String imagen_recurso_bibl, boolean digital_recurso_bib,
+			boolean fisico_recurso_bib, int total_recurso_bib, Biblioteca biblioteca, TipoRecurso tipo_recurso,
 			Set<Categoria> categoria) {
 		super();
 		this.id = id;
@@ -123,27 +123,27 @@ public class RecursoBibliotecario {
 		this.imagen_recurso_bibl = imagen_recurso_bibl;
 	}
 
-	public String getDigital_recurso_bib() {
+	public boolean getDigital_recurso_bib() {
 		return digital_recurso_bib;
 	}
 
-	public void setDigital_recurso_bib(String digital_recurso_bib) {
+	public void setDigital_recurso_bib(boolean digital_recurso_bib) {
 		this.digital_recurso_bib = digital_recurso_bib;
 	}
 
-	public String getFisico_recurso_bib() {
+	public boolean getFisico_recurso_bib() {
 		return fisico_recurso_bib;
 	}
 
-	public void setFisico_recurso_bib(String fisico_recurso_bib) {
+	public void setFisico_recurso_bib(boolean fisico_recurso_bib) {
 		this.fisico_recurso_bib = fisico_recurso_bib;
 	}
 
-	public String getTotal_recurso_bib() {
+	public int getTotal_recurso_bib() {
 		return total_recurso_bib;
 	}
 
-	public void setTotal_recurso_bib(String total_recurso_bib) {
+	public void setTotal_recurso_bib(int total_recurso_bib) {
 		this.total_recurso_bib = total_recurso_bib;
 	}
 
