@@ -89,7 +89,6 @@
 				<th>Formato del Recurso</th>
 				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
-				<th>Fecha de entrega</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
@@ -100,7 +99,6 @@
 				<th> <span th:text="${prestamo.recursoEspecifico.formato_recurso.nombre_formato}"> </span> </th>
 				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
 				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
-				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
 				
 				<td> <a href="#" th:href="@{/autorizar/autorizado?id=__${prestamo.id}__}">
 				<button type="button" class="btn btn-success boton3">Autorizar</button></a>
@@ -120,8 +118,8 @@
 				<th>Formato del Recurso</th>
 				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
-				<th>Fecha de entrega</th>
 				<th>Fecha de devolucion</th>
+				<th>Mora</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
@@ -132,8 +130,8 @@
 				<th> <span th:text="${prestamo.recursoEspecifico.formato_recurso.nombre_formato}"> </span> </th>
 				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
 				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
-				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
 				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
+				<th><span th:text="${prestamo.mora}==true ? 'Con mora' : 'Sin mora'"> </span></th>
 
 				<td> <a href="#" th:href="@{/autorizar/recibido?id=__${prestamo.id}__}">
 				<button type="button" class="btn btn-success boton3">Recibir</button></a></td>
@@ -150,8 +148,8 @@
 				<th>Formato del Recurso</th>
 				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
-				<th>Fecha de entrega</th>
 				<th>Fecha de devolucion</th>
+				<th>Mora</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
@@ -162,8 +160,8 @@
 				<th> <span th:text="${prestamo.recursoEspecifico.formato_recurso.nombre_formato}"> </span> </th>
 				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
 				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
-				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
 				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
+				<th><span th:text="${prestamo.mora}==true ? 'Con mora' : 'Sin mora'"> </span></th>
 
 				<td> <a href="#" th:href="@{/autorizar/recibidoMora?id=__${prestamo.id}__}">
 				<button type="button" class="btn btn-success boton3">Recibir</button></a></td>

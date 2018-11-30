@@ -139,6 +139,7 @@ public class AutorizarController {
 		if(id!=0) {
 			prestamo=prestamoServiceImpl.findPrestamoByIdModel(id);
 			prestamo.setEstado(val);
+			prestamo.setFecha_entrega(new Date());
 			prestamoServiceImpl.addPrestamo(prestamo);
 			model.addAttribute("mensaje", 2);
 			model.addAttribute("prestado", 2);
@@ -146,6 +147,7 @@ public class AutorizarController {
 
 		}
 		prestamo.setEstado(val);
+		prestamo.setFecha_entrega(new Date());
 		model.addAttribute("prestamoModel", prestamo);
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
@@ -163,6 +165,7 @@ public class AutorizarController {
 		if(id!=0) {
 			prestamo=prestamoServiceImpl.findPrestamoByIdModel(id);
 			prestamo.setEstado(val);
+			prestamo.setFecha_entrega(new Date());
 			prestamoServiceImpl.addPrestamo(prestamo);
 			model.addAttribute("mensaje", 2);
 			model.addAttribute("prestado", 3);
@@ -170,6 +173,7 @@ public class AutorizarController {
 			mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
 		}
 		prestamo.setEstado(val);
+		prestamo.setFecha_entrega(new Date());
 		model.addAttribute("prestamoModel", prestamo);
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("prestamos", prestamoServiceImpl.listPrestamos());
