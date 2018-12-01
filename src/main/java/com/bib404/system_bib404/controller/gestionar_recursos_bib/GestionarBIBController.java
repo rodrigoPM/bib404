@@ -71,17 +71,29 @@ public class GestionarBIBController {
 	
 	
 	@PostMapping("/addRecurso")
-	public String addContra(@Valid@ModelAttribute("RecursoBibliotecario") RecursoBibliotecario recurso,@ModelAttribute("tipoR") String tipR,@ModelAttribute("bib") String bib, Model model,HttpServletRequest request) {
+	public String addContra(@Valid@ModelAttribute("RecursoBibliotecario") RecursoBibliotecario recurso,@ModelAttribute("tipoR") String tipR,@ModelAttribute("bib") String bib,@ModelAttribute("forRecurso") String df, Model model,HttpServletRequest request) {
 		HttpSession sesion = request.getSession();
 		TipoRecurso tiporecurso;
 		Biblioteca biblioteca;
 		int id_tipo = Integer.parseInt(tipR);
 		int id_biblioteca = Integer.parseInt(bib);
+		int num=Integer.parseInt(df);
 		tiporecurso=trr.buscarRecurso(id_tipo);
 		biblioteca=br.buscarBiblioteca(id_biblioteca);
 		recurso.setTipo_recurso(tiporecurso);
 		recurso.setBiblioteca(biblioteca);
-	
+		recurso.setId(5);
+	if(num==1)
+	{
+		recurso.setDigital_recurso_bib(true);
+		recurso.setFisico_recurso_bib(false);
+	}
+	else {
+		
+		recurso.setFisico_recurso_bib(true);
+		recurso.setDigital_recurso_bib(false);
+	}
+		
 		rbr.save(recurso);
 
 		return "redirect:/recursos";
