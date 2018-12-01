@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bib404.system_bib404.constant.Template;
@@ -23,6 +24,7 @@ import com.bib404.system_bib404.entity.RecursoEspecifico;
 import com.bib404.system_bib404.model.ObjectAux;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
 import com.bib404.system_bib404.service.impl.DetalleRecursoServiceImpl;
+import com.bib404.system_bib404.service.impl.FileServiceImpl;
 import com.bib404.system_bib404.service.impl.FormatoRecursoServiceImpl;
 import com.bib404.system_bib404.service.impl.RecursoBibliotecarioServiceImpl;
 import com.bib404.system_bib404.service.impl.RecursoEspecificoServiceImpl;
@@ -56,6 +58,10 @@ public class RecursoEspController {
 	@Qualifier("detalleRecursoServiceImpl")
 	private DetalleRecursoServiceImpl dr;
 
+	@Autowired
+	@Qualifier("fileServiceImpl")
+	private FileServiceImpl file;
+
 	@RequestMapping("")
 	public ModelAndView gestionRecursoEspecifico(@PathVariable("id_bib") int id_bib,@PathVariable("id_rb") int id_rb,HttpServletRequest request) {
 		if(!biblioteca.existsBibById(id_bib) || !rb.existsById(id_rb)){
@@ -72,6 +78,7 @@ public class RecursoEspController {
 		mav.addObject("formatos", fr.listAllFormatoRec());
 		mav.addObject("crearRecEsp", "/bib404/"+id_bib+"/"+id_rb+"/recurso_especifico/nueva"); //action del form crear categoria
 		mav.addObject("borrarRecEsp", "/bib404/"+id_bib+"/"+id_rb+"/recurso_especifico/borrar"); //action del form eliminar categoria
+		mav.addObject("subirFileRecEsp", "/bib404/"+id_bib+"/"+id_rb+"/recurso_especifico/subir_file"); //action del form eliminar categoria
 		mav.addObject("recEspModel", new RecursoEspecifico());
 		mav.addObject("objectAux", new ObjectAux());
 
@@ -95,6 +102,14 @@ public class RecursoEspController {
 			}
 			session.removeAttribute("deleteRE");
 			session.removeAttribute("deleteError");
+		}
+		if(session.getAttribute("addFile")!=null){
+			if((boolean)session.getAttribute("addFile")){
+				mav.addObject("exito", "El archivo se subio correctamente");
+			}else{
+				mav.addObject("fracaso", "El archivo no se pudo subir, ocurrio un error");
+			}
+			session.removeAttribute("addFile");
 		}
 
 		if(funcion.isAnyUser(request)) {
@@ -123,6 +138,7 @@ public class RecursoEspController {
 			rec_esp.setConsulta_interna(false);
 		}
 		rec_esp.setPrestado(false);
+		rec_esp.setArchivo("nada");
 		rec_esp.setCodigo_rec_esp("rb"+id_rb+"->"+re.listAllRecEsp(id_rb).size());
 		
 		DetalleRecurso detalleRecurso=new DetalleRecurso();
@@ -167,6 +183,10 @@ public class RecursoEspController {
 								@PathVariable("id_rb") int id_rb,HttpServletRequest request ){
 		HttpSession session = request.getSession();
 		String redirect= "redirect:/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico";
+
+		if (!biblioteca.existsBibById(id_bib) || !rb.existsById(id_rb)) {
+			return redirect;
+		}
 		if (!re.existsById(ox.getId_object())) {
 			session.setAttribute("deleteRE", false);
 			session.setAttribute("deleteError", "El recurso especifico a borrar no existe");
@@ -211,4 +231,39 @@ public class RecursoEspController {
 
 		return redirect;
 	}
+
+	@PostMapping("/subir_file")
+	public String uploadFile(@ModelAttribute(name = "objectAux") ObjectAux ox, @PathVariable("id_bib") int id_bib,
+			@PathVariable("id_rb") int id_rb, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String redirect = "redirect:/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico";
+		if (!biblioteca.existsBibById(id_bib) || !rb.existsById(id_rb)) {
+			return redirect;
+		}
+		MultipartFile archivo=ox.getFile();
+		RecursoEspecifico rec_esp=re.findRecEspById(ox.getId_object());
+		
+		String nombreFile="nada";
+		if(!archivo.isEmpty()){
+			try {
+				nombreFile=file.subirFile(archivo, 2);
+			} catch (Exception e) {
+				//TODO: handle exception
+				System.out.println("ocurrio un error al subir archivo");
+				session.setAttribute("addFile", false);
+				return redirect;
+			}
+		}
+
+		if(rec_esp.getArchivo()!="nada"){// hay foto, eliminarla
+			String nombreLastFile=rec_esp.getArchivo();
+			file.eliminarFile(nombreLastFile, 2);
+		}
+		rec_esp.setArchivo(nombreFile);
+		dr.updateDetalleRecurso(rec_esp.getDetalle_recurso());
+		System.out.println("todo correctamente");
+		session.setAttribute("addFile", true);
+		return redirect;
+	}
+
 }

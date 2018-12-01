@@ -21,6 +21,7 @@ public class Template {
 
 	//gestionar recursos especificos
 	public static final String GESTION_REC_ESP="gestionar_rec_esp/gestionar_rec_esp";
+	public static final String UPLOAD_REC_ESP = "gestionar_rec_esp/subir_file";
 	
 	//registrar / iniciar sesion
 	public static final String REGISTRAR = "registrar_iniciar_Sesion/registrase";

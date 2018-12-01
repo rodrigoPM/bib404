@@ -39,32 +39,37 @@ public class RecursoEspecifico {
 
 	@Column(name = "prestado")
 	private boolean prestado;
-	
+
 	@Column(name = "editorial")
 	private String editorial;
 
 	@Column(name = "codigo_rec_esp")
 	private String codigo_rec_esp;
-	
+
+	@Column(name = "archivo")
+	private String archivo;
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "formato_recurso_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private FormatoRecurso formato_recurso;
 
 	private int idFormatoRecurso;
-	
+
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "detalle_recurso_id", nullable = false)
 	private DetalleRecurso detalle_recurso;
 
-	//@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	//@JoinTable(name = "prestamo_recurso_esp", joinColumns = {
-			//@JoinColumn(name = "prestamo_id") }, inverseJoinColumns = { @JoinColumn(name = "recurso_esp_id") })
-	//private Set<Prestamo> prestamo = new HashSet<>();
+	// @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
+	// CascadeType.MERGE })
+	// @JoinTable(name = "prestamo_recurso_esp", joinColumns = {
+	// @JoinColumn(name = "prestamo_id") }, inverseJoinColumns = { @JoinColumn(name
+	// = "recurso_esp_id") })
+	// private Set<Prestamo> prestamo = new HashSet<>();
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "recurso_esp_autor", joinColumns = {
-	@JoinColumn(name = "recurso_esp_id") }, inverseJoinColumns = { @JoinColumn(name = "autor_id") })
+			@JoinColumn(name = "recurso_esp_id") }, inverseJoinColumns = { @JoinColumn(name = "autor_id") })
 	private Set<Autor> autor = new HashSet<>();
 
 	public int getId() {
@@ -98,6 +103,7 @@ public class RecursoEspecifico {
 	public void setEdicion_recurso(int edicion_recurso) {
 		this.edicion_recurso = edicion_recurso;
 	}
+
 	public String getEditorial() {
 		return editorial;
 	}
@@ -121,7 +127,7 @@ public class RecursoEspecifico {
 	public void setFormato_recurso(FormatoRecurso formato_recurso) {
 		this.formato_recurso = formato_recurso;
 	}
-	
+
 	public int getIdFormatoRecurso() {
 		return idFormatoRecurso;
 	}
@@ -137,14 +143,17 @@ public class RecursoEspecifico {
 	public void setDetalle_recurso(DetalleRecurso detalle_recurso) {
 		this.detalle_recurso = detalle_recurso;
 	}
-/*
-	public Set<Prestamo> getPrestamo() {
-		return prestamo;
+	public String getArchivo(){
+		return archivo;
 	}
-
-	public void setPrestamo(Set<Prestamo> prestamo) {
-		this.prestamo = prestamo;
-	}*/
+	public void setArchivo(String archivo){
+		this.archivo=archivo;
+	}
+	/*
+	 * public Set<Prestamo> getPrestamo() { return prestamo; }
+	 * 
+	 * public void setPrestamo(Set<Prestamo> prestamo) { this.prestamo = prestamo; }
+	 */
 
 	public String getCodigo_rec_esp() {
 		return codigo_rec_esp;
@@ -155,7 +164,7 @@ public class RecursoEspecifico {
 	}
 
 	public Set<Autor> getAutor() {
-		return autor;
+		return autor; 
 	}
 
 	public void setAutor(Set<Autor> autor) {
@@ -163,8 +172,8 @@ public class RecursoEspecifico {
 	}
 
 	public RecursoEspecifico(int id, boolean consulta_interna, int volumen_recurso, int edicion_recurso,
-			boolean prestado, String codigo_rec_esp, FormatoRecurso formato_recurso,
-			DetalleRecurso detalle_recurso, Set<Autor> autor, String editorial) {
+			boolean prestado, String codigo_rec_esp, FormatoRecurso formato_recurso, DetalleRecurso detalle_recurso,
+			Set<Autor> autor, String editorial, String archivo) {
 		super();
 		this.id = id;
 		this.consulta_interna = consulta_interna;
@@ -176,10 +185,11 @@ public class RecursoEspecifico {
 		this.detalle_recurso = detalle_recurso;
 		this.autor = autor;
 		this.editorial = editorial;
+		this.archivo=archivo;
 	}
 
 	public RecursoEspecifico() {
-		
+
 	}
 
 }
