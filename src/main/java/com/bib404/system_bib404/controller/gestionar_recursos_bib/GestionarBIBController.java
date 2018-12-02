@@ -53,16 +53,31 @@ public class GestionarBIBController {
 	
 	@GetMapping("/recursos")
 	public String redirectPerfilForm(Model model,HttpServletRequest request) {
+TipoDigitaloFisico digi= new TipoDigitaloFisico();		
+		digi.setId(1);
+		digi.setTipo("Digital");
+		TipoDigitaloFisico fisico= new TipoDigitaloFisico();
+		fisico.setId(2);
+		fisico.setTipo("Fisico");
+		List <TipoDigitaloFisico> df= new ArrayList<TipoDigitaloFisico>();
+		
+	
+	
 
 		List<TipoRecurso> tr = new ArrayList<TipoRecurso>();
 		List<RecursoBibliotecario> lrb= new ArrayList<RecursoBibliotecario>();
 		lrb=rbr.findAll();
 		tr=trr.findAll();
+		df.add(digi);
+		df.add(fisico);
 		
 		HttpSession sesion = request.getSession();
 			    
 		model.addAttribute("TipoRecurso", tr);
         model.addAttribute("recursoBib", lrb);
+        model.addAttribute("tipDF", df);
+        model.addAttribute("fisico", fisico);
+        model.addAttribute("digital", digi);
         model.addAttribute("bibliotecas", usuarioImp.listBibliotecas());
 
 		return Template.GESTION;
@@ -82,7 +97,7 @@ public class GestionarBIBController {
 		biblioteca=br.buscarBiblioteca(id_biblioteca);
 		recurso.setTipo_recurso(tiporecurso);
 		recurso.setBiblioteca(biblioteca);
-		recurso.setId(5);
+		
 	if(num==1)
 	{
 		recurso.setDigital_recurso_bib(true);
@@ -98,6 +113,8 @@ public class GestionarBIBController {
 
 		return "redirect:/recursos";
 }
+	
+			
 	
 @PostMapping("/removeRecurso")
 
