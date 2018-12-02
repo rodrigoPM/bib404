@@ -57,7 +57,7 @@
  										<div class="form-group">
  											<label>(Opcional)Categoria Padre </label> <select th:field="*{idCatForanea}" class="form-control">
 												<option value="-1">categoria padre</option>
- 												<div th:each="categoria:${categorias}">
+ 												<div th:each="categoria:${listCategorias}">
  													<option th:value="${categoria.id}"
 														th:text="${categoria.nombre_categoria}"></option>
  												</div>
@@ -81,8 +81,8 @@
 			<div class="col-12">
 				<div class="row">
 					<div class="col-5 offset-7">
-						<form action="">
-							<input type="text" placeholder="buscar"> <input
+						<form th:action="${buscarCategoria}" method="get">
+							<input type="text" placeholder="buscar por nombre categoria" name="str" required> <input
 								type="submit" value="buscar" class="btn btn-primary">
 						</form>
 					</div>
@@ -100,22 +100,19 @@
 					th:text="${fracaso}"></p>
 			</div>
 		</div>
-			<div th:if="${categorias}" class="row">
-				<div th:each="categoria:${categorias}" class="col-12 my-3 bg-info">
-						<div class="row">
-							<div class="col-4">
-								<p>imagen</p>
-							</div>
-							<div class="col-8">
+			<div th:if="${listCategorias}" class="row">
+				<div th:each="categoria:${categorias}" class="col-12 my-3">
+						<div class="row d-flex justify-content-center">
+							<div class="col-8 rounded bg-info">
 								<div class="row">
 									<div class="col-12">
-											<p th:text="${categoria.nombre_categoria}"></p>
+										<p>	Nombre: <span th:text="${categoria.nombre_categoria}"></span></p>
 									</div>
 									<div class="col-12">
-										<p th:text="${categoria.descripcion_categoria}"></p>
+										<p>Descripcion: <span th:text="${categoria.descripcion_categoria}"></span></p>
 									</div>
-									<!-- <div class="col-12">
-										<p>Subcategaria?:</p>
+									<!-- <div th:if="${categoria.categoria.nombre_categoria}" class="col-12">
+										<p>Categoria Padre: <span th:text="${categoria.categoria.nombre_categoria}"></span></p>
 									</div> -->
 									<div class="col-12">
 										<div class="row">
@@ -140,7 +137,7 @@
 						</div>
 				</div>
 			</div>
-			<div th:unless="${categorias}" class="alert alert-info font-weight-bold text-center">Esta biblioteca aun no tiene
+			<div th:unless="${listCategorias}" class="alert alert-info font-weight-bold text-center">Esta biblioteca aun no tiene
 				categorias
 			</div>
 	</div>
