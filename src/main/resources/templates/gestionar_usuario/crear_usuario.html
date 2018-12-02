@@ -82,8 +82,9 @@
 			<div class="col-12">
 				<div class="row">
 					<div class="col-5 offset-7">
-						<form action="">
-							<input type="text" placeholder="buscar"> <input
+						<form th:action="@{/buscar_usuario?id_bib=__${bib}__}" method="post">
+							<input type="text" placeholder="buscar usuario" name="str" required> 
+							<input
 								type="submit" value="buscar" class="btn btn-primary">
 						</form>
 					</div>

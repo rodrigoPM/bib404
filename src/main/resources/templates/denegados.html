@@ -68,6 +68,18 @@
     <a href="#" th:href="@{/autorizar/listRecibidos?id_bib=__${bib}__}"><button class="btn btn-primary boton" type=button onclick="mostrar2()">Prestamos Recibidos</button></a>
 
 <section th:if="${prestado==1}">
+<form th:action="@{/autorizar/buscar_denegados?id_bib=__${bib}__}" method="post">
+					<input type="text" placeholder="buscar usuario" name="str" required> 
+						<input type="submit" value="buscar" class="btn btn-primary">
+				</form>
+<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${error}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${error}"></p>
+			</div>
 <div th:if="${mensaje==3}" class="alert alert-danger">
   	<strong>No hay ningun prestamo denegado</strong>
 </div>
@@ -98,6 +110,18 @@
 	</table>
 </section>
 <section th:if="${prestado==2}">
+<form th:action="@{/autorizar/buscar_recibidos?id_bib=__${bib}__}" method="post">
+					<input type="text" placeholder="buscar usuario" name="str" required> 
+						<input type="submit" value="buscar" class="btn btn-primary">
+				</form>
+<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${error}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${error}"></p>
+			</div>
 <div th:if="${mensaje==3}" class="alert alert-danger">
   	<strong>No hay ningun prestamo recibido</strong>
 </div>

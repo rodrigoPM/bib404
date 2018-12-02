@@ -25,8 +25,11 @@
   	
 			<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#mdlGuardar" data-whatever="">Nuevo recurso</button>
 		
+		<form action="#" th:action="@{/Buscar}"  th:method="get" >
+		<input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="escriba el nombre de un recurso">
+		<input type="submit" id="btnGuardar" value="Guardar" class="btn btn-success" >
 
-
+</form>
 		<div class="modal fade mdlGuardar" id="mdlGuardar" tabindex="-1" role="dialog" aria-labelledby="mdlGuardar" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -111,8 +114,10 @@
 		</div>
 						
 	</div>
-	
-	<table class="table table-condensed" id="tblCuentasBD" style="text-align: center;">
+	<div class="container" th:if="${exito}">
+	<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${mensaje}"></p>
+	<table class="table table-condensed" id="tblCuentasBD" style="text-align: center;" >
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">ID</th>
@@ -278,6 +283,11 @@
 			
 						</tbody>
 						</table>
+						</div>
+						<div th:unless="${exito}" class="alert alert-info font-weight-bold text-center"> 
+						<p th:text="${mensaje}">
+
+			</div>
 	
 	
 	

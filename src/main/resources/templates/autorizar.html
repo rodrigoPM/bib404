@@ -59,14 +59,7 @@
     		<a href="#" th:href="@{/autorizar/listDenegados?id_bib=__${bib}__}">
         	<button class="btn btn-primary boton" type=button onclick="mostrar()">Denegados/Recibidos</button></a>
     	</div>
-
-	
-		<!--<div class="buscador">
-        		<form class="form-inline" method="GET" action="" id="busqueda">
-                	<input class="buscador" name="consulta" id='consulta' type="text" placeholder="Buscar" value="">
-                    <input type="submit" value="Buscar" id="buscar" class="btn btn-success buscador">
-                </form>
-         </div>-->
+       
     <a href="#" th:href="@{/autorizar/listPrestamos?id_bib=__${bib}__}"><button class="btn btn-primary boton" type=button onclick="mostrar()">Autorizar Prestamos</button></a>
     <a href="#" th:href="@{/autorizar/listPrestados?id_bib=__${bib}__}"><button class="btn btn-primary boton" type=button onclick="mostrar2()">Recibir Prestamos</button></a>
     <a href="#" th:href="@{/autorizar/listPrestadosMora?id_bib=__${bib}__}"><button class="btn btn-primary boton" type=button onclick="mostrar3()">Prestamos con Mora</button></a>
@@ -76,6 +69,18 @@
 </div>
 
 <section th:if="${prestado==1}">
+<form th:action="@{/autorizar/buscar_prestamos?id_bib=__${bib}__}" method="post">
+					<input type="text" placeholder="buscar usuario" name="str" required> 
+						<input type="submit" value="buscar" class="btn btn-primary">
+				</form>
+<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${error}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${error}"></p>
+			</div>
 <div th:if="${mensaje==3}" class="alert alert-danger">
   	<strong>No hay ningun prestamo</strong>
 </div>
@@ -114,6 +119,18 @@
 	</table>
 </section>
 <section th:if="${prestado==2}">
+<form th:action="@{/autorizar/buscar_prestados?id_bib=__${bib}__}" method="post">
+					<input type="text" placeholder="buscar usuario" name="str" required> 
+						<input type="submit" value="buscar" class="btn btn-primary">
+				</form>
+<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${error}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${error}"></p>
+			</div>
 <div th:if="${mensaje==3}" class="alert alert-danger">
   	<strong>No hay ningun prestamo</strong>
 </div>
@@ -148,6 +165,18 @@
 	</table>
 </section>
 <section th:if="${prestado==3}">
+<form th:action="@{/autorizar/buscar_prestadosMora?id_bib=__${bib}__}" method="post">
+					<input type="text" placeholder="buscar usuario" name="str" required> 
+						<input type="submit" value="buscar" class="btn btn-primary">
+				</form>
+<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${error}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${error}"></p>
+			</div>
 <div th:if="${mensaje==3}" class="alert alert-danger">
   	<strong>No hay ningun prestamo</strong>
 </div>

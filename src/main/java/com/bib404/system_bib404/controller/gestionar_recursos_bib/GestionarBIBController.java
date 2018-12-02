@@ -83,6 +83,8 @@ TipoDigitaloFisico digi= new TipoDigitaloFisico();
         model.addAttribute("digital", digi);
         model.addAttribute("bibliotecas", usuarioImp.listBibliotecas());
         model.addAttribute("bib",usuarioImp.findBibByUser(user.getUsername()));
+        model.addAttribute("exito", true);
+        model.addAttribute("mensaje","estos son los recursos");
 		return Template.GESTION;
 		
 	}
@@ -128,5 +130,56 @@ public String removerRecurso(@RequestParam("dato") String dato) {
 	   
 	return "redirect:/recursos";
 }
+
+
+@GetMapping("/Buscar")
+
+
+public String buscar(Model model,HttpServletRequest request,@RequestParam("busqueda") String busqueda){
+	Biblioteca busca=new Biblioteca();
+	HttpSession session = request.getSession();
+	Usuario user =(Usuario) session.getAttribute(Constante.USER);
+TipoDigitaloFisico digi= new TipoDigitaloFisico();		
+	digi.setId(1);
+	digi.setTipo("Digital");
+	TipoDigitaloFisico fisico= new TipoDigitaloFisico();
+	fisico.setId(2);
+	fisico.setTipo("Fisico");
+	List <TipoDigitaloFisico> df= new ArrayList<TipoDigitaloFisico>();
+	busca=br.buscarBiblioteca(user.getBiblioteca().getId());
+
+
+	List<TipoRecurso> tr = new ArrayList<TipoRecurso>();
+	tr=trr.findAll();
+	df.add(digi);
+	df.add(fisico);
+	String buscando=busqueda+'%';
+	
+	System.out.println(buscando+"id"+busca.getId());
+	List<RecursoBibliotecario> lrb= new ArrayList<RecursoBibliotecario>();
+	
+	lrb=rbr.buscarecurso(buscando,busca.getId());
+
+	if (lrb.size() > 0) {
+		model.addAttribute("exito",true);
+		model.addAttribute("recursoBib", lrb);
+		
+	} else {
+		model.addAttribute("exito",false);
+		model.addAttribute("mensaje", "No hay resultados que coincidan con la busqueda");
+	}
+
+
+
+
+
+
+	model.addAttribute("tipDF", df);
+	model.addAttribute("bib",usuarioImp.findBibByUser(user.getUsername()));
+	return Template.GESTION;
+}
+
+
+
 	
 }
