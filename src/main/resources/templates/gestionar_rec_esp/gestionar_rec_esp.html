@@ -120,14 +120,14 @@
 									<span>consulta interna:</span> <p th:text="${recEsp.consulta_interna}"></p>
 								</div>
 								<div class="col-12">
-									<span>volumen recurso:</span><p th:text="${recEsp.volumen_recurso}"></p>
+									<span>Editorial:</span><p th:text="${recEsp.editorial}"></p>
 								</div>
 								<!-- <div class="col-12">
 									<p>Subcategaria?:</p>
 								</div> -->
 								<div class="col-12">
 									<div class="row">
-										<div class="col-6">
+										<div class="col-4">
 											<form action="#" th:action="${borrarRecEsp}" method="post"
 											th:object="${objectAux}" class="row">
 											<select th:field="*{id_object}" class="d-none">
@@ -136,7 +136,38 @@
 												<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
 											</form>
 										</div>
-										<div class="col-6">
+										<div class="col-4">
+											<button type="button" class="btn btn-success w-100" data-toggle="modal" th:data-target="'#rem'+${recEsp.id}">Subir Archivo</button>
+											<div class="modal" th:id="'rem'+${recEsp.id}" tabindex="-1" role="dialog"  aria-hidden="true" th:aria-labelledby="'rel'+${recEsp.id}">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" th:id="'rel'+${recEsp.id}">Subir Archivo</h5>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<form action="#" th:action="${subirFileRecEsp}" th:object="${objectAux}" method="post" enctype="multipart/form-data">
+																<select th:field="*{id_object}" class="d-none">
+																	<option th:value="${recEsp.id}"></option>
+																</select>
+																<div class="input-group">
+																	<div class="custom-file">
+																		<input type="file" class="custom-file-input" th:id="'file'+${recEsp.id}" th:field="*{file}" required>
+																		<label class="custom-file-label" th:for="'file'+${recEsp.id}">Archivo</label>
+																	</div>
+																	<div class="input-group-append">
+																		<button class="btn btn-outline-secondary" type="submit" th:id="'file'+${recEsp.id}">Subir Archivo</button>
+																	</div>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-4">
 											<form class="row">
 												<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
 											</form>
