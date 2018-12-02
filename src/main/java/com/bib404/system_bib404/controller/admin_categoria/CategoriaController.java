@@ -101,7 +101,8 @@ public class CategoriaController {
 
 	@GetMapping("/buscar")
 	public ModelAndView buscar(@PathVariable("id_bib") int id_bib,
-			@RequestParam(name = "str", required = false, defaultValue = "all") String str, HttpServletRequest request) {
+			@RequestParam(name = "str", required = false, defaultValue = "all") String str,
+			HttpServletRequest request) {
 		if (!biblioteca.existsBibById(id_bib)) {
 			ModelAndView mav = new ModelAndView("redirect:/");
 			return mav;
@@ -123,14 +124,17 @@ public class CategoriaController {
 		// buscar por nombre de categoria
 		List<Categoria> categorias = categoria.listAllCategorias(id_bib);
 		List<Categoria> categoriasBuscadas = new ArrayList<Categoria>();
-		if (str != "all" && str!="") {
+		if (!str.equals("all")) {
 			for (Categoria cat : categorias) {
-				if (cat.getNombre_categoria().toLowerCase().contains(str.toLowerCase())) {// si el nombre de la categoria contiene str de busqueda
+				if (cat.getNombre_categoria().toLowerCase().contains(str.toLowerCase())) {// si el nombre de la
+																							// categoria contiene str de
+																							// busqueda
 					categoriasBuscadas.add(cat);
 				}
 			}
-		}else{
-			categoriasBuscadas=categorias;
+		} else {
+			System.out.println("copiando");
+			categoriasBuscadas = categorias;
 		}
 
 		if (categoriasBuscadas.size() > 0) {
