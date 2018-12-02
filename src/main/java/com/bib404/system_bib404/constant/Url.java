@@ -19,4 +19,7 @@ public class Url {
 	//gestionar recursos especificos
 	public static final String GESTION_REC_ESP="/bib404/{id_bib}/{id_rb}/recurso_especifico";
 
+	//url para traer los archivos
+	public static final String ARCHIVOS="/bib404/archivos";
+
 }

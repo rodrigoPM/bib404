@@ -20,7 +20,8 @@ public class RecursoEspecificoConverter {
         		recursoEspecificoModel.getDetalle_recurso(),
         		recursoEspecificoModel.getAutor(),
 				recursoEspecificoModel.getEditorial(),
-				recursoEspecificoModel.getArchivo()
+				recursoEspecificoModel.getArchivo(),
+				recursoEspecificoModel.getAutores()
         		);
     }
     public RecursoEspecificoModel convertRecursoEspecifico2RecursoEspecificoModel(RecursoEspecifico recursoEspecifico){
@@ -35,7 +36,8 @@ public class RecursoEspecificoConverter {
         		recursoEspecifico.getDetalle_recurso(),
         		recursoEspecifico.getAutor(),
 				recursoEspecifico.getEditorial(),
-				recursoEspecifico.getArchivo()
+				recursoEspecifico.getArchivo(),
+				recursoEspecifico.getAutores()
         		);
     }
 }

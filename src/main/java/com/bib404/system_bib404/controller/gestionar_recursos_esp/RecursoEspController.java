@@ -193,15 +193,27 @@ public class RecursoEspController {
 			System.out.println("El recurso no existe");
 			return redirect;
 		}
-
+		String nombreLastFile=null;
+		boolean foto=false;
 		if(re.listAllRecEsp(id_rb).size() > 0){
+			if (re.findById(ox.getId_object()).getArchivo() != "nada") {// hay foto, eliminarla
+				nombreLastFile = re.findById(ox.getId_object()).getArchivo();
+				foto=true;
+			}
 			if (re.listAllRecEsp(id_rb).size() > 1) {
 				DetalleRecurso lastDR=dr.getLastDRbyRB(id_rb);
 				String formato=re.findById(ox.getId_object()).getFormato_recurso().getNombre_formato();
+				
 				if(dr.deleteDetalleRecurso(re.findById(ox.getId_object()).getDetalle_recurso().getId())){
 					session.setAttribute("deleteRE", true);
 					System.out.println("detalle recurso eliminada con exito");
-
+					if(foto){
+						if (file.eliminarFile(nombreLastFile, 2)) {
+							System.out.println("eliminando archivo " + nombreLastFile);
+						} else {
+							System.out.println("No se pudo eliminar " + nombreLastFile);
+						}
+					}
 					if (formato != "Fisico") {
 						lastDR.setTotal_dig_rec_bib(lastDR.getTotal_dig_rec_bib()-1);
 					} else {
@@ -216,6 +228,13 @@ public class RecursoEspController {
 				}
 			} else {
 				if(dr.deleteDetalleRecurso(re.findById(ox.getId_object()).getDetalle_recurso().getId())){
+					if (foto) {
+						if(file.eliminarFile(nombreLastFile, 2)){
+							System.out.println("eliminando archivo " + nombreLastFile);
+						}else{
+							System.out.println("No se pudo eliminar " + nombreLastFile);
+						}
+					}
 					session.setAttribute("deleteRE", true);
 					System.out.println("detalle recurso eliminada con exito");
 				}else{
@@ -257,7 +276,13 @@ public class RecursoEspController {
 
 		if(rec_esp.getArchivo()!="nada"){// hay foto, eliminarla
 			String nombreLastFile=rec_esp.getArchivo();
-			file.eliminarFile(nombreLastFile, 2);
+			if(file.eliminarFile(nombreLastFile, 2)){
+				System.out.println("eliminando archivo " + nombreLastFile);
+			}else{
+				System.out.println("no se pudo eliminar " + nombreLastFile);
+			}
+			
+			
 		}
 		rec_esp.setArchivo(nombreFile);
 		dr.updateDetalleRecurso(rec_esp.getDetalle_recurso());

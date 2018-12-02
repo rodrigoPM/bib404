@@ -61,7 +61,11 @@
 										<div class="form-group">
 											<label>Editorial: </label> <input type="text"
 												placeholder="editorial" class="form-control"
-												th:field="*{editorial}">
+												th:field="*{editorial}" required>
+										</div>
+										<div class="form-group">
+											<label>Autor/es(si son varios separar por punto y coma): </label>
+											<textarea class="form-control" name="" id="" cols="30" rows="10" placeholder="autor/es" th:field="*{autores}" required rows="3"></textarea>
 										</div>
 										<div class="form-group">
  											<label>Formato del recurso: </label> <select th:field="*{idFormatoRecurso}" class="form-control">
@@ -112,7 +116,6 @@
 			<div th:each="recEsp:${recEsps}" class="col-12 my-3 bg-info">
 					<div class="row">
 						<div class="col-4">
-							<p>imagen</p>
 						</div>
 						<div class="col-8">
 							<div class="row">
