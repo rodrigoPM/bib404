@@ -13,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bib404.system_bib404.Repository.BibliotecaRepository;
 import com.bib404.system_bib404.Repository.PerfilRepository;
@@ -26,8 +28,11 @@ import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Biblioteca;
 import com.bib404.system_bib404.entity.Municipio;
 import com.bib404.system_bib404.entity.RecursoBibliotecario;
+import com.bib404.system_bib404.entity.RecursoEspecifico;
 import com.bib404.system_bib404.entity.TipoRecurso;
 import com.bib404.system_bib404.entity.Usuario;
+import com.bib404.system_bib404.model.ObjectAux;
+import com.bib404.system_bib404.service.impl.FileServiceImpl;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 
 @Controller
@@ -38,6 +43,10 @@ public class GestionarBIBController {
 	@Qualifier("TipoRecursoRepository")
 	private TipoRecursoRepository trr;	
 	
+	@Autowired
+	@Qualifier("fileServiceImpl")
+	private FileServiceImpl file;
+
 	
 	@Autowired
 	@Qualifier("recursoBibliotecarioRepository")
@@ -163,6 +172,7 @@ TipoDigitaloFisico digi= new TipoDigitaloFisico();
 	if (lrb.size() > 0) {
 		model.addAttribute("exito",true);
 		model.addAttribute("recursoBib", lrb);
+		model.addAttribute("mensaje","resultados de la busqueda");
 		
 	} else {
 		model.addAttribute("exito",false);
@@ -172,7 +182,7 @@ TipoDigitaloFisico digi= new TipoDigitaloFisico();
 
 
 
-
+	model.addAttribute("TipoRecurso", tr);
 
 	model.addAttribute("tipDF", df);
 	model.addAttribute("bib",usuarioImp.findBibByUser(user.getUsername()));
@@ -180,6 +190,4 @@ TipoDigitaloFisico digi= new TipoDigitaloFisico();
 }
 
 
-
-	
 }
