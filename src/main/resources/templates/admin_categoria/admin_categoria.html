@@ -126,10 +126,52 @@
 											<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
 										</form>
 									</div>
-									<div class="col-6">
-										<form class="row">
-											<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
-										</form>
+									<div class="col-6 p-0">
+										<button type="button" class="btn btn-warning w-100" data-toggle="modal" th:data-target="'#cat'+${categoria.id}">Editar</button>
+										<div class="modal" th:id="'cat'+${categoria.id}" tabindex="-1" role="dialog" aria-hidden="true" th:aria-labelledby="'cal'+${categoria.id}">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" th:id="'cal'+${categoria.id}">Editando categoria</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<form action="#" th:action="${editarCategoria}" th:object="${categoriaModel}" method="post" th:id="'form'+${categoria.id}">
+															<input type="hidden" th:value="${categoria.id}" th:name="id">
+															<div class="form-group">
+																<label>Nombre de la categoria: </label>
+																<input required type="text" placeholder="nombre de categoria" class="form-control" th:name="nombre_categoria" th:value="${categoria.nombre_categoria}">
+															</div>
+															<div class="form-group">
+																<label>Descripcion categoria: </label>
+																<textarea required rows="3" cols="" class="form-control" th:name="descripcion_categoria" th:text="${categoria.descripcion_categoria}"></textarea>
+															</div>
+															<div class="form-group">
+																<!-- <p>categoria padre:</p> -->
+																<!-- <p>id foranea: <span th:text="${categoria.idCatForanea}"></span></p> -->
+																<label>(Opcional)Categoria Padre </label>
+																<select th:field="*{idCatForanea}" class="form-control">
+																	<option value="0">Escoger categoria padre</option>
+																	<div th:each="cat:${listCategorias}">
+																		<option th:value="${cat.id}" th:text="${cat.nombre_categoria}"></option>
+																	</div>
+																</select>
+															</div>
+
+														</form>
+													</div>
+													<div class="modal-footer">
+														<div class="row">
+															<div class="col-6">
+																<button type="submit" class="btn btn-primary" th:form="'form'+${categoria.id}">Modificar Categoria</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -138,8 +180,9 @@
 				</div>
 			</div>
 		</div>
-		<div th:unless="${listCategorias}" class="alert alert-info font-weight-bold text-center">Esta biblioteca aun no tiene categorias
-		</div>
+	</div>
+	<div th:unless="${listCategorias}" class="alert alert-info font-weight-bold text-center">Esta biblioteca aun no tiene categorias
+	</div>
 	</div>
 
 	<footer th:replace="fragmentos/plantilla :: footer"></footer>
