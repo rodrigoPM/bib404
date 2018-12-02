@@ -57,17 +57,23 @@ public class CategoriaController {
 		mav.addObject("titulo", "Categorias");
 		mav.addObject("url_categoria", "/bib404/" + id_bib + "/dashboard/categorias");
 		mav.addObject("name_bib", biblioteca.findById(id_bib).getNombre_biblioteca());
-		mav.addObject("crearCategoria", "/bib404/" + id_bib + "/dashboard/categorias/nueva"); // action del form crear
-																								// categoria
-		mav.addObject("borrarCategoria", "/bib404/" + id_bib + "/dashboard/categorias/borrar"); // action del form
-																								// eliminar categoria
-		mav.addObject("buscarCategoria", "/bib404/" + id_bib + "/dashboard/categorias/buscar"); // action del form
-																								// buscar categoria
+		mav.addObject("crearCategoria", "/bib404/" + id_bib + "/dashboard/categorias/nueva"); 
+		mav.addObject("borrarCategoria", "/bib404/" + id_bib + "/dashboard/categorias/borrar"); 
+		mav.addObject("buscarCategoria", "/bib404/" + id_bib + "/dashboard/categorias/buscar"); 
+		mav.addObject("editarCategoria", "/bib404/" + id_bib + "/dashboard/categorias/editar");
 		mav.addObject("categoriaModel", new Categoria());
 		mav.addObject("objectAux", new ObjectAux());
 		mav.addObject("listCategorias", categoria.listAllCategorias(id_bib));
 		if (categoria.listAllCategorias(id_bib).size() > 0) {
-			mav.addObject("categorias", categoria.listAllCategorias(id_bib));
+			List<Categoria> categorias=categoria.listAllCategorias(id_bib);
+			for(Categoria cat:categorias){
+				try{
+					cat.setIdCategoriaForanea(cat.getCategoria().getId());
+				}catch(Exception e){
+					cat.setIdCategoriaForanea(0);
+				}
+			}
+			mav.addObject("categorias", categorias);
 		}
 
 		HttpSession session = request.getSession();
@@ -88,6 +94,14 @@ public class CategoriaController {
 			session.removeAttribute("deleteCategoria");
 			session.removeAttribute("deleteError");
 		}
+		if (session.getAttribute("updateCategoria") != null) {
+			if ((boolean) session.getAttribute("updateCategoria")) {
+				mav.addObject("exito", "La categoria solicitada se modifico con exito");
+			} else {
+				mav.addObject("fracaso", "La categoria no se pudo modificar");
+			}
+			session.removeAttribute("updateCategoria");
+		}
 
 		if (funcion.isAnyUser(request)) {
 			mav.addObject("isUser", true);
@@ -95,6 +109,8 @@ public class CategoriaController {
 			mav.addObject("isNoUser", true);
 			System.out.println("No se valida si es usuario");
 		}
+
+		mav.addObject("catService", categoria);
 
 		return mav;
 	}
@@ -196,6 +212,32 @@ public class CategoriaController {
 			session.setAttribute("deleteError", "No se pudo eliminar la categoria solicitada");
 			System.out.println("La categoria no se pudo eliminar");
 		}
+		return redirect;
+	}
+	@PostMapping("/editar")
+	public String editarCategoria(@ModelAttribute(name = "cat") Categoria cat, @PathVariable("id_bib") int id_bib,
+			HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String redirect = "redirect:/bib404/" + id_bib + "/dashboard/categorias";
+		Categoria catMod=categoria.findByID(cat.getId());
+		catMod.setDescripcion_categoria(cat.getDescripcion_categoria());
+		catMod.setNombre_categoria(cat.getNombre_categoria());
+		if(cat.getIdCatForanea()!=0){
+			catMod.setCategoria(categoria.findByID(cat.getIdCatForanea()));
+		}else{
+			catMod.setCategoria(null);
+		}
+		
+		if (null != categoria.updateCategoria(catMod)) {
+			System.out.println("categoria modificada");
+			session.setAttribute("updateCategoria", true);
+		} else {
+			session.setAttribute("updateCategoria", false);
+			System.out.println("fallo categoria");
+		}
+
+		System.out.println("la biblioteca de categoria: "+catMod.getId()+" "+catMod.getBiblioteca().getCodigo_biblioteca());
+		
 		return redirect;
 	}
 

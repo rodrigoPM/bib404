@@ -1,7 +1,9 @@
 package com.bib404.system_bib404.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Municipio;
 import com.bib404.system_bib404.entity.Prestamo;
+import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.PrestamoModel;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
 import com.bib404.system_bib404.service.impl.PrestamoServiceImpl;
@@ -40,6 +43,10 @@ public class AutorizarController {
 	@Autowired
 	@Qualifier("bibliotecaServiceImpl")
 	private BibliotecaServiceImpl bibliotecaServiceImpl;
+	
+	@Autowired
+	@Qualifier("usuarioServiceImpl")
+	private UsuarioServiceImpl usuarioServiceImpl;
 	
 	@RequestMapping("/listPrestamos")
 	public ModelAndView listPrestamos(Model model, @RequestParam(name="id_bib") int id_bib, HttpServletRequest request)  throws ServletException, IOException  {
@@ -238,6 +245,221 @@ public class AutorizarController {
 	public String addPrestamo(@ModelAttribute(name="prestamoModel") PrestamoModel prestamoModel) {
 		prestamoServiceImpl.addPrestamo(prestamoModel);
 		return Template.AUTORIZAR;
+	}
+	@PostMapping("/buscar_prestamos")
+	public ModelAndView buscarPrestamos(@RequestParam("id_bib") int id_bib, Model model,
+			@RequestParam(name = "str", required = false, defaultValue = "all") String str, HttpServletRequest request) {
+		if (!bibliotecaServiceImpl.existsBibById(id_bib)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
+		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
+		Usuario user= new Usuario();
+		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());
+		mav.addObject("bib", bibliotecaServiceImpl.findById(id_bib).getId());
+
+		model.addAttribute("user", user);
+		// buscar por nombre de usuario
+		List<PrestamoModel> usuarios = prestamoServiceImpl.listPrestamos(id_bib);
+		List<PrestamoModel> usuariosBuscados = new ArrayList<PrestamoModel>();
+		if (!str.equals("all") && !str.equals("")) {
+			for (PrestamoModel user2 : usuarios) {
+				if (user2.getUsuario().getUsername().toLowerCase().contains(str.toLowerCase())) {// si el nombre de la categoria contiene str de busqueda
+					usuariosBuscados.add(user2);
+				}
+			}
+		}else{
+			usuariosBuscados=usuarios;
+		}
+
+		if (usuariosBuscados.size() > 0) {
+			mav.addObject("prestamos", usuariosBuscados);
+			model.addAttribute("prestado", 1);
+			mav.addObject("exito", "Los usuarios encontrados con el termino " + str.toUpperCase() + " son:");
+		} else {
+			model.addAttribute("prestado", 1);
+			mav.addObject("error", "No hay resultados que coincidan con la busqueda");
+		}
+/*
+		if (funcion.isAnyUser(request)) {
+			mav.addObject("isUser", true);
+		} else {
+			mav.addObject("isNoUser", true);
+			System.out.println("No se valida si es usuario");
+		}*/
+		return mav;
+	}
+	@PostMapping("/buscar_prestados")
+	public ModelAndView buscarPrestados(@RequestParam("id_bib") int id_bib, Model model,
+			@RequestParam(name = "str", required = false, defaultValue = "all") String str, HttpServletRequest request) {
+		if (!bibliotecaServiceImpl.existsBibById(id_bib)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
+		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
+		Usuario user= new Usuario();
+		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());
+		mav.addObject("bib", bibliotecaServiceImpl.findById(id_bib).getId());
+
+		model.addAttribute("user", user);
+		// buscar por nombre de usuario
+		List<PrestamoModel> usuarios = prestamoServiceImpl.listPrestados(id_bib);
+		List<PrestamoModel> usuariosBuscados = new ArrayList<PrestamoModel>();
+		if (!str.equals("all") && !str.equals("")) {
+			for (PrestamoModel user2 : usuarios) {
+				if (user2.getUsuario().getUsername().toLowerCase().contains(str.toLowerCase())) {// si el nombre de la categoria contiene str de busqueda
+					usuariosBuscados.add(user2);
+				}
+			}
+		}else{
+			usuariosBuscados=usuarios;
+		}
+
+		if (usuariosBuscados.size() > 0) {
+			mav.addObject("prestamos", usuariosBuscados);
+			model.addAttribute("prestado", 2);
+			mav.addObject("exito", "Los usuarios encontrados con el termino " + str.toUpperCase() + " son:");
+		} else {
+			model.addAttribute("prestado", 2);
+			mav.addObject("error", "No hay resultados que coincidan con la busqueda");
+		}
+/*
+		if (funcion.isAnyUser(request)) {
+			mav.addObject("isUser", true);
+		} else {
+			mav.addObject("isNoUser", true);
+			System.out.println("No se valida si es usuario");
+		}*/
+		return mav;
+	}
+	@PostMapping("/buscar_prestadosMora")
+	public ModelAndView buscarPrestadosMora(@RequestParam("id_bib") int id_bib, Model model,
+			@RequestParam(name = "str", required = false, defaultValue = "all") String str, HttpServletRequest request) {
+		if (!bibliotecaServiceImpl.existsBibById(id_bib)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
+		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
+		Usuario user= new Usuario();
+		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());
+		mav.addObject("bib", bibliotecaServiceImpl.findById(id_bib).getId());
+
+		model.addAttribute("user", user);
+		// buscar por nombre de usuario
+		List<PrestamoModel> usuarios = prestamoServiceImpl.listPrestadosMora(id_bib);
+		List<PrestamoModel> usuariosBuscados = new ArrayList<PrestamoModel>();
+		if (!str.equals("all") && !str.equals("")) {
+			for (PrestamoModel user2 : usuarios) {
+				if (user2.getUsuario().getUsername().toLowerCase().contains(str.toLowerCase())) {// si el nombre de la categoria contiene str de busqueda
+					usuariosBuscados.add(user2);
+				}
+			}
+		}else{
+			usuariosBuscados=usuarios;
+		}
+
+		if (usuariosBuscados.size() > 0) {
+			mav.addObject("prestamos", usuariosBuscados);
+			model.addAttribute("prestado", 3);
+			mav.addObject("exito", "Los usuarios encontrados con el termino " + str.toUpperCase() + " son:");
+		} else {
+			model.addAttribute("prestado", 3);
+			mav.addObject("error", "No hay resultados que coincidan con la busqueda");
+		}
+/*
+		if (funcion.isAnyUser(request)) {
+			mav.addObject("isUser", true);
+		} else {
+			mav.addObject("isNoUser", true);
+			System.out.println("No se valida si es usuario");
+		}*/
+		return mav;
+	}
+	@PostMapping("/buscar_denegados")
+	public ModelAndView buscarDenegados(@RequestParam("id_bib") int id_bib, Model model,
+			@RequestParam(name = "str", required = false, defaultValue = "all") String str, HttpServletRequest request) {
+		if (!bibliotecaServiceImpl.existsBibById(id_bib)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
+		ModelAndView mav = new ModelAndView(Template.DENEGADOS);
+		Usuario user= new Usuario();
+		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());
+		mav.addObject("bib", bibliotecaServiceImpl.findById(id_bib).getId());
+
+		model.addAttribute("user", user);
+		// buscar por nombre de usuario
+		List<PrestamoModel> usuarios = prestamoServiceImpl.listDenegados(id_bib);
+		List<PrestamoModel> usuariosBuscados = new ArrayList<PrestamoModel>();
+		if (!str.equals("all") && !str.equals("")) {
+			for (PrestamoModel user2 : usuarios) {
+				if (user2.getUsuario().getUsername().toLowerCase().contains(str.toLowerCase())) {// si el nombre de la categoria contiene str de busqueda
+					usuariosBuscados.add(user2);
+				}
+			}
+		}else{
+			usuariosBuscados=usuarios;
+		}
+
+		if (usuariosBuscados.size() > 0) {
+			mav.addObject("prestamos", usuariosBuscados);
+			model.addAttribute("prestado", 1);
+			mav.addObject("exito", "Los usuarios encontrados con el termino " + str.toUpperCase() + " son:");
+		} else {
+			model.addAttribute("prestado", 1);
+			mav.addObject("error", "No hay resultados que coincidan con la busqueda");
+		}
+/*
+		if (funcion.isAnyUser(request)) {
+			mav.addObject("isUser", true);
+		} else {
+			mav.addObject("isNoUser", true);
+			System.out.println("No se valida si es usuario");
+		}*/
+		return mav;
+	}
+	@PostMapping("/buscar_recibidos")
+	public ModelAndView buscarRecibidos(@RequestParam("id_bib") int id_bib, Model model,
+			@RequestParam(name = "str", required = false, defaultValue = "all") String str, HttpServletRequest request) {
+		if (!bibliotecaServiceImpl.existsBibById(id_bib)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
+		ModelAndView mav = new ModelAndView(Template.DENEGADOS);
+		Usuario user= new Usuario();
+		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());
+		mav.addObject("bib", bibliotecaServiceImpl.findById(id_bib).getId());
+
+		model.addAttribute("user", user);
+		// buscar por nombre de usuario
+		List<PrestamoModel> usuarios = prestamoServiceImpl.listRecibidos(id_bib);
+		List<PrestamoModel> usuariosBuscados = new ArrayList<PrestamoModel>();
+		if (!str.equals("all") && !str.equals("")) {
+			for (PrestamoModel user2 : usuarios) {
+				if (user2.getUsuario().getUsername().toLowerCase().contains(str.toLowerCase())) {// si el nombre de la categoria contiene str de busqueda
+					usuariosBuscados.add(user2);
+				}
+			}
+		}else{
+			usuariosBuscados=usuarios;
+		}
+
+		if (usuariosBuscados.size() > 0) {
+			mav.addObject("prestamos", usuariosBuscados);
+			model.addAttribute("prestado", 2);
+			mav.addObject("exito", "Los usuarios encontrados con el termino " + str.toUpperCase() + " son:");
+		} else {
+			model.addAttribute("prestado", 2);
+			mav.addObject("error", "No hay resultados que coincidan con la busqueda");
+		}
+/*
+		if (funcion.isAnyUser(request)) {
+			mav.addObject("isUser", true);
+		} else {
+			mav.addObject("isNoUser", true);
+			System.out.println("No se valida si es usuario");
+		}*/
+		return mav;
 	}
 
 }

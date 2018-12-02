@@ -99,11 +99,21 @@
 	<div class="container">
 
 		<h2>MIS RECURSOS DIGITALES</h2>
+		<div th:if="${exito}" class="col-12">
+			<p class="m-0 alert alert-success text-center font-weight-bold"
+				th:text="${exito}"></p>
+		</div>
 		<div th:if="${error}" class="col-12">
 			<p class="m-0 alert alert-danger text-center font-weight-bold"
 				th:text="${error}"></p>
 		</div>
-		
+		<div class="col-10 offset-8">
+						<form th:action="@{/buscar_digital?id_user=__${userid}__}" method="post">
+							<input type="text" placeholder="buscar usuario" name="str" required> 
+							<input
+								type="submit" value="buscar" class="btn btn-primary">
+						</form>
+					</div>
 		<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
   			<h5 class="card-header">Recursos Disponibles</h5>
   		</div>
