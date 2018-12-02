@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
-<title th:text="${titulo}"></title>
 
-<link rel="stylesheet" href="#" />
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+	<title th:text="${titulo}"></title>
+
+	<link rel="stylesheet" href="#" />
 </head>
+
 <body>
 	<div th:if="${isUser}">
 		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
@@ -16,7 +18,8 @@
 	<br /> -->
 	<div class="container">
 		<h1 class="text-center">
-			Administrar Categoria de <span th:text="${name_bib}"></span>
+			Administrar Categoria de
+			<span th:text="${name_bib}"></span>
 		</h1>
 	</div>
 	<hr>
@@ -25,51 +28,43 @@
 			<div class="col-12">
 				<div class="row">
 					<div class="col-4">
-						<button type="button" class="btn btn-success" data-toggle="modal"
-							data-target="#crearCategoria">Crear Categoria</button>
+						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#crearCategoria">Crear Categoria</button>
 					</div>
-					<div class="modal" id="crearCategoria" tabindex="-1" role="dialog"
-						aria-labelledby="crearCategoriaLabel" aria-hidden="true">
+					<div class="modal" id="crearCategoria" tabindex="-1" role="dialog" aria-labelledby="crearCategoriaLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="crearCategoriaLabel">Nueva
-										Categoria</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
+									<h5 class="modal-title" id="crearCategoriaLabel">Nueva Categoria
+									</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
 								<div class="modal-body">
-									<form action="#" th:action="${crearCategoria}"
-										th:object="${categoriaModel}" method="post"
-										id="formCrearCategoria">
+									<form action="#" th:action="${crearCategoria}" th:object="${categoriaModel}" method="post" id="formCrearCategoria">
 										<div class="form-group">
-											<label>Nombre de la categoria: </label> <input type="text"
-												placeholder="nombre de categoria" class="form-control"
-												th:field="*{nombre_categoria}">
+											<label>Nombre de la categoria: </label>
+											<input type="text" placeholder="nombre de categoria" class="form-control" th:field="*{nombre_categoria}">
 										</div>
 										<div class="form-group">
 											<label>Descripcion categoria: </label>
-											<textarea rows="3" cols="" class="form-control"
-												th:field="*{descripcion_categoria}"></textarea>
+											<textarea rows="3" cols="" class="form-control" th:field="*{descripcion_categoria}"></textarea>
 										</div>
- 										<div class="form-group">
- 											<label>(Opcional)Categoria Padre </label> <select th:field="*{idCatForanea}" class="form-control">
+										<div class="form-group">
+											<label>(Opcional)Categoria Padre </label>
+											<select th:field="*{idCatForanea}" class="form-control">
 												<option value="-1">categoria padre</option>
- 												<div th:each="categoria:${listCategorias}">
- 													<option th:value="${categoria.id}"
-														th:text="${categoria.nombre_categoria}"></option>
- 												</div>
- 											</select>
- 										</div>
+												<div th:each="categoria:${listCategorias}">
+													<option th:value="${categoria.id}" th:text="${categoria.nombre_categoria}"></option>
+												</div>
+											</select>
+										</div>
 									</form>
 								</div>
 								<div class="modal-footer">
 									<div class="row">
 										<div class="col-6">
-											<button type="submit" class="btn btn-primary"
-												form="formCrearCategoria">Crear Categoria</button>
+											<button type="submit" class="btn btn-primary" form="formCrearCategoria">Crear Categoria</button>
 										</div>
 									</div>
 								</div>
@@ -80,10 +75,15 @@
 			</div>
 			<div class="col-12">
 				<div class="row">
-					<div class="col-5 offset-7">
+					<div class="col-6 offset-6">
 						<form th:action="${buscarCategoria}" method="get">
-							<input type="text" placeholder="buscar por nombre categoria" name="str" required> <input
-								type="submit" value="buscar" class="btn btn-primary">
+							<div class="input-group mb-3">
+								<input type="text" name="str" class="form-control" placeholder="buscar por nombre categoria" aria-describedby="btnSearch"
+								 required>
+								<div class="input-group-append">
+									<button class="btn btn-outline-primary" type="button" id="btnSearch">Buscar</button>
+								</div>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -92,54 +92,54 @@
 		<hr>
 		<div class="row">
 			<div th:if="${exito}" class="col-12">
-				<p class="m-0 alert alert-success text-center font-weight-bold"
-					th:text="${exito}"></p>
+				<p class="m-0 alert alert-success text-center font-weight-bold" th:text="${exito}"></p>
 			</div>
 			<div th:if="${fracaso}" class="col-12">
-				<p class="m-0 alert alert-danger text-center font-weight-bold"
-					th:text="${fracaso}"></p>
+				<p class="m-0 alert alert-danger text-center font-weight-bold" th:text="${fracaso}"></p>
 			</div>
 		</div>
-			<div th:if="${listCategorias}" class="row">
-				<div th:each="categoria:${categorias}" class="col-12 my-3">
-						<div class="row d-flex justify-content-center">
-							<div class="col-8 rounded bg-info">
-								<div class="row">
-									<div class="col-12">
-										<p>	Nombre: <span th:text="${categoria.nombre_categoria}"></span></p>
-									</div>
-									<div class="col-12">
-										<p>Descripcion: <span th:text="${categoria.descripcion_categoria}"></span></p>
-									</div>
-									<!-- <div th:if="${categoria.categoria.nombre_categoria}" class="col-12">
+		<div th:if="${listCategorias}" class="row">
+			<div th:each="categoria:${categorias}" class="col-12 my-3">
+				<div class="row d-flex justify-content-center">
+					<div class="col-8 rounded bg-success">
+						<div class="row">
+							<div class="col-12">
+								<p> Nombre:
+									<span th:text="${categoria.nombre_categoria}"></span>
+								</p>
+							</div>
+							<div class="col-12">
+								<p>Descripcion:
+									<span th:text="${categoria.descripcion_categoria}"></span>
+								</p>
+							</div>
+							<!-- <div th:if="${categoria.categoria.nombre_categoria}" class="col-12">
 										<p>Categoria Padre: <span th:text="${categoria.categoria.nombre_categoria}"></span></p>
 									</div> -->
-									<div class="col-12">
-										<div class="row">
-											<div class="col-6">
-												<form action="#" th:action="${borrarCategoria}" method="post"
-												th:object="${objectAux}" class="row">
-												<select th:field="*{id_object}" class="d-none">
-													<option th:value="${categoria.id}"></option>
-												</select>
-													<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
-												</form>
-											</div>
-											<div class="col-6">
-												<form class="row">
-													<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
-												</form>
-											</div>
-										</div>
+							<div class="col-12">
+								<div class="row">
+									<div class="col-6">
+										<form action="#" th:action="${borrarCategoria}" method="post" th:object="${objectAux}" class="row">
+											<select th:field="*{id_object}" class="d-none">
+												<option th:value="${categoria.id}"></option>
+											</select>
+											<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
+										</form>
+									</div>
+									<div class="col-6">
+										<form class="row">
+											<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
+										</form>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
 				</div>
 			</div>
-			<div th:unless="${listCategorias}" class="alert alert-info font-weight-bold text-center">Esta biblioteca aun no tiene
-				categorias
-			</div>
+		</div>
+		<div th:unless="${listCategorias}" class="alert alert-info font-weight-bold text-center">Esta biblioteca aun no tiene categorias
+		</div>
 	</div>
 
 	<footer th:replace="fragmentos/plantilla :: footer"></footer>
