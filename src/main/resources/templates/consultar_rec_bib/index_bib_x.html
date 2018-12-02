@@ -5,6 +5,12 @@
 
 <link rel="stylesheet" href="#" />
 </head>
+<Style type="text/css">
+  .buscador{
+   float: right;
+   margin-bottom: 10px;
+  }
+ </Style>
 <body>
 
 	<div th:if="${isUser}">
@@ -49,7 +55,14 @@
 
 	<br />
 	<div class="container-fluid">
+	<div class="buscador">
+			<a href="#" th:href="@{/autorizar/listPrestamos?id_bib=__${biblioteca.id}__}">
+				<button type="button" class="btn btn-info">Administrar Prestamos</button></a>
+			<a href="#" th:href="@{/gestion_usuario?id_bib=__${biblioteca.id}__}">
+				<button type="button" class="btn btn-info">Gestionar Usuarios</button></a>
+		</div>
 		<h1>Recursos Bibliotecarios</h1>
+		
 	</div>
 
 	<hr>
