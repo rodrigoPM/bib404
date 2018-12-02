@@ -31,6 +31,9 @@ public class VerDigitalesController {
 		if(prestamoServiceImpl.listPrestadosEspecificos(id_user).size()>0) {
 			mav.addObject("prestamos", prestamoServiceImpl.listPrestadosEspecificos(id_user));
 		}
+		else {
+			model.addAttribute("error", "No tienes recusos digitales actualmente");
+		}
 		
 		return mav;
 	}

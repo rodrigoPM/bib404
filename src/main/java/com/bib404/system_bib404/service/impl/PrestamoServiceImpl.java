@@ -42,8 +42,8 @@ public class PrestamoServiceImpl implements PrestamoService{
 	
 
 	@Override
-	public List<PrestamoModel> listPrestamos() {
-		List<Prestamo> prestamos=prestamoRepository.findAll();
+	public List<PrestamoModel> listPrestamos(int id_bib) {
+		List<Prestamo> prestamos=prestamoRepository.listPrestamos(id_bib);
 		List<Prestamo> valprestamos= prestamos.stream().filter(x -> x.getEstado()==1).collect(Collectors.toList());
 		List<PrestamoModel> prestamoModels=new ArrayList<PrestamoModel>();
 		for(Prestamo prestamo:valprestamos) {
@@ -51,27 +51,27 @@ public class PrestamoServiceImpl implements PrestamoService{
 		}
 		return prestamoModels;
 	}
-	public List<PrestamoModel> listPrestados() {
-		List<Prestamo> prestamos=prestamoRepository.findAll();
+	public List<PrestamoModel> listPrestados(int id_bib) {
+		List<Prestamo> prestamos=prestamoRepository.listPrestamos(id_bib);
 		List<Prestamo> valprestamos= prestamos.stream().filter(x -> x.getEstado()==2).collect(Collectors.toList());
 		List<PrestamoModel> prestamoModels=new ArrayList<PrestamoModel>();
 		for(Prestamo prestamo:valprestamos) {
 			Date fech = new Date();
-			int dias = fech.getDay();
-			if(dias <= prestamo.getFecha_devolucion().getDay()) {
+			if(fech.before(prestamo.getFecha_devolucion()) || fech.equals(prestamo.getFecha_devolucion())) {
+				prestamo.setMora(false);
+				prestamoRepository.save(prestamo);
 				prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
 			}
 		}
 		return prestamoModels;
 	}
-	public List<PrestamoModel> listPrestadosMora() {
-		List<Prestamo> prestamos=prestamoRepository.findAll();
+	public List<PrestamoModel> listPrestadosMora(int id_bib) {
+		List<Prestamo> prestamos=prestamoRepository.listPrestamos(id_bib);
 		List<Prestamo> valprestamos= prestamos.stream().filter(x -> x.getEstado()==2).collect(Collectors.toList());
 		List<PrestamoModel> prestamoModels=new ArrayList<PrestamoModel>();
 		for(Prestamo prestamo:valprestamos) {
 			Date fech = new Date();
-			int dias = fech.getDay();
-			if(dias > prestamo.getFecha_devolucion().getDay()) {
+			if(fech.after(prestamo.getFecha_devolucion())) {
 				prestamo.setMora(true);
 				prestamoRepository.save(prestamo);
 				prestamoModels.add(prestamoConverter.convertPrestamo2PrestamoModel(prestamo));
@@ -79,8 +79,8 @@ public class PrestamoServiceImpl implements PrestamoService{
 		}
 		return prestamoModels;
 	}
-	public List<PrestamoModel> listDenegados() {
-		List<Prestamo> prestamos=prestamoRepository.findAll();
+	public List<PrestamoModel> listDenegados(int id_bib) {
+		List<Prestamo> prestamos=prestamoRepository.listPrestamos(id_bib);
 		List<Prestamo> valprestamos= prestamos.stream().filter(x -> x.getEstado()==0).collect(Collectors.toList());
 		List<PrestamoModel> prestamoModels=new ArrayList<PrestamoModel>();
 		for(Prestamo prestamo:valprestamos) {
@@ -88,8 +88,8 @@ public class PrestamoServiceImpl implements PrestamoService{
 		}
 		return prestamoModels;
 	}
-	public List<PrestamoModel> listRecibidos() {
-		List<Prestamo> prestamos=prestamoRepository.findAll();
+	public List<PrestamoModel> listRecibidos(int id_bib) {
+		List<Prestamo> prestamos=prestamoRepository.listPrestamos(id_bib);
 		List<Prestamo> valprestamos= prestamos.stream().filter(x -> x.getEstado()==3).collect(Collectors.toList());
 		List<PrestamoModel> prestamoModels=new ArrayList<PrestamoModel>();
 		for(Prestamo prestamo:valprestamos) {
@@ -100,10 +100,13 @@ public class PrestamoServiceImpl implements PrestamoService{
 	@Override
 	public List<Prestamo> listPrestadosEspecificos(int id_user) {
 		List<Prestamo> prestamos=prestamoRepository.findByUsuarioId(id_user);
-		List<Prestamo> resultado=prestamos.stream().filter(x -> !x.getRecursoEspecifico().getFormato_recurso().getNombre_formato().equals("fisico") && x.getEstado()==2).collect(Collectors.toList());
+		List<Prestamo> resultado=prestamos.stream().filter(x -> !x.getRecursoEspecifico().getFormato_recurso().getNombre_formato().equals("Fisico") && x.getEstado()==2).collect(Collectors.toList());
 		List<Prestamo> variable=new ArrayList<Prestamo>();
 		for(Prestamo prestamo:resultado) {
-			variable.add(prestamo);
+			Date fech = new Date();
+			if(fech.before(prestamo.getFecha_devolucion()) || fech.equals(prestamo.getFecha_devolucion())) {
+				variable.add(prestamo);
+			}
 		}
 		return variable;
 	}

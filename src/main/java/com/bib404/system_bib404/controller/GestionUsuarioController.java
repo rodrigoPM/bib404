@@ -50,8 +50,8 @@ public class GestionUsuarioController {
 	@Qualifier("encriptadoPass")
 	private EncriptadoPass encriptado;
 
-	@RequestMapping("/bib404/{id_bib}/gestion_usuario")
-	public ModelAndView listUsuarios(@PathVariable("id_bib") int id_bib, Model model, HttpServletRequest request)  throws ServletException, IOException  {
+	@RequestMapping("/gestion_usuario")
+	public ModelAndView listUsuarios(@RequestParam(name="id_bib") int id_bib, Model model, HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.GESTION_USUARIO);
 		Usuario user= new Usuario();
 		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());
@@ -60,7 +60,7 @@ public class GestionUsuarioController {
 			model.addAttribute("user", user);
 			
 		}
-				return mav;
+		return mav;
 	}
 	@RequestMapping("/bib404/gestionar_admin")
 	public ModelAndView listAdmin(HttpServletRequest request, Model model) {
