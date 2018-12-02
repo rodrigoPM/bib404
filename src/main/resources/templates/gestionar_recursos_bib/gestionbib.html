@@ -20,7 +20,7 @@
   <hr>
   <br>
   <br>
-  <h1 class="text-center"> Gestionar Recursos bibliotecarios</h1>
+  <h1 class="text-center"> Gestionar Recursos bibliotecarios de la biblioteca <span th:text="${bib.nombre_biblioteca}"></span></h1>
   	<hr>
   	
 			<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#mdlGuardar" data-whatever="">Nuevo recurso</button>
@@ -58,7 +58,7 @@
 							</div>
 							
 							<div class="form-group">
-								<label for="descripcionRecurso" class="col-form-label">Descripción del recurso</label>
+								<label for="descripcionRecurso" class="col-form-label">Descripcion del recurso</label>
 								<textarea class="form-control" id="descripcion_recurso_bib" name="descripcion_recurso_bib" th:fields="*{descripcion_recurso_bib}" required="true"></textarea>
 							</div>
 							<div class="form-group">
@@ -69,13 +69,8 @@
 						
 							<div class="form-group">
 							<label for="bib" class="col-form-label">biblioteca</label>
-								<select id="bib" name="bib"  class="form-control" required="true" >
-			        <option th:each="bib : ${bibliotecas}" 
-			        	th:value="${bib.id}"
-			        	th:text="${bib.nombre_biblioteca}"
-			        
- ></option>
-			      </select>
+				<input type="text" class="form-control" id="bib" name="bib" th:value="${bib.nombre_biblioteca}" disabled>
+			    
 							</div>	
 												<div class="form-group">
 							<label for="forRecurso" class="col-form-label">Es digital o fisico</label>
@@ -89,7 +84,7 @@
 					
 							<div class="form-group">
 								<label for="Total" class="col-form-label">cantidad </label>
-								<input type="number" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" required="true"> 
+								<input type="number" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" min="1" step="1" required="true"> 
 								<span id="total_recurso_bib"></span>
 							</div>
 							
@@ -176,11 +171,11 @@
 							
 								<div class="form-group">
 								<label for="descripcionRecurso" class="col-form-label">Descripción del recurso</label>
-								<input type="textarea" class="form-control" id="descripcion_recurso_bib" name="descripcion_recurso_bib" th:fields="*{descripcion_recurso_bib}" th:value="${recursoList.descripcion_recurso_bib}">
+								<textarea class="form-control" id="descripcion_recurso_bib" name="descripcion_recurso_bib" th:fields="*{descripcion_recurso_bib}" th:text="${recursoList.descripcion_recurso_bib}"> </textarea>
 							</div>
 							<div class="form-group">
 								<label for="sinopsis" class="col-form-label">Sinopsis del recurso</label>
-								<input type="textarea" class="form-control" id="sinopsis_recurso_bib" name="sinopsis_recurso_bib" th:fields="*{sinopsis_recurso_bib}" th:value="${recursoList.sinopsis_recurso_bib}">
+								<textarea class="form-control" id="sinopsis_recurso_bib" name="sinopsis_recurso_bib" th:fields="*{sinopsis_recurso_bib}" th:text="${recursoList.sinopsis_recurso_bib}"> </textarea>
 							</div>
 						</div>
 						
@@ -214,7 +209,7 @@
 							</div>
 							<div class="form-group">
 								<label for="Total" class="col-form-label">cantidad </label>
-								<input type="number" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" th:value="${recursoList.total_recurso_bib}" required="true"> 
+								<input type="number" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" th:value="${recursoList.total_recurso_bib}" min="1" step="1"  required="true"> 
 								<span id="total_recurso_bib"></span>
 							</div>
 							

@@ -21,6 +21,7 @@ import com.bib404.system_bib404.Repository.BibliotecaRepository;
 import com.bib404.system_bib404.Repository.PerfilRepository;
 import com.bib404.system_bib404.Repository.RecursoBibliotecarioRepository;
 import com.bib404.system_bib404.Repository.TipoRecursoRepository;
+import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Biblioteca;
 import com.bib404.system_bib404.entity.Municipio;
@@ -53,6 +54,9 @@ public class GestionarBIBController {
 	
 	@GetMapping("/recursos")
 	public String redirectPerfilForm(Model model,HttpServletRequest request) {
+		Biblioteca busca=new Biblioteca();
+		HttpSession session = request.getSession();
+		Usuario user =(Usuario) session.getAttribute(Constante.USER);
 TipoDigitaloFisico digi= new TipoDigitaloFisico();		
 		digi.setId(1);
 		digi.setTipo("Digital");
@@ -60,13 +64,12 @@ TipoDigitaloFisico digi= new TipoDigitaloFisico();
 		fisico.setId(2);
 		fisico.setTipo("Fisico");
 		List <TipoDigitaloFisico> df= new ArrayList<TipoDigitaloFisico>();
-		
+		busca=br.buscarBiblioteca(user.getBiblioteca().getId());
 	
 	
-
 		List<TipoRecurso> tr = new ArrayList<TipoRecurso>();
 		List<RecursoBibliotecario> lrb= new ArrayList<RecursoBibliotecario>();
-		lrb=rbr.findAll();
+		lrb=rbr.findByBibliotecaId(busca.getId());
 		tr=trr.findAll();
 		df.add(digi);
 		df.add(fisico);
@@ -79,7 +82,7 @@ TipoDigitaloFisico digi= new TipoDigitaloFisico();
         model.addAttribute("fisico", fisico);
         model.addAttribute("digital", digi);
         model.addAttribute("bibliotecas", usuarioImp.listBibliotecas());
-
+        model.addAttribute("bib",usuarioImp.findBibByUser(user.getUsername()));
 		return Template.GESTION;
 		
 	}
@@ -91,10 +94,11 @@ TipoDigitaloFisico digi= new TipoDigitaloFisico();
 		TipoRecurso tiporecurso;
 		Biblioteca biblioteca;
 		int id_tipo = Integer.parseInt(tipR);
-		int id_biblioteca = Integer.parseInt(bib);
+		Usuario user =(Usuario) sesion.getAttribute(Constante.USER);
+		biblioteca=br.buscarBiblioteca(user.getBiblioteca().getId());
 		int num=Integer.parseInt(df);
 		tiporecurso=trr.buscarRecurso(id_tipo);
-		biblioteca=br.buscarBiblioteca(id_biblioteca);
+		biblioteca=br.buscarBiblioteca(biblioteca.getId());
 		recurso.setTipo_recurso(tiporecurso);
 		recurso.setBiblioteca(biblioteca);
 		
