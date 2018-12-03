@@ -1,6 +1,8 @@
 package com.bib404.system_bib404.controller.gestionar_recursos_bib;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bib404.system_bib404.Repository.BibliotecaRepository;
+import com.bib404.system_bib404.Repository.DetalleRecursoRepository;
 import com.bib404.system_bib404.Repository.PerfilRepository;
 import com.bib404.system_bib404.Repository.RecursoBibliotecarioRepository;
 import com.bib404.system_bib404.Repository.TipoRecursoRepository;
 import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Biblioteca;
+import com.bib404.system_bib404.entity.DetalleRecurso;
 import com.bib404.system_bib404.entity.Municipio;
 import com.bib404.system_bib404.entity.RecursoBibliotecario;
 import com.bib404.system_bib404.entity.RecursoEspecifico;
@@ -59,7 +64,9 @@ public class GestionarBIBController {
 	@Autowired
 	@Qualifier("bibliotecaRepository")
 	private BibliotecaRepository br;
-	
+	@Autowired
+	@Qualifier("detalleRecursoRepository")
+	private DetalleRecursoRepository detalle;
 	
 	@GetMapping("/recursos")
 	public String redirectPerfilForm(Model model,HttpServletRequest request) {
@@ -112,19 +119,32 @@ TipoDigitaloFisico digi= new TipoDigitaloFisico();
 		biblioteca=br.buscarBiblioteca(biblioteca.getId());
 		recurso.setTipo_recurso(tiporecurso);
 		recurso.setBiblioteca(biblioteca);
-		
+		DetalleRecurso detr =new DetalleRecurso();
+		Date fecha = new Date();
+		int anio = fecha.getYear() ;
+		fecha.setYear(anio);
+		SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+		String fecha_actual = formateador.format(fecha);
+		detr.setFecha_ingreso_r_e(fecha);
+		detr.setCreatedAt(fecha);
+		detr.setRecurso_bib(recurso);
+		detr.setId(6);
 	if(num==1)
 	{
 		recurso.setDigital_recurso_bib(true);
 		recurso.setFisico_recurso_bib(false);
+		detr.setTotal_dig_rec_bib(1);
 	}
 	else {
 		
 		recurso.setFisico_recurso_bib(true);
 		recurso.setDigital_recurso_bib(false);
+		detr.setTotal_fis_rec_bib(1);
 	}
 		
+	detr.setTotal_rec_bib(recurso.getTotal_recurso_bib());
 		rbr.save(recurso);
+		detalle.save(detr);
 
 		return "redirect:/recursos";
 }

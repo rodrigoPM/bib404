@@ -55,5 +55,7 @@ public class Template {
 	public static final String solicitar = "/solicitar/biblioteca";
 	public static final String recibir = "/solicitar/recibir";
 	public static final String aceptar = "/solicitar/aceptar";
+	// Consultar historial de la biblioteca 
+   public static final String CONSULTAR="/consultar_historial_bib/historial.html";
 
 }
