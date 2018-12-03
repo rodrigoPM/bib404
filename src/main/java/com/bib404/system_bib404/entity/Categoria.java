@@ -1,5 +1,6 @@
 package com.bib404.system_bib404.entity;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,9 +15,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "categoria")
@@ -38,6 +42,11 @@ public class Categoria {
 
 	@Column(name = "categoria_id")
 	private int categoria_id;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_at", nullable = false, updatable = false)
+	@CreatedDate
+	private Date createdAt;
 	
 /* 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "categoria_id", nullable = true)
@@ -102,9 +111,16 @@ public class Categoria {
 	public void setDescripcion_categoria(String descripcion_categoria) {
 		this.descripcion_categoria = descripcion_categoria;
 	}
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 
 	public Categoria(int id, String nombre_categoria, String descripcion_categoria,
-			Set<RecursoBibliotecario> recurso_bib, int categoria_id, Biblioteca biblioteca) {
+			Set<RecursoBibliotecario> recurso_bib, int categoria_id, Biblioteca biblioteca, Date createdAt) {
 		super();
 		this.id = id;
 		this.nombre_categoria = nombre_categoria;
@@ -112,6 +128,7 @@ public class Categoria {
 		this.recurso_bib = recurso_bib;
 		this.categoria_id = categoria_id;
 		this.biblioteca=biblioteca;
+		this.createdAt=createdAt;
 	}
 
 	public Categoria() {

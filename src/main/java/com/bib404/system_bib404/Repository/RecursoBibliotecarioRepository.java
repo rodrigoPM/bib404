@@ -23,6 +23,9 @@ public interface RecursoBibliotecarioRepository extends JpaRepository<RecursoBib
 			  nativeQuery = true)
 			List<RecursoBibliotecario> buscarecurso(String nombre_recurso_bib,int biblioteca_id);
 			
+	@Query(value = "select * from  where trunc(usuario.fecha_registro)=? and usuario.biblioteca_id=?  ", 
+			  nativeQuery = true)
+			List<Usuario> obtenerRecursosHoy(String fecha_registro,int biblioteca_id);
 	
 	
 }
