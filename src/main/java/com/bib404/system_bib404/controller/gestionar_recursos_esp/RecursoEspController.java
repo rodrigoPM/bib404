@@ -96,6 +96,7 @@ public class RecursoEspController {
 		mav.addObject("editarRecEsp", "/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico/editar");// editar
 		mav.addObject("recEspModel", new RecursoEspecifico());
 		mav.addObject("objectAux", new ObjectAux());
+		mav.addObject("imgRB", rb.findById(id_rb).getImagen_recurso_bibl());
 
 		if (re.listAllRecEsp(id_rb).size() > 0) {
 			mav.addObject("recEsps", re.listAllRecEsp(id_rb));
@@ -176,7 +177,7 @@ public class RecursoEspController {
 		mav.addObject("editarRecEsp", "/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico/editar");// editar
 		mav.addObject("recEspModel", new RecursoEspecifico());
 		mav.addObject("objectAux", new ObjectAux());
-
+		mav.addObject("imgRB", rb.findById(id_rb).getImagen_recurso_bibl());
 
 		List<RecursoEspecifico> rec_esp_all = re.listAllRecEsp(id_rb);
 		List<RecursoEspecifico> reBuscados = new ArrayList<RecursoEspecifico>();

@@ -82,11 +82,14 @@ public class bibliotecaController {
 			}
 		} */
 		if (funcion.isAnyUser(request)) {
+			if (funcion.isAdmin(request)) {
+				model.addAttribute("isadmin", true);
+			}
 			model.addAttribute("isUser", true);
 			System.out.println("Usuario simple");
 		} else {
-			model.addAttribute("isNoUser", true);
-			System.out.println("No se valida si es usuario");
+				model.addAttribute("isNoUser", true);
+				System.out.println("No se valida si es usuario");
 		}
 
 		model.addAttribute("rbs", rbService.listAllRBOfBib(id_bib)); // listado de recursos bibliotecarios

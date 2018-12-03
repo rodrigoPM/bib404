@@ -52,10 +52,11 @@
 						<td th:text="${recursoEspecifico.consulta_interna}==true ? 'interna' : 'externa'"></td>		
 						<td th:text="${recursoEspecifico.prestado}==true ? 'no disponible' : 'disponible'"></td>														
 						<td>					
-						    <a class="btn btn-danger" th:href="@{/recursoBibliotecario/prestarRecurso?id=__${recursoEspecifico.id}__}" >
-						        PRESTAR
-							</a>
-						</td>				
+							<form action="#" th:action="@{/recursoBibliotecario/prestarRecurso}" th:method="post">
+								<input type="number" id="id" name="id" th:value="${recursoEspecifico.id}" hidden="true" />
+								<input type="submit" value="PRESTAR" class="btn btn-success" />
+							</form>
+						</td>
 					</tr>
 				</tbody>
 			</table>

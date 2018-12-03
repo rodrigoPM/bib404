@@ -21,6 +21,7 @@
 	<div th:if="${isNoUser}">
 		<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
 	</div>
+	
 
 	<!-- <div th:if="${isUser}">
 		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
@@ -68,7 +69,7 @@
 	</div>
 
 	<br />
-	<div class="container-fluid">
+	<div class="container-fluid" th:if="${isadmin}">
 		<div class="buscador">
 			<a href="#" th:href="@{/autorizar/listPrestamos?id_bib=__${biblioteca.id}__}">
 				<button type="button" class="btn btn-info">Administrar Prestamos</button>

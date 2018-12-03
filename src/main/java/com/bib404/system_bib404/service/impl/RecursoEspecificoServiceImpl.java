@@ -30,6 +30,11 @@ public class RecursoEspecificoServiceImpl implements RecursoEspecificoService {
     @Autowired
     @Qualifier("detalleRecursoServiceImpl")
     private DetalleRecursoServiceImpl dRec;
+    
+    @Override
+    public RecursoEspecifico findByIdRecurso(int id) {
+        return recursoEspecificoRepository.getOne(id);
+    }
 
     @Override
     public RecursoEspecificoModel addRecursoEspecifico(RecursoEspecificoModel recursoEspecificoModel) {

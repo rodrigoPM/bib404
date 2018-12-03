@@ -11,5 +11,6 @@ public interface PrestamoService {
 	public abstract List<Prestamo> listPrestadosEspecificos(int id_user);
 	public abstract Prestamo findPrestamoById(int id);
 	public abstract PrestamoModel findPrestamoByIdModel(int id);
+	Prestamo addPres(Prestamo prestamo);
 
 }

@@ -41,6 +41,10 @@ public class PrestamoServiceImpl implements PrestamoService{
 		return prestamoConverter.convertPrestamo2PrestamoModel(findPrestamoById(id));
 	}
 	
+	@Override
+	public Prestamo addPres(Prestamo prestamo) {
+		return prestamoRepository.save(prestamo);
+	}
 
 	@Override
 	public List<PrestamoModel> listPrestamos(int id_bib) {

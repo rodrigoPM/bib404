@@ -23,4 +23,6 @@ public interface RecursoEspecificoService {
     public abstract boolean existsById(int id_re);
     public abstract boolean deleteRecEsp(int id_re);
 
+	RecursoEspecifico findByIdRecurso(int id);
+
 }

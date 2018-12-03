@@ -73,13 +73,6 @@ public class GestionarBIBController {
 		Biblioteca busca=new Biblioteca();
 		HttpSession session = request.getSession();
 		Usuario user =(Usuario) session.getAttribute(Constante.USER);
-TipoDigitaloFisico digi= new TipoDigitaloFisico();		
-		digi.setId(1);
-		digi.setTipo("Digital");
-		TipoDigitaloFisico fisico= new TipoDigitaloFisico();
-		fisico.setId(2);
-		fisico.setTipo("Fisico");
-		List <TipoDigitaloFisico> df= new ArrayList<TipoDigitaloFisico>();
 		busca=br.buscarBiblioteca(user.getBiblioteca().getId());
 	
 	
@@ -87,27 +80,77 @@ TipoDigitaloFisico digi= new TipoDigitaloFisico();
 		List<RecursoBibliotecario> lrb= new ArrayList<RecursoBibliotecario>();
 		lrb=rbr.findByBibliotecaId(busca.getId());
 		tr=trr.findAll();
-		df.add(digi);
-		df.add(fisico);
 		
 		HttpSession sesion = request.getSession();
 			    
 		model.addAttribute("TipoRecurso", tr);
         model.addAttribute("recursoBib", lrb);
-        model.addAttribute("tipDF", df);
-        model.addAttribute("fisico", fisico);
-        model.addAttribute("digital", digi);
-        model.addAttribute("bibliotecas", usuarioImp.listBibliotecas());
         model.addAttribute("bib",usuarioImp.findBibByUser(user.getUsername()));
         model.addAttribute("exito", true);
         model.addAttribute("mensaje","estos son los recursos");
+        model.addAttribute("subirFileRB", "/foto");
+        model.addAttribute("objectAux", new ObjectAux());
+        
+        if (session.getAttribute("addFile") != null) {
+			if ((boolean) session.getAttribute("addFile")) {
+				model.addAttribute("exito", "Se agrego exitosamente el Recurso Especifico");
+			} else {
+				model.addAttribute("fracaso", "No se pudo crear el Recuros Especifico");
+			}
+			session.removeAttribute("addFile");
+		}
+        
+        
 		return Template.GESTION;
 		
 	}
 	
+	@PostMapping("/foto")
+	public String subirFoto(@ModelAttribute(name = "objectAux") ObjectAux ox, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String redirect = "redirect:/recursos";
+		
+		MultipartFile archivo = ox.getFile();
+		RecursoBibliotecario rec_bib = rbr.findById(ox.getId_object()).get();
+		
+		String nombreFoto = "nada";
+		if (!archivo.isEmpty()) {
+			try {
+				nombreFoto = file.subirFile(archivo, 1);
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("ocurrio un error al subir foto");
+				session.setAttribute("addFile", false);
+				return redirect;
+			}
+		}
+		
+		try {
+			if (rec_bib.getImagen_recurso_bibl() != "nada") {// hay foto, eliminarla
+				String nombreLastFile = rec_bib.getImagen_recurso_bibl();
+				if (file.eliminarFile(nombreLastFile, 1)) {
+					System.out.println("eliminando foto " + nombreLastFile);
+				} else {
+					System.out.println("no se pudo eliminar " + nombreLastFile);
+				}
+
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("ocurrio un error");
+		}
+		
+		
+		rec_bib.setImagen_recurso_bibl(nombreFoto);
+		rbr.save(rec_bib);
+		System.out.println("todo correctamente");
+		session.setAttribute("addFile", true);
+		
+		return redirect;
+	}
 	
 	@PostMapping("/addRecurso")
-	public String addContra(@Valid@ModelAttribute("RecursoBibliotecario") RecursoBibliotecario recurso,@ModelAttribute("tipoR") String tipR,@ModelAttribute("bib") String bib,@ModelAttribute("forRecurso") String df, Model model,HttpServletRequest request) {
+	public String addContra(@Valid@ModelAttribute("RecursoBibliotecario") RecursoBibliotecario recurso,@ModelAttribute("tipoR") String tipR,@ModelAttribute("bib") String bib, Model model,HttpServletRequest request) {
 		HttpSession sesion = request.getSession();
 		TipoRecurso tiporecurso;
 		Biblioteca biblioteca;
@@ -118,6 +161,7 @@ TipoDigitaloFisico digi= new TipoDigitaloFisico();
 		biblioteca=br.buscarBiblioteca(biblioteca.getId());
 		recurso.setTipo_recurso(tiporecurso);
 		recurso.setBiblioteca(biblioteca);
+		recurso.setImagen_recurso_bibl("nada");
 
 		rbr.save(recurso);
 

@@ -126,7 +126,7 @@
 				  	
     			<div class="image">
     			<a th:href="@{/pdf?id_prestamo=__${prestamo.id}__}">
-				  	<img class="card-img-top" th:src="@{/imgs/libro.jpg}" style="height:200px; opacity: 1;
+				  	<img th:src="@{'http://localhost:90/bib404/archivos/img/'+${prestamo.recursoEspecifico.detalle_recurso.recurso_bib.imagen_recurso_bibl}}" alt="No hay imagen" style="height:200px; opacity: 1;
   						width:200px; display: block; transition: .5s ease; backface-visibility: hidden"></a>
   						</div>
   						<div class="middle">
