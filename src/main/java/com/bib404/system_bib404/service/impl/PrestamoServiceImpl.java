@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.bib404.system_bib404.Repository.PrestamoRepository;
 import com.bib404.system_bib404.component.PrestamoConverter;
 import com.bib404.system_bib404.entity.Prestamo;
+import com.bib404.system_bib404.entity.RecursoEspecifico;
 import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.PrestamoModel;
 import com.bib404.system_bib404.service.PrestamoService;
@@ -109,6 +110,13 @@ public class PrestamoServiceImpl implements PrestamoService{
 			}
 		}
 		return variable;
+	}
+	public String pdf(int id_prestamo) {
+		Prestamo prestamo=prestamoRepository.findById(id_prestamo);
+		String archivo=prestamo.getRecursoEspecifico().getArchivo();
+		
+		return archivo;
+		
 	}
 
 
