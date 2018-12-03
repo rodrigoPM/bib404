@@ -50,9 +50,11 @@
 
 	<br />
 	<div class="container">
-	<h2>PRESTAMOS DENEGADOS Y RECIBIDOS</h2>
+		<h1 class="text-center">
+			Prestamos Denegados y Recibidos de la Biblioteca: <span th:text="${name_bib}"></span>
+		</h1>
 		<div class="buscador">
-        	<a href="#" th:href="@{/autorizar/listPrestamos}">
+        	<a href="#" th:href="@{/autorizar/listPrestamos?id_bib=__${bib}__}">
         	<button class="btn btn-primary boton" type=button onclick="mostrar()">Regresar</button></a>
     	</div>
 		<!--<div class="buscador">
@@ -62,10 +64,25 @@
                 </form>
          </div>-->
             
-    <a href="#" th:href="@{/autorizar/listDenegados}"><button class="btn btn-primary boton" type=button onclick="mostrar()">Prestamos Denegados</button></a>
-    <a href="#" th:href="@{/autorizar/listRecibidos}"><button class="btn btn-primary boton" type=button onclick="mostrar2()">Prestamos Recibidos</button></a>
+    <a href="#" th:href="@{/autorizar/listDenegados?id_bib=__${bib}__}"><button class="btn btn-primary boton" type=button onclick="mostrar()">Prestamos Denegados</button></a>
+    <a href="#" th:href="@{/autorizar/listRecibidos?id_bib=__${bib}__}"><button class="btn btn-primary boton" type=button onclick="mostrar2()">Prestamos Recibidos</button></a>
 
 <section th:if="${prestado==1}">
+<form th:action="@{/autorizar/buscar_denegados?id_bib=__${bib}__}" method="post">
+					<input type="text" placeholder="buscar usuario" name="str" required> 
+						<input type="submit" value="buscar" class="btn btn-primary">
+				</form>
+<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${error}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${error}"></p>
+			</div>
+<div th:if="${mensaje==3}" class="alert alert-danger">
+  	<strong>No hay ningun prestamo denegado</strong>
+</div>
 	<table class="table" border="2">
 		<thead class="thead">
 			<tr>
@@ -75,6 +92,7 @@
 				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
 				<th>Fecha de entrega</th>
+				<th>Mora</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -85,12 +103,28 @@
 				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
 				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
 				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
+				<th><span th:text="${prestamo.mora}==true ? 'Con mora' : 'Sin mora'"> </span></th>
 				
 			</tr>
 		</tbody>
 	</table>
 </section>
 <section th:if="${prestado==2}">
+<form th:action="@{/autorizar/buscar_recibidos?id_bib=__${bib}__}" method="post">
+					<input type="text" placeholder="buscar usuario" name="str" required> 
+						<input type="submit" value="buscar" class="btn btn-primary">
+				</form>
+<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${error}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${error}"></p>
+			</div>
+<div th:if="${mensaje==3}" class="alert alert-danger">
+  	<strong>No hay ningun prestamo recibido</strong>
+</div>
 	<table class="table" border="2">
 		<thead class="thead">
 			<tr>
@@ -99,8 +133,9 @@
 				<th>Formato del Recurso</th>
 				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
-				<th>Fecha de entrega</th>
 				<th>Fecha de devolucion</th>
+				<th>Fecha de entrega</th>
+				<th>Mora</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -110,8 +145,9 @@
 				<th> <span th:text="${prestamo.recursoEspecifico.formato_recurso.nombre_formato}"> </span> </th>
 				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
 				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
-				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
 				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
+				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
+				<th><span th:text="${prestamo.mora}==true ? 'Con mora' : 'Sin mora'"> </span></th>
 
 			</tr>
 		</tbody>

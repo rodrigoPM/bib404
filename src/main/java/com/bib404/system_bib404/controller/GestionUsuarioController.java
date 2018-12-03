@@ -1,7 +1,9 @@
 package com.bib404.system_bib404.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.entity.Categoria;
 import com.bib404.system_bib404.entity.Usuario;
+import com.bib404.system_bib404.model.ObjectAux;
 import com.bib404.system_bib404.model.PrestamoModel;
 import com.bib404.system_bib404.service.EncriptadoPass;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
@@ -50,17 +53,18 @@ public class GestionUsuarioController {
 	@Qualifier("encriptadoPass")
 	private EncriptadoPass encriptado;
 
-	@RequestMapping("/bib404/{id_bib}/gestion_usuario")
-	public ModelAndView listUsuarios(@PathVariable("id_bib") int id_bib, Model model, HttpServletRequest request)  throws ServletException, IOException  {
+	@RequestMapping("/gestion_usuario")
+	public ModelAndView listUsuarios(@RequestParam(name="id_bib") int id_bib, Model model, HttpServletRequest request)  throws ServletException, IOException  {
 		ModelAndView mav = new ModelAndView(Template.GESTION_USUARIO);
 		Usuario user= new Usuario();
 		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());
+		mav.addObject("bib", bibliotecaServiceImpl.findById(id_bib).getId());
 		if(usuarioServiceImpl.listUsuarioBib(id_bib).size()>0) {
 			mav.addObject("usuarios", usuarioServiceImpl.listUsuarioBib(id_bib));
 			model.addAttribute("user", user);
 			
 		}
-				return mav;
+		return mav;
 	}
 
 	
@@ -158,6 +162,47 @@ public class GestionUsuarioController {
 		model.addAttribute("exito", "Se registró correctamente el usuario");
 		return listUsuarios(id_biblioteca, model, request);
 
+	}
+	@PostMapping("/buscar_usuario")
+	public ModelAndView buscar(@RequestParam("id_bib") int id_bib, Model model,
+			@RequestParam(name = "str", required = false, defaultValue = "all") String str, HttpServletRequest request) {
+		if (!bibliotecaServiceImpl.existsBibById(id_bib)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
+		ModelAndView mav = new ModelAndView(Template.GESTION_USUARIO);
+		Usuario user= new Usuario();
+		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());
+		mav.addObject("bib", bibliotecaServiceImpl.findById(id_bib).getId());
+
+		model.addAttribute("user", user);
+		// buscar por nombre de usuario
+		List<Usuario> usuarios = usuarioServiceImpl.listUsuarioBib(id_bib);
+		List<Usuario> usuariosBuscados = new ArrayList<Usuario>();
+		if (!str.equals("all") && !str.equals("")) {
+			for (Usuario user2 : usuarios) {
+				if (user2.getUsername().toLowerCase().contains(str.toLowerCase())) {// si el nombre de la categoria contiene str de busqueda
+					usuariosBuscados.add(user2);
+				}
+			}
+		}else{
+			usuariosBuscados=usuarios;
+		}
+
+		if (usuariosBuscados.size() > 0) {
+			mav.addObject("usuarios", usuariosBuscados);
+			mav.addObject("exito", "Los usuarios encontrados con el termino " + str.toUpperCase() + " son:");
+		} else {
+			mav.addObject("error", "No hay resultados que coincidan con la busqueda");
+		}
+/*
+		if (funcion.isAnyUser(request)) {
+			mav.addObject("isUser", true);
+		} else {
+			mav.addObject("isNoUser", true);
+			System.out.println("No se valida si es usuario");
+		}*/
+		return mav;
 	}
 
 }

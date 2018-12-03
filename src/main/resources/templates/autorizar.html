@@ -50,31 +50,40 @@
 
 	<br />
 	<div class="container">
-
-		<h2>AUTORIZAR PRESTAMO Y RECIBIR PRESTAMOS</h2>
+		<h1 class="text-center">
+			Autorizar y Recibir Prestamos de la Biblioteca: <span th:text="${name_bib}"></span>
+		</h1>
 		<div class="buscador">
-        	<!--<a href="#" th:href="@{/recursoEspecifico/mostrarTodosLosRegistros}">
-        	<button class="btn btn-primary boton" type=button onclick="mostrar()">Regresar</button></a>-->
-    		<a href="#" th:href="@{/autorizar/listDenegados}">
+        	<a href="#" th:href="@{/}">
+        	<button class="btn btn-primary boton" type=button onclick="mostrar()">Regresar</button></a>
+    		<a href="#" th:href="@{/autorizar/listDenegados?id_bib=__${bib}__}">
         	<button class="btn btn-primary boton" type=button onclick="mostrar()">Denegados/Recibidos</button></a>
     	</div>
-
+       
+    <a href="#" th:href="@{/autorizar/listPrestamos?id_bib=__${bib}__}"><button class="btn btn-primary boton" type=button onclick="mostrar()">Autorizar Prestamos</button></a>
+    <a href="#" th:href="@{/autorizar/listPrestados?id_bib=__${bib}__}"><button class="btn btn-primary boton" type=button onclick="mostrar2()">Recibir Prestamos</button></a>
+    <a href="#" th:href="@{/autorizar/listPrestadosMora?id_bib=__${bib}__}"><button class="btn btn-primary boton" type=button onclick="mostrar3()">Prestamos con Mora</button></a>
 	
-		<!--<div class="buscador">
-        		<form class="form-inline" method="GET" action="" id="busqueda">
-                	<input class="buscador" name="consulta" id='consulta' type="text" placeholder="Buscar" value="">
-                    <input type="submit" value="Buscar" id="buscar" class="btn btn-success buscador">
-                </form>
-         </div>-->
-        
-    <a href="#" th:href="@{/autorizar/listPrestamos}"><button class="btn btn-primary boton" type=button onclick="mostrar()">Autorizar Prestamos</button></a>
-    <a href="#" th:href="@{/autorizar/listPrestados}"><button class="btn btn-primary boton" type=button onclick="mostrar2()">Recibir Prestamos</button></a>
-    <a href="#" th:href="@{/autorizar/listPrestadosMora}"><button class="btn btn-primary boton" type=button onclick="mostrar3()">Prestamos con Mora</button></a>
-
 <div th:if="${mensaje==2}" class="alert alert-info">
   	<strong>Prestamo Recibido</strong>
 </div>
+
 <section th:if="${prestado==1}">
+<form th:action="@{/autorizar/buscar_prestamos?id_bib=__${bib}__}" method="post">
+					<input type="text" placeholder="buscar usuario" name="str" required> 
+						<input type="submit" value="buscar" class="btn btn-primary">
+				</form>
+<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${error}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${error}"></p>
+			</div>
+<div th:if="${mensaje==3}" class="alert alert-danger">
+  	<strong>No hay ningun prestamo</strong>
+</div>
 	<div th:if="${mensaje==0}" class="alert alert-success">
 		<strong>Prestamo Autorizado</strong> 
 	</div>
@@ -89,7 +98,6 @@
 				<th>Formato del Recurso</th>
 				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
-				<th>Fecha de entrega</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
@@ -100,28 +108,43 @@
 				<th> <span th:text="${prestamo.recursoEspecifico.formato_recurso.nombre_formato}"> </span> </th>
 				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
 				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
-				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
 				
-				<td> <a href="#" th:href="@{/autorizar/autorizado?id=__${prestamo.id}__}">
+				<td> <a href="#" th:href="@{/autorizar/autorizado?id=__${prestamo.id}__&id_bib=__${prestamo.recursoEspecifico.detalle_recurso.recurso_bib.biblioteca.id}__}">
 				<button type="button" class="btn btn-success boton3">Autorizar</button></a>
 				
-				<p><a href="#" th:href="@{/autorizar/denegado?id=__${prestamo.id}__}">
+				<p><a href="#" th:href="@{/autorizar/denegado?id=__${prestamo.id}__&id_bib=__${prestamo.recursoEspecifico.detalle_recurso.recurso_bib.biblioteca.id}__}">
 				<button type="button" class="btn btn-danger">Denegar</button></a></p> </td>
 			</tr>
 		</tbody>
 	</table>
 </section>
 <section th:if="${prestado==2}">
+<form th:action="@{/autorizar/buscar_prestados?id_bib=__${bib}__}" method="post">
+					<input type="text" placeholder="buscar usuario" name="str" required> 
+						<input type="submit" value="buscar" class="btn btn-primary">
+				</form>
+<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${error}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${error}"></p>
+			</div>
+<div th:if="${mensaje==3}" class="alert alert-danger">
+  	<strong>No hay ningun prestamo</strong>
+</div>
 	<table class="table" border="2">
 		<thead class="thead">
+		
 			<tr>
 				<th>Usuario</th>
 				<th>Nombre del Recurso</th>
 				<th>Formato del Recurso</th>
 				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
-				<th>Fecha de entrega</th>
 				<th>Fecha de devolucion</th>
+				<th>Mora</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
@@ -132,16 +155,31 @@
 				<th> <span th:text="${prestamo.recursoEspecifico.formato_recurso.nombre_formato}"> </span> </th>
 				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
 				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
-				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
 				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
+				<th><span th:text="${prestamo.mora}==true ? 'Con mora' : 'Sin mora'"> </span></th>
 
-				<td> <a href="#" th:href="@{/autorizar/recibido?id=__${prestamo.id}__}">
+				<td> <a href="#" th:href="@{/autorizar/recibido?id=__${prestamo.id}__&id_bib=__${prestamo.recursoEspecifico.detalle_recurso.recurso_bib.biblioteca.id}__}">
 				<button type="button" class="btn btn-success boton3">Recibir</button></a></td>
 			</tr>
 		</tbody>
 	</table>
 </section>
 <section th:if="${prestado==3}">
+<form th:action="@{/autorizar/buscar_prestadosMora?id_bib=__${bib}__}" method="post">
+					<input type="text" placeholder="buscar usuario" name="str" required> 
+						<input type="submit" value="buscar" class="btn btn-primary">
+				</form>
+<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${exito}"></p>
+			</div>
+			<div th:if="${error}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold"
+					th:text="${error}"></p>
+			</div>
+<div th:if="${mensaje==3}" class="alert alert-danger">
+  	<strong>No hay ningun prestamo</strong>
+</div>
 	<table class="table" border="2">
 		<thead class="thead">
 			<tr>
@@ -150,8 +188,8 @@
 				<th>Formato del Recurso</th>
 				<th>Cantidad Recurso</th>
 				<th>Fecha de prestamo</th>
-				<th>Fecha de entrega</th>
 				<th>Fecha de devolucion</th>
+				<th>Mora</th>
 				<th>Accion</th>
 			</tr>
 		</thead>
@@ -162,16 +200,15 @@
 				<th> <span th:text="${prestamo.recursoEspecifico.formato_recurso.nombre_formato}"> </span> </th>
 				<th><span th:text="${prestamo.cantidad_recurso_bib}"> </span></th>
 				<th><span th:text="${prestamo.fecha_prestamo}"> </span></th>
-				<th><span th:text="${prestamo.fecha_entrega}"> </span></th>
 				<th><span th:text="${prestamo.fecha_devolucion}"> </span></th>
+				<th><span th:text="${prestamo.mora}==true ? 'Con mora' : 'Sin mora'"> </span></th>
 
-				<td> <a href="#" th:href="@{/autorizar/recibidoMora?id=__${prestamo.id}__}">
+				<td> <a href="#" th:href="@{/autorizar/recibidoMora?id=__${prestamo.id}__&id_bib=__${prestamo.recursoEspecifico.detalle_recurso.recurso_bib.biblioteca.id}__}">
 				<button type="button" class="btn btn-success boton3">Recibir</button></a></td>
 			</tr>
 		</tbody>
 	</table>
 </section>
-	</div>
 	
 	
 	<div th:replace="fragmentos/plantilla :: scripts"></div>

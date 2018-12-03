@@ -68,4 +68,9 @@ public boolean existsById(int id_cat){
 		}
 	}
 
+	@Override
+	public Categoria updateCategoria(Categoria categoria) {
+		return categoriaRepository.save(categoria);
+	}
+
 }

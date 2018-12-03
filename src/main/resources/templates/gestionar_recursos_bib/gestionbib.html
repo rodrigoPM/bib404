@@ -13,14 +13,31 @@
 <link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.css}" />
 </head>
 <body>
+
   <div class ="container">
   
-  
-  	
+  <nav th:replace="fragmentos/plantilla :: navbar-admin-local"></nav> 
+  <hr>
+  <br>
+  <br>
+  <h1 class="text-center"> Gestionar Recursos bibliotecarios de la biblioteca <span th:text="${bib.nombre_biblioteca}"></span></h1>
+  	<hr>
+  	<div  class="text-center">
+  	<div class="form-group row">
 			<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#mdlGuardar" data-whatever="">Nuevo recurso</button>
-		
-
-
+		</div>
+		</div>
+		<div  class="text-center">
+		<form action="#" th:action="@{/Buscar}"  th:method="get" >
+		<div class="form-group row">
+		<label> buscar recurso</label>
+		<input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="escriba el nombre de un recurso">
+		</div>
+		<div class="form-group row">
+		<input type="submit" id="btnGuardar" value="buscar" class="btn btn-success" >
+</div>
+</form>
+</div>
 		<div class="modal fade mdlGuardar" id="mdlGuardar" tabindex="-1" role="dialog" aria-labelledby="mdlGuardar" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -33,7 +50,7 @@
 							<form action="#" th:action="@{/addRecurso}" th:objects="*{RecursoBibliotecario}" th:method="post" enctype="multipart/form-data">
 						<div class="modal-body">
 						<div class="form-group">
-							<input type="text" th:value="${recursoList.id}" class="form-control" id="ide" name="ide"  required="true" hidden="true">
+
 							</div>
 							<div class="form-group">
 							<div class="picture-container">
@@ -52,7 +69,7 @@
 							</div>
 							
 							<div class="form-group">
-								<label for="descripcionRecurso" class="col-form-label">Descripción del recurso</label>
+								<label for="descripcionRecurso" class="col-form-label">Descripcion del recurso</label>
 								<textarea class="form-control" id="descripcion_recurso_bib" name="descripcion_recurso_bib" th:fields="*{descripcion_recurso_bib}" required="true"></textarea>
 							</div>
 							<div class="form-group">
@@ -61,28 +78,24 @@
 							</div>
 						</div>
 						
-						<div class="form-group">
-								<label for="recursofisico" class="col-form-label"> cantidad de Recurso bibliotecario digital</label>
-								<input type="number" class="form-control"  id="digital_recurso_bib" OnClick="sumar()"  name="digital_recurso_bib"  th:fields="*{fisico_recurso_bib}" min="0" step="1"  required="true" > 
-							</div>
 							<div class="form-group">
-								<select id="bib" name="bib"  class="form-control" required="true" >
-			        <option th:each="bib : ${bibliotecas}" 
-			        	th:value="${bib.id}"
-			        	th:text="${bib.nombre_biblioteca}"
-			        
- ></option>
-			      </select>
+							<label for="bib" class="col-form-label">biblioteca</label>
+				<input type="text" class="form-control" id="bib" name="bib" th:value="${bib.nombre_biblioteca}" disabled>
+			    
 							</div>	
-								<div class="form-group">
-								<label for="recursodigital" class="col-form-label">cantidad de Recurso bibliotecario fisico</label>
-								<input type="number" class="form-control"  id="fisico_recurso_bib" OnClick="sumar()"  name="fisico_recurso_bib" th:fields="*{fisico_recurso_bib}" min="0" step="1" required="true"  > 
+												<div class="form-group">
+							<label for="forRecurso" class="col-form-label">Es digital o fisico</label>
+								<select id="forRecurso" name="forRecurso"  class="form-control" required="true" >
+			         <option th:each="forRecurso : ${tipDF}" 
+			        	th:value="${forRecurso.id}"
+			        	th:text="${forRecurso.tipo}"
+			        
+ ></option>			      </select>
 							</div>
-					
 					
 							<div class="form-group">
 								<label for="Total" class="col-form-label">cantidad </label>
-								<input type="text" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" readonly="readonly" required="true"> 
+								<input type="number" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" min="1" step="1" required="true"> 
 								<span id="total_recurso_bib"></span>
 							</div>
 							
@@ -109,8 +122,10 @@
 		</div>
 						
 	</div>
-	
-	<table class="table" id="tblCuentasBD" style="text-align: center;">
+	<div class="container" th:if="${exito}">
+	<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${mensaje}"></p>
+	<table class="table table-condensed" id="tblCuentasBD" style="text-align: center;" >
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">ID</th>
@@ -118,9 +133,9 @@
 							<th scope="col">Descripción</th>
 							<th scope="col">Sinopsis</th>
 							<th scope="col">Total del recurso</th>
-							<th scope="col">Tipo de recurso</th>
 							<th scope="col">Editar</th>
 							<th scope="col">Eliminar</th>
+							<th scope="col">Subir imagen</th>
 						</tr>
 						</thead>
 					
@@ -129,11 +144,9 @@
 								<tr th:each="recursoList : ${recursoBib}">
 									<td th:text="${recursoList.id}"></td>
 									<td th:text="${recursoList.nombre_recurso_bib}"></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
+									<td th:text="${recursoList.descripcion_recurso_bib}"></td>
+									<td th:text="${recursoList.sinopsis_recurso_bib}"></td>
+									<td th:text="${recursoList.total_recurso_bib}"></td>
 									
 									<td><button type="button" class="btn btn-outline-warning" data-toggle="modal" th:attr="data-target='#mdlEditar_' + ${recursoList.id}">Editar</button>
 									<input type="text" class="form-control" th:id="${recursoList.id}" th:name="${recursoList.id}" th:value="${recursoList.id}" required="false" hidden="true">  
@@ -142,15 +155,14 @@
 								  	<div class="modal-dialog" role="document">
 								    	<div class="modal-content">
 								      		<div class="modal-header">
-								        		<h5 class="modal-title" th:id="'mdlEditar_' + ${recursoList.id}">Eliminar Cuenta</h5>
+								        		<h5 class="modal-title" th:id="'mdlEditar_' + ${recursoList.id}">Editar recurso Bibliotecario</h5>
 								        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								        			<span aria-hidden="true">&times;</span>
 								        		</button>
 								     		</div>
 								     		<form action="#" th:action="@{/addRecurso}" th:objects="*{RecursoBibliotecario}" th:method="post" enctype="multipart/form-data">
-						<div class="modal-body">
+						<	<div class="form-group">
 							
-							<div class="form-group">
 							<div class="picture-container">
 													<div class="picture">
 														<img src="#" th:src="@{/imgs/libro.jpg}"
@@ -161,43 +173,53 @@
 													<h6>Recurso</h6>
 												</div>
 												</div>
+												<div class="modal-body">
+							<div class="form-group">
+						<input type="text" class="form-control" id="id" name="id" th:fields="*{id}" th:value="${recursoList.id}" required="true" hidden="true">  
+						
+							</div>
 							<div class="form-group">
 								<label for="nombreRecurso" class="col-form-label">Nombre del recurso bibliotecario</label>
 								<input type="text" class="form-control" id="nombre_recurso_bib" name="nombre_recurso_bib" th:fields="*{nombre_recurso_bib}" th:value="${recursoList.nombre_recurso_bib}"> 
 							</div>
 							
-							<div class="form-group">
+								<div class="form-group">
 								<label for="descripcionRecurso" class="col-form-label">Descripción del recurso</label>
-								<textarea class="form-control" id="descripcion_recurso_bib" name="descripcion_recurso_bib" th:fields="*{descripcion_recurso_bib}" required="true"></textarea>
+								<textarea class="form-control" id="descripcion_recurso_bib" name="descripcion_recurso_bib" th:fields="*{descripcion_recurso_bib}" th:text="${recursoList.descripcion_recurso_bib}"> </textarea>
 							</div>
 							<div class="form-group">
 								<label for="sinopsis" class="col-form-label">Sinopsis del recurso</label>
-								<textarea class="form-control" id="sinopsis_recurso_bib" name="sinopsis_recurso_bib" th:fields="*{sinopsis_recurso_bib}" required="true"></textarea>
+								<textarea class="form-control" id="sinopsis_recurso_bib" name="sinopsis_recurso_bib" th:fields="*{sinopsis_recurso_bib}" th:text="${recursoList.sinopsis_recurso_bib}"> </textarea>
 							</div>
 						</div>
 						
-						<div class="form-group">
-								<label for="recursofisico" class="col-form-label"> cantidad de Recurso bibliotecario digital</label>
-								<input type="number" class="form-control"  id="digital_recurso_bib" OnClick="sumar()"  name="digital_recurso_bib"  th:fields="*{fisico_recurso_bib}" min="0" step="1"  required="true" > 
-							</div>
 							<div class="form-group">
-								<select id="bib" name="bib"  class="form-control" required="true" >
-			        <option th:each="bib : ${bibliotecas}" 
-			        	th:value="${bib.id}"
-			        	th:text="${bib.nombre_biblioteca}"
-			        
- ></option>
-			      </select>
+							<div class="form-group">
+							<label for="bib" class="col-form-label">biblioteca</label>
+				<input type="text" class="form-control" id="bib" name="bib" th:value="${bib.nombre_biblioteca}" disabled> 
 							</div>	
-								<div class="form-group">
-								<label for="recursodigital" class="col-form-label">cantidad de Recurso bibliotecario fisico</label>
-								<input type="number" class="form-control"  id="fisico_recurso_bib" OnClick="sumar()"  name="fisico_recurso_bib" th:fields="*{fisico_recurso_bib}" min="0" step="1" required="true"  > 
+							</div>	
+												<div class="form-group" th:if="${recursoList.digital_recurso_bib}">
+							<label for="forRecurso" class="col-form-label">Es digital o fisico</label>
+								<select id="forRecurso" name="forRecurso"  class="form-control" required="true" >
+			         <option th:each="forRecurso : ${tipDF}" 
+			        	th:value="${forRecurso.id}"
+			        	th:text="${forRecurso.tipo}"
+			         th:selected="${forRecurso.id}==1"
+ ></option>			      </select>
 							</div>
-					
-					
+					<div class="form-group" th:if="${recursoList.fisico_recurso_bib}">
+							<label for="forRecurso" class="col-form-label">Es digital o fisico</label>
+								<select id="forRecurso" name="forRecurso"  class="form-control" required="true" >
+			         <option th:each="forRecurso : ${tipDF}" 
+			        	th:value="${forRecurso.id}"
+			        	th:text="${forRecurso.tipo}"
+			         th:selected="${forRecurso.id}==2"
+ ></option>			      </select>
+							</div>
 							<div class="form-group">
 								<label for="Total" class="col-form-label">cantidad </label>
-								<input type="text" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" readonly="readonly" required="true"> 
+								<input type="number" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" th:value="${recursoList.total_recurso_bib}" min="1" step="1"  required="true"> 
 								<span id="total_recurso_bib"></span>
 							</div>
 							
@@ -207,11 +229,12 @@
 			        <option th:each="tipoR : ${TipoRecurso}" 
 			        	th:value="${tipoR.id}"
 			        	th:text="${tipoR.nombre_tipo_recurso}"
-			  
+			  th:selected="${tipoR.id}==${recursoList.tipo_recurso.id}"
  ></option>
 			      </select>
 			      </div>
-						<div class="modal-footer">
+							
+													<div class="modal-footer">
 							<input type="hidden" name="sbmName" value="sbmGuardarCuenta">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCerrarMdlGuardar">Cerrar</button>
 							<input type="submit" id="btnGuardar" value="Guardar" class="btn btn-success" >
@@ -224,11 +247,6 @@
 								
 									</td>
 									
-			<td>					
-									
-			
-									
-									</td>
 									<td>
 									
 									<button type="button" class="btn btn-outline-danger" data-toggle="modal" th:attr="data-target='#mdlEliminar_' + ${recursoList.id}" id="btnEliminarCuenta">Eliminar</button>
@@ -263,20 +281,19 @@
 								
 									</td>
 									
-			<td>					
+									
 			
-			
-			
-	
-			
-			
-				</td>
 								</tr>
 		
 								
 			
 						</tbody>
 						</table>
+						</div>
+						<div th:unless="${exito}" class="alert alert-info font-weight-bold text-center"> 
+						<p th:text="${mensaje}">
+
+			</div>
 	
 	
 	
@@ -292,42 +309,7 @@
 		<script src="#" th:src="@{/js/util.js}"></script>
 		<script src="#" th:src="@{/js/main.js}"></script>
 		<script src="#" th:src="@{/js/deshabilitar.js}"></script>
-	<script type="text/javascript">
 	
-	function sumar() {
-          var total;
-          total=0;
-		 a= document.getElementById("fisico_recurso_bib").value;
-		 b=document.getElementById("digital_recurso_bib").value;
-		 
-		 if (isNaN(parseFloat(a))) {
-
-		      total += 0;
-
-		    } else {
-
-		      total += parseFloat(a);
-
-		    }
-		 
-		 if (isNaN(parseFloat(b))) {
-
-		      total += 0;
-
-		    } else {
-
-		      total += parseFloat(b);
-
-		    }
-		 
-		 		 
-
-		 
-		 document.getElementById("total_recurso_bib").value=total;
-		}
-	
-	
-	</script>
 	
 	</div>
 </body>

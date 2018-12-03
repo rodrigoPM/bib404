@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
-<title th:text="${titulo}"></title>
 
-<link rel="stylesheet" href="#" />
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+	<title th:text="${titulo}"></title>
+
+	<link rel="stylesheet" href="#" />
 </head>
+
 <body>
 	<div th:if="${isUser}">
 		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
@@ -15,7 +17,8 @@
 
 	<div class="container">
 		<h1 class="text-center">
-			Gestionar Recursos Especificos de <span th:text="${name_bib}"></span>
+			Gestionar Recursos Especificos de
+			<span th:text="${name_rb}"></span>
 		</h1>
 	</div>
 	<hr>
@@ -26,46 +29,53 @@
 			<div class="col-12">
 				<div class="row">
 					<div class="col-4">
-						<button type="button" class="btn btn-success" data-toggle="modal"
-							data-target="#crearRecEsp">Crear Recurso Especifico</button>
+						<button type="button" class="btn btn-success" data-toggle="modal" data-target="#crearRecEsp">Crear Recurso Especifico</button>
 					</div>
-					<div class="modal" id="crearRecEsp" tabindex="-1" role="dialog"
-						aria-labelledby="crearRecEspLabel" aria-hidden="true">
+					<div class="modal" id="crearRecEsp" tabindex="-1" role="dialog" aria-labelledby="crearRecEspLabel" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
 									<h5 class="modal-title" id="crearRecEspLabel">Nuevo Recurso Especifico</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
 								<div class="modal-body">
-									<form action="#" th:action="${crearRecEsp}"
-										th:object="${recEspModel}" method="post"
-										id="formCrearRecEsp">
+									<form action="#" th:action="${crearRecEsp}" th:object="${recEspModel}" method="post" id="formCrearRecEsp">
 										<div class="form-group">
-											<label>Volumen: </label> <input type="text"
-												placeholder="nombre de categoria" class="form-control"
-												th:field="*{volumen_recurso}">
+											<label>Nombre: </label>
+											<input type="text" placeholder="" class="form-control" th:value="${name_rb}" disabled readOnly>
 										</div>
 										<div class="form-group">
-											<label>Edicion: </label><input type="text"
-												placeholder="nombre de categoria" class="form-control"
-												th:field="*{edicion_recurso}">
+											<label>Volumen: </label>
+											<input type="number" placeholder="volumen del recurso" class="form-control" th:field="*{volumen_recurso}">
 										</div>
 										<div class="form-group">
-											<label>Codigo del recurso: </label><input type="text"
-												placeholder="nombre de categoria" class="form-control"
-												th:field="*{codigo_rec_esp}">
+											<label>Edicion: </label>
+											<input type="number" placeholder="edicion del recurso" class="form-control" th:field="*{edicion_recurso}" value="1">
+										</div>
+										<div class="form-group">
+											<label>Editorial: </label>
+											<input type="text" placeholder="editorial" class="form-control" th:field="*{editorial}" required>
+										</div>
+										<div class="form-group">
+											<label>Autor/es(si son varios separar por punto y coma): </label>
+											<textarea class="form-control" name="" id="" cols="30" rows="3" placeholder="autor/es" th:field="*{autores}" required></textarea>
+										</div>
+										<div class="form-group">
+											<label>Formato del recurso: </label>
+											<select th:field="*{idFormatoRecurso}" class="form-control">
+												<div th:each="formato:${formatos}">
+													<option th:value="${formato.id}" th:text="${formato.nombre_formato}"></option>
+												</div>
+											</select>
 										</div>
 									</form>
 								</div>
 								<div class="modal-footer">
 									<div class="row">
 										<div class="col-6">
-											<button type="submit" class="btn btn-primary"
-												form="formCrearRecEsp">Registrar Recurso Esp</button>
+											<button type="submit" class="btn btn-primary" form="formCrearRecEsp">Registrar Recurso Esp</button>
 										</div>
 									</div>
 								</div>
@@ -75,69 +85,104 @@
 				</div>
 			</div>
 			<div class="col-12">
-				<div class="row">
-					<div class="col-5 offset-7">
-						<form action="">
-							<input type="text" placeholder="buscar"> <input
-								type="submit" value="buscar" class="btn btn-primary">
-						</form>
-					</div>
+				<div class="row d-flex" style="justify-content: end;">
+					<form th:action="${buscarRecEsp}" method="get" class="col-6">
+						<div class="input-group mb-3">
+							<input type="text" name="str" class="form-control" placeholder="buscar por editorial, autores, consulta" aria-describedby="btnSearch"
+							 required>
+							<div class="input-group-append">
+								<button class="btn btn-outline-primary" type="button" id="btnSearch">Buscar</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
 		<hr>
 		<div class="row">
 			<div th:if="${exito}" class="col-12">
-				<p class="m-0 alert alert-success text-center font-weight-bold"
-					th:text="${exito}"></p>
+				<p class="m-0 alert alert-success text-center font-weight-bold" th:text="${exito}"></p>
 			</div>
 			<div th:if="${fracaso}" class="col-12">
-				<p class="m-0 alert alert-danger text-center font-weight-bold"
-					th:text="${fracaso}"></p>
+				<p class="m-0 alert alert-danger text-center font-weight-bold" th:text="${fracaso}"></p>
 			</div>
 		</div>
 		<div th:if="${recEsps}" class="row">
-			<div th:each="recEsp:${recEsps}" class="col-12 my-3 bg-info">
-					<div class="row">
-						<div class="col-4">
-							<p>imagen</p>
-						</div>
-						<div class="col-8">
-							<div class="row">
-								<div class="col-12">
-									<span>consulta interna:</span> <p th:text="${recEsp.consulta_interna}"></p>
-								</div>
-								<div class="col-12">
-									<span>volumen recurso:</span><p th:text="${recEsp.volumen_recurso}"></p>
-								</div>
-								<!-- <div class="col-12">
-									<p>Subcategaria?:</p>
-								</div> -->
-								<div class="col-12">
-									<div class="row">
-										<div class="col-6">
-											<form action="#" th:action="${borrarRecEsp}" method="post"
-											th:object="${objectAux}" class="row">
+			<div th:each="recEsp:${recEsps}" class="col-12 my-3">
+				<div class="row bg-success rounded">
+					<div class="col-4">
+					</div>
+					<div class="col-8">
+						<div class="row">
+							<div class="col-12">
+								<p>consulta interna:
+									<span class="font-weight-bold" th:text="${recEsp.consulta_interna}"></span>
+								</p>
+							</div>
+							<div class="col-12">
+								<p>Editorial:
+									<span class="font-weight-bold" th:text="${recEsp.editorial}"></span>
+								</p>
+							</div>
+							<div class="col-12">
+								<p>Autor/es:
+									<span class="font-weight-bold" th:text="${recEsp.autores}"></span>
+								</p>
+							</div>
+							<div class="col-12">
+								<div class="row">
+									<div class="col-4">
+										<form action="#" th:action="${borrarRecEsp}" method="post" th:object="${objectAux}" class="row">
 											<select th:field="*{id_object}" class="d-none">
 												<option th:value="${recEsp.id}"></option>
 											</select>
-												<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
-											</form>
+											<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
+										</form>
+									</div>
+									<div class="col-4">
+										<button type="button" class="btn btn-secondary w-100" data-toggle="modal" th:data-target="'#rem'+${recEsp.id}">Subir Archivo</button>
+										<div class="modal" th:id="'rem'+${recEsp.id}" tabindex="-1" role="dialog" aria-hidden="true" th:aria-labelledby="'rel'+${recEsp.id}">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" th:id="'rel'+${recEsp.id}">Subir Archivo</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<form action="#" th:action="${subirFileRecEsp}" th:object="${objectAux}" method="post" enctype="multipart/form-data">
+															<select th:field="*{id_object}" class="d-none">
+																<option th:value="${recEsp.id}"></option>
+															</select>
+															<div class="input-group">
+																<div class="custom-file">
+																	<input type="file" class="custom-file-input" th:id="'file'+${recEsp.id}" th:field="*{file}" required>
+																	<label class="custom-file-label" th:for="'file'+${recEsp.id}">Archivo</label>
+																</div>
+																<div class="input-group-append">
+																	<button class="btn btn-outline-secondary" type="submit" th:id="'file'+${recEsp.id}">Subir Archivo</button>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+											</div>
 										</div>
-										<div class="col-6">
-											<form class="row">
-												<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
-											</form>
-										</div>
+									</div>
+									<div class="col-4">
+										<form class="row">
+											<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
+										</form>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 			</div>
 		</div>
-		<div th:unless="${recEsps}" class="alert alert-info font-weight-bold text-center">El recurso bibliotecario aun no
-			cuente con recursos especificos.
+		<div th:if="${reCero}" class="alert alert-info font-weight-bold text-center">El recurso bibliotecario aun no cuente con recursos especificos.
 		</div>
 
 
