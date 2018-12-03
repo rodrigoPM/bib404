@@ -2,6 +2,9 @@ package com.bib404.system_bib404.constant;
 
 public class Template {
 
+	//ver pdfs
+	public static final String PDF="pdf/pdf";
+
 	//Ver registrar biblioteca
 	public static final String INDEX_BIB404 ="ver_registrar_biblioteca/index_bib404";
 
