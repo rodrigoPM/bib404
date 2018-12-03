@@ -12,13 +12,7 @@
   }
  </Style>
 <body> 
-	<div th:if="${isUser}">
-		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
-	</div>
-	<div th:if="${isNoUser}">
-		<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
-	</div>
-	
+	<nav th:replace="fragmentos/plantilla :: navbar-admin-local"></nav>
 
 	<br />
 	<div class="container">
