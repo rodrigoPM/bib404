@@ -13,5 +13,6 @@ public interface BibliotecaService {
 	public abstract Biblioteca findBibById(int id_bib);
 	public abstract boolean existsBibById(int id_bib);
 	public abstract boolean deleteBiblioteca(int id_bib);
+	public abstract Biblioteca updateBiblioteca(Biblioteca bib);
 
 }

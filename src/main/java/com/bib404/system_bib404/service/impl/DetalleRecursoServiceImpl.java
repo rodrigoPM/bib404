@@ -66,7 +66,7 @@ public class DetalleRecursoServiceImpl implements DetalleRecursoService{
     }
 
     @Override
-    public void updateDetalleRecurso(DetalleRecurso detalleRecurso) {
-        dRecRepository.save(detalleRecurso);
+    public DetalleRecurso updateDetalleRecurso(DetalleRecurso detalleRecurso) {
+        return dRecRepository.save(detalleRecurso);
     }
 }

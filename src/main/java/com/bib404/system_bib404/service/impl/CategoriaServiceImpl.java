@@ -73,4 +73,18 @@ public boolean existsById(int id_cat){
 		return categoriaRepository.save(categoria);
 	}
 
+	@Override
+	public List<Categoria> listAllCategoriasSinCat(int id_bib, int cat, int cat_id) {
+		List<Categoria> catSinCat=new ArrayList<Categoria>();
+		for(Categoria cate:listAllCategorias(id_bib)){
+			if(cate.getId()==cat || cate.getId() == cat_id){
+				continue;
+			}else{
+				catSinCat.add(cate);
+			}
+		}
+		return catSinCat;
+
+	}
+
 }
