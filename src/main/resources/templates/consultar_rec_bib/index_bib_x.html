@@ -18,7 +18,7 @@
 	<div th:if="${isUser}">
 		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
 	</div>
-	
+
 	<div th:if="${isAdmin}">
 		<nav th:replace="fragmentos/plantilla :: navbar-admin-local"></nav>
 	</div>
@@ -73,41 +73,61 @@
 	</div>
 	<div class="container">
 		<h1>Recursos Bibliotecarios</h1>
-		<!-- <div class="row d-flex justify-content-end">
-			<div class="col-6 d-flex justify-content-end offset-6">
+		<div class="row d-flex justify-content-end">
+			<div class="col-8 d-flex justify-content-end offset-4">
 				<form th:action="${buscarBiblioteca}" method="GET" class="w-100">
 					<div class="input-group mb-3">
-						<input type="text" name="str" class="form-control" placeholder="nombre o codigo biblioteca" aria-describedby="btnSearch"
+						<input type="text" name="str" class="form-control" placeholder="titulo, autor" aria-describedby="btnSearch"
 						 required>
+						<select class="custom-select" id="tipo" name="tipo">
+							<option value="1">Titulo</option> 
+							<option value="2">Autor</option>
+							<option value="3">Tipo Recurso</option>
+						</select>
 						<div class="input-group-append">
-							<button class="btn btn-outline-primary" type="button" id="btnSearch">Buscar</button>
+							<button class="btn btn-outline-primary" type="submit" id="btnSearch">Buscar</button>
 						</div>
 					</div>
 				</form>
-			</div> -->
-	</div>
-	<hr>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div th:if="${exito}" class="col-12">
+				<p class="m-0 alert alert-success text-center font-weight-bold" th:text="${exito}"></p>
+			</div>
+			<div th:if="${fracaso}" class="col-12">
+				<p class="m-0 alert alert-danger text-center font-weight-bold" th:text="${fracaso}"></p>
+			</div>
+		</div>
 
-
-	<div th:if="${vacio}">
-		<p class="alert alert-warning text-center" th:text="${vacio}"></p>
-	</div>
-	<div class="container row" th:unless="${vacio}">
-		<div th:each="rb:${rbs}" class="col-5 my-4">
-			<div class="row d-flex justify-content-around">
-				<div class="card text-white bg-success mb-3 d-inline-block" style="width: 25rem;">
-					<div class="card-header h2">
-						<a href="#" th:href="@{/recursoBibliotecario/verRecurso?id=__${rb.id}__}" th:text="${rb.nombre_recurso_bib}" class="text-white">
-						</a>
-					</div>
-					<div class="card-body">
-						<h4 class="card-title">Descripcion:</h4>
-						<p class="card-text" th:text="${rb.descripcion_recurso_bib}"></p>
+		<div th:if="${vacio}">
+			<p class="alert alert-warning text-center" th:text="${vacio}"></p>
+		</div>
+		<div class="container row" th:unless="${vacio}">
+			<div th:each="rb:${rbs}" class="col-5 my-4">
+				<div class="row d-flex justify-content-around">
+					<div class="card text-white bg-success mb-3 d-inline-block" style="width: 25rem;">
+						<div class="card-header h2">
+							<a href="#" th:href="@{/recursoBibliotecario/verRecurso?id=__${rb.id}__}" th:text="${rb.nombre_recurso_bib}" class="text-white">
+							</a>
+						</div>
+						<div class="card-body">
+							<p class="card-text" >Descripcion: <span th:text="${rb.descripcion_recurso_bib}"></span></p>
+							<p class="card-text">Sinopsis:
+								<span th:text="${rb.sinopsis_recurso_bib}"></span>
+							</p>
+							<p class="card-text">Total de existencias:
+								<span th:text="${rb.total_recurso_bib}"></span>
+							</p>
+							<p class="card-text">Tipo recurso:
+								<span th:text="${rb.tipo_recurso.nombre_tipo_recurso}"></span>
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 	<div th:replace="fragmentos/plantilla :: login"></div>

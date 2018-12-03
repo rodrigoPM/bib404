@@ -124,8 +124,18 @@
 									<span class="font-weight-bold" th:text="${recEsp.autores}"></span>
 								</p>
 							</div>
+							<div class="col-12" th:if="${recEsp.formato_recurso.nombre_formato} !='Fisico'">
+								<p>Archivo(Solo para digitales):
+									<span class="font-weight-bold" th:text="${recEsp.archivo} !='nada' ? 'Hay Archivo':'No hay Archivo'"></span>
+								</p>
+							</div>
 							<div class="col-12">
-								<div class="row">
+								<p>Tipo Formato:
+									<span class="font-weight-bold" th:text="${recEsp.formato_recurso.nombre_formato}"></span>
+								</p>
+							</div>
+							<div class="col-12">
+								<div class="row d-flex" style="justify-content: space-between;">
 									<div class="col-4">
 										<form action="#" th:action="${borrarRecEsp}" method="post" th:object="${objectAux}" class="row">
 											<select th:field="*{id_object}" class="d-none">
@@ -134,7 +144,7 @@
 											<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12">
 										</form>
 									</div>
-									<div class="col-4">
+									<div class="col-4" th:if="${recEsp.formato_recurso.nombre_formato} !='Fisico'">
 										<button type="button" class="btn btn-secondary w-100" data-toggle="modal" th:data-target="'#rem'+${recEsp.id}">Subir Archivo</button>
 										<div class="modal" th:id="'rem'+${recEsp.id}" tabindex="-1" role="dialog" aria-hidden="true" th:aria-labelledby="'rel'+${recEsp.id}">
 											<div class="modal-dialog" role="document">

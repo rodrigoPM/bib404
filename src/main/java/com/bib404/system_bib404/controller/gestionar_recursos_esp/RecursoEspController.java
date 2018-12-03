@@ -306,25 +306,28 @@ public class RecursoEspController {
 		boolean foto = false;
 		RecursoBibliotecario rec_bib = rb.findById(id_rb);
 		if (re.listAllRecEsp(id_rb).size() > 0) {
-			if (re.findById(ox.getId_object()).getArchivo() != "nada") {// hay foto, eliminarla
-				nombreLastFile = re.findById(ox.getId_object()).getArchivo();
+			if (re.findRecEspById(ox.getId_object()).getFormato_recurso().getId() != 1 &&  /*1 es de fisico*/ 
+				re.findRecEspById(ox.getId_object()).getArchivo()!="nada") {// hay foto, eliminarla
+				nombreLastFile = re.findRecEspById(ox.getId_object()).getArchivo();
 				foto = true;
 			}
 			if (re.listAllRecEsp(id_rb).size() > 1) {
 				DetalleRecurso lastDR = dr.getLastDRbyRB(id_rb);
-				String formato = re.findById(ox.getId_object()).getFormato_recurso().getNombre_formato();
+				int formato = re.findRecEspById(ox.getId_object()).getFormato_recurso().getId();
 
-				if (dr.deleteDetalleRecurso(re.findById(ox.getId_object()).getDetalle_recurso().getId())) {
+				if (dr.deleteDetalleRecurso(re.findRecEspById(ox.getId_object()).getDetalle_recurso().getId())) {
 					session.setAttribute("deleteRE", true);
 					System.out.println("detalle recurso eliminada con exito");
+
 					if (foto) {
 						if (file.eliminarFile(nombreLastFile, 2)) {
+
 							System.out.println("eliminando archivo " + nombreLastFile);
 						} else {
 							System.out.println("No se pudo eliminar " + nombreLastFile);
 						}
 					}
-					if (formato != "Fisico") {
+					if (formato != 1) {
 						lastDR.setTotal_dig_rec_bib(lastDR.getTotal_dig_rec_bib() - 1);
 					} else {
 						lastDR.setTotal_fis_rec_bib(lastDR.getTotal_fis_rec_bib() - 1);
@@ -338,7 +341,7 @@ public class RecursoEspController {
 					System.out.println("El detalle recurso no se pudo eliminar");
 				}
 			} else {
-				if (dr.deleteDetalleRecurso(re.findById(ox.getId_object()).getDetalle_recurso().getId())) {
+				if (dr.deleteDetalleRecurso(re.findRecEspById(ox.getId_object()).getDetalle_recurso().getId())) {
 					if (foto) {
 						if (file.eliminarFile(nombreLastFile, 2)) {
 							System.out.println("eliminando archivo " + nombreLastFile);
