@@ -114,37 +114,12 @@ TipoDigitaloFisico digi= new TipoDigitaloFisico();
 		int id_tipo = Integer.parseInt(tipR);
 		Usuario user =(Usuario) sesion.getAttribute(Constante.USER);
 		biblioteca=br.buscarBiblioteca(user.getBiblioteca().getId());
-		int num=Integer.parseInt(df);
 		tiporecurso=trr.buscarRecurso(id_tipo);
 		biblioteca=br.buscarBiblioteca(biblioteca.getId());
 		recurso.setTipo_recurso(tiporecurso);
 		recurso.setBiblioteca(biblioteca);
-		DetalleRecurso detr =new DetalleRecurso();
-		Date fecha = new Date();
-		int anio = fecha.getYear() ;
-		fecha.setYear(anio);
-		SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
-		String fecha_actual = formateador.format(fecha);
-		detr.setFecha_ingreso_r_e(fecha);
-		detr.setCreatedAt(fecha);
-		detr.setRecurso_bib(recurso);
-		detr.setId(6);
-	if(num==1)
-	{
-		recurso.setDigital_recurso_bib(true);
-		recurso.setFisico_recurso_bib(false);
-		detr.setTotal_dig_rec_bib(1);
-	}
-	else {
-		
-		recurso.setFisico_recurso_bib(true);
-		recurso.setDigital_recurso_bib(false);
-		detr.setTotal_fis_rec_bib(1);
-	}
-		
-	detr.setTotal_rec_bib(recurso.getTotal_recurso_bib());
+
 		rbr.save(recurso);
-		detalle.save(detr);
 
 		return "redirect:/recursos";
 }
