@@ -69,8 +69,7 @@ public class GestionUsuarioController {
 		mav.addObject("bib", bibliotecaServiceImpl.findById(id_bib).getId());
 		if(usuarioServiceImpl.listUsuarioBib(id_bib).size()>0) {
 			mav.addObject("usuarios", usuarioServiceImpl.listUsuarioBib(id_bib));
-			model.addAttribute("user", user);
-			
+			mav.addObject("user", user);
 		}
 		return mav;
 	}

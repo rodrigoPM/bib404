@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.constant.Url;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
@@ -27,6 +28,7 @@ import com.bib404.system_bib404.service.impl.RecursoBibliotecarioServiceImpl;
 import com.bib404.system_bib404.service.impl.RecursoEspecificoServiceImpl;
 import com.bib404.system_bib404.entity.RecursoBibliotecario;
 import com.bib404.system_bib404.entity.RecursoEspecifico;
+import com.bib404.system_bib404.entity.Usuario;
 
 @Controller
 @RequestMapping(Url.INDEX_BIB_X) // --> /bib404
@@ -84,7 +86,9 @@ public class bibliotecaController {
 		if (rbService.listAllRBOfBib(id_bib).size() == 0) {
 			model.addAttribute("vacio", "No se encontraron Recursos bibliotecarios");
 		}
-
+		HttpSession session = request.getSession();
+		Usuario user = (Usuario) session.getAttribute(Constante.USER);
+		model.addAttribute("user", user);
 		return Template.INDEX_BIB_X;
 	}
 
@@ -157,6 +161,9 @@ public class bibliotecaController {
 
 			}
 		}
+		HttpSession session = request.getSession();
+		Usuario user = (Usuario) session.getAttribute(Constante.USER);
+		model.addAttribute("user", user);
 		return Template.INDEX_BIB_X;
 	}
 
