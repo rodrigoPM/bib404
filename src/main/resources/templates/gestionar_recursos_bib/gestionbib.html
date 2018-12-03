@@ -83,19 +83,10 @@
 				<input type="text" class="form-control" id="bib" name="bib" th:value="${bib.nombre_biblioteca}" disabled>
 			    
 							</div>	
-												<div class="form-group">
-							<label for="forRecurso" class="col-form-label">Es digital o fisico</label>
-								<select id="forRecurso" name="forRecurso"  class="form-control" required="true" >
-			         <option th:each="forRecurso : ${tipDF}" 
-			        	th:value="${forRecurso.id}"
-			        	th:text="${forRecurso.tipo}"
-			        
- ></option>			      </select>
-							</div>
-					
+											
 							<div class="form-group">
 								<label for="Total" class="col-form-label">cantidad </label>
-								<input type="number" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" min="1" step="1" required="true"> 
+								<input type="number" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" value="0" required="true" disabled> 
 								<span id="total_recurso_bib"></span>
 							</div>
 							
@@ -199,30 +190,13 @@
 				<input type="text" class="form-control" id="bib" name="bib" th:value="${bib.nombre_biblioteca}" disabled> 
 							</div>	
 							</div>	
-												<div class="form-group" th:if="${recursoList.digital_recurso_bib}">
-							<label for="forRecurso" class="col-form-label">Es digital o fisico</label>
-								<select id="forRecurso" name="forRecurso"  class="form-control" required="true" >
-			         <option th:each="forRecurso : ${tipDF}" 
-			        	th:value="${forRecurso.id}"
-			        	th:text="${forRecurso.tipo}"
-			         th:selected="${forRecurso.id}==1"
- ></option>			      </select>
-							</div>
-					<div class="form-group" th:if="${recursoList.fisico_recurso_bib}">
-							<label for="forRecurso" class="col-form-label">Es digital o fisico</label>
-								<select id="forRecurso" name="forRecurso"  class="form-control" required="true" >
-			         <option th:each="forRecurso : ${tipDF}" 
-			        	th:value="${forRecurso.id}"
-			        	th:text="${forRecurso.tipo}"
-			         th:selected="${forRecurso.id}==2"
- ></option>			      </select>
-							</div>
+								
 							<div class="form-group">
 								<label for="Total" class="col-form-label">cantidad </label>
-								<input type="number" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" th:value="${recursoList.total_recurso_bib}" min="1" step="1"  required="true"> 
+								<input type="number" class="form-control" id="total_recurso_bib" name="total_recurso_bib" th:fields="*{total_recurso_bib}" value="0" disabled required="true"> 
 								<span id="total_recurso_bib"></span>
 							</div>
-							
+								
 							<div class="form-group">
 								  	<label for="inputState" class="col-sm-2 col-form-label">tipo de recurso</label>
 			      <select id="tipoR" name="tipoR"  class="form-control" required="true" >
