@@ -60,10 +60,16 @@ public class Template {
 	public static final String recibir = "/solicitar/recibir";
 	public static final String aceptar = "/solicitar/aceptar";
 	
-	//Consultar estadisticas de biblioteca
-	public static final String CONSULTAR_ESTADISTICAS="consultar_estadisticas/estadisticasGenerales";
 	
-	//Ver/prestar recurso
-	public static final String RECURSOSESPECIFICOS = "ver_prestar_recurso/recursosespecificos";
-	public static final String SOLICITAR_PRESTAMO = "ver_prestar_recurso/solicitarPrestamo";
+	 public static final String CONSULTAR="/consultar_historial_bib/historial.html";
+
+	 
+	 	
+	 	//Consultar estadisticas de biblioteca
+	 	public static final String CONSULTAR_ESTADISTICAS="consultar_estadisticas/estadisticasGenerales";
+	 	
+	 	//Ver/prestar recurso
+	 	public static final String RECURSOSESPECIFICOS = "ver_prestar_recurso/recursosespecificos";
+	 	public static final String SOLICITAR_PRESTAMO = "ver_prestar_recurso/solicitarPrestamo";
+
 }
