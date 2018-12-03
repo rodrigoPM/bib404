@@ -116,8 +116,8 @@ public class ConsultarHistorial {
 	model.addAttribute("usuarios", lrb);
 	model.addAttribute("categorias", categoria);
 	model.addAttribute("exito",true);
-	model.addAttribute("mensaje","usuarios que se registraron en esta biblioteca Hoy");
-	model.addAttribute("mensaje2","categorias registradas en esta biblioteca Hoy");
+	model.addAttribute("mensaje","usuarios que se registraron en esta biblioteca Ayer");
+	model.addAttribute("mensaje2","categorias registradas en esta biblioteca Ayer");
 	return Template.CONSULTAR;
 		
 	
