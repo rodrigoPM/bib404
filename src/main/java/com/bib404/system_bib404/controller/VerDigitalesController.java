@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -82,6 +83,12 @@ public class VerDigitalesController {
 			mav.addObject("isNoUser", true);
 			System.out.println("No se valida si es usuario");
 		}*/
+		return mav;
+	}
+	@GetMapping("pdf")
+	public ModelAndView pruebaPDF(HttpServletRequest request, @RequestParam("id_prestamo") int id_prestamo){
+		ModelAndView mav=new ModelAndView(Template.PDF);
+		mav.addObject("nombreFile", prestamoServiceImpl.pdf(id_prestamo));
 		return mav;
 	}
 
