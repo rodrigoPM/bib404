@@ -30,13 +30,12 @@
 									<ul>
 										<li>
 											<a href="#about" data-toggle="tab">
-												Tu cuenta
+												Informacion sobre la cuenta
 											</a>
 										</li>
 										<li><a href="#account" data-toggle="tab">Mas
 												informacion</a></li>
-										<li><a href="#address" data-toggle="tab">Como
-												contactarte</a></li>
+										<li><a href="#address" data-toggle="tab">Contacto</a></li>
 									</ul>
 								</div>
 								<div class="tab-content">
@@ -148,17 +147,6 @@
 														<option value="">Seleccione</option>
 														<option value="masculino">masculino</option>
 														<option value="femenino">femenino</option>
-													</select>
-												</div>
-											</div>
-
-											<div class="col-sm-12 col-sm-offset-1">
-												<div class="form-inline">
-													<label class="col-sm-4">Departamento:</label>
-													<select id="dept" name="dept" class="form-control col-sm-6" required="true">
-														<option value="">Seleccione</option>
-														<option th:each="dep : ${departamentos}" th:value="${dep.id}"
-															th:text="${dep.nombre_departamento}"></option>
 													</select>
 												</div>
 											</div>

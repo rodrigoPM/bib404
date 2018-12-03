@@ -93,7 +93,6 @@ public class dashBoardController {
 			System.out.println(fecha_actual);
 			mav.addObject("fecha_actual", fecha_actual);
 			mav.addObject("municipios", usuarioImp.listMunicipiosOrderByNombre());
-			mav.addObject("departamentos", usuarioImp.listDpto());
 			mav.addObject("bibliotecas",bibImp.listAllBibliotecas());
 			
 		}else {

@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bib404.system_bib404.Repository.ConsultasRE;
 import com.bib404.system_bib404.constant.Template;
+import com.bib404.system_bib404.service.impl.Functions;
 @Controller
 @RequestMapping("/recursoBibliotecario")
 public class RecursoBibliotecarioController {
@@ -25,11 +26,24 @@ public class RecursoBibliotecarioController {
     @Qualifier("consultasRE")
     ConsultasRE consultas;
     
+    @Autowired
+    @Qualifier("Functions")
+    Functions function;
+    
 	@GetMapping("/verRecurso")
 	public ModelAndView verEspecifico(@RequestParam(name = "id", required = false) int id, HttpServletRequest request, Model model) {
         ModelAndView modelAndView = new ModelAndView(Template.RECURSOSESPECIFICOS);
         modelAndView.addObject("recursosEspecificos", consultas.findJoin(id));
         modelAndView.addObject("recursoBib", consultas.ver(id));
+        return modelAndView;
+	}
+	@GetMapping("/prestarRecurso")
+	public ModelAndView prestarEspecifico(@RequestParam(name = "id", required = false) int id, HttpServletRequest request, Model model) {
+        ModelAndView modelAndView = new ModelAndView(Template.SOLICITAR_PRESTAMO);
+        if(function.isUser(request))
+        	modelAndView.addObject("mensaje", "Su solicitud de prestamo ha sido enviada");
+        else
+        	modelAndView.addObject("mensaje", "Debes iniciar sesion o registrarte");
         return modelAndView;
 	}
 }

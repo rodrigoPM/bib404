@@ -91,7 +91,7 @@
 			<!-- Nav -->
 			<nav id="menu">
 				<ul class="links">
-					<li><a href="/" th:href="@{/bib404/gestionar_admin}">Administradores de bibliotecas</a></li>
+					<li><a href="/" th:href="@{/bib404/gestion_admin/lista_administradores}">Administradores de bibliotecas</a></li>
 					<li><a href="/">Bibliotecas en el sistema</a></li>
 					<li><a th:href="@{/solicitar/recibir}">Solicitudes de bibliotecas</a></li>
 					<li><a th:href="@{/estadisicas/BIB404}">Estadisticas de bibliotecas</a></li>
@@ -138,6 +138,26 @@
 					<a class="btn btn-info" data-toggle="modal" data-target="#modalGrafica" href="">Personalizado</a>
 				</div>
 			</div>
+		</div>
+	</div>
+	
+	<!-- **** CONSULTAR ESTADISTICAS **** -->
+	
+	<div class="row" th:fragment="usuarios">
+		<div class="col-sm-12">
+			<div class="form-inline">
+				<!--<div class="col-sm-3">
+					<a class="btn btn-info" th:href="@{/consultarEstadisticas/ultimasemana}">Ultima semana</a>
+				</div>-->
+				<div class="col-sm-3">
+					<a class="btn btn-info" th:href="@{/consultarEstadisticas/ultimomes}" >Ultimo mes</a>
+				</div>
+				<div class="col-sm-3">
+					<a class="btn btn-info" th:href="@{/consultarEstadisticas/ultimomes3}">Ultimos 3 meses</a>
+				</div>
+			</div>
+		<h3 class="text-center">Estadisticas de usuarios de la biblioteca <span th:text="${biblioteca}"></span> </h3>
+		<h5 class="text-center">Cantidad total de usuarios: <span th:text="${cantidad}"></span> </h5>
 		</div>
 	</div>
 

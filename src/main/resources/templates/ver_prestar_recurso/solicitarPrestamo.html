@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+    <meta charset="utf-8"/>
+    <title>Detalles del recurso</title>
+ 	<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.min.js}" />
+	<link rel="stylesheet" href="#" th:href="@{/sweet/sweetalert.css}" />
+	<link rel="stylesheet" href="#" />
+	</head>
+  <body>
+	<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
+    <h3 class="text-center"> <span th:text="${mensaje}"></span> </h3>
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
+</html>

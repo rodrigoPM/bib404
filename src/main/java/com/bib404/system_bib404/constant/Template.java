@@ -37,7 +37,6 @@ public class Template {
 	public static final String DENEGADOS ="denegados";
 	public static final String PERFIL ="perfil";
 	public static final String EDITAR="editar";
-	public static final String RECURSOSESPECIFICOS = "ver_prestar_recurso/recursosespecificos";
 	public static final String DIGITALES = "digitales";
 	
 	//Dasboard
@@ -49,11 +48,19 @@ public class Template {
 	public static final String CONTRA="password";
 	public static final String GESTION="gestionar_recursos_bib/gestionbib";
 
+	//Gestionar administradores
 	public static final String GESTION_ADMIN="gestionar_admin/gestionar_admin";
+	public static final String ADMIN_EDITAR="gestionar_admin/editar";
 	
 	//Solicitar nueva biblioteca
 	public static final String solicitar = "/solicitar/biblioteca";
 	public static final String recibir = "/solicitar/recibir";
 	public static final String aceptar = "/solicitar/aceptar";
-
+	
+	//Consultar estadisticas de biblioteca
+	public static final String CONSULTAR_ESTADISTICAS="consultar_estadisticas/estadisticasGenerales";
+	
+	//Ver/prestar recurso
+	public static final String RECURSOSESPECIFICOS = "ver_prestar_recurso/recursosespecificos";
+	public static final String SOLICITAR_PRESTAMO = "ver_prestar_recurso/solicitarPrestamo";
 }
