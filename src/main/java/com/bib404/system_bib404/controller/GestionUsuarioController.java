@@ -31,11 +31,15 @@ import com.bib404.system_bib404.model.ObjectAux;
 import com.bib404.system_bib404.model.PrestamoModel;
 import com.bib404.system_bib404.service.EncriptadoPass;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
+import com.bib404.system_bib404.service.impl.Functions;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 
 @Controller
 @RequestMapping("/")
 public class GestionUsuarioController {
+	@Autowired
+	@Qualifier("Functions")
+	private Functions funcion;
 	
     @Autowired
     @Qualifier("consultasRE")
@@ -55,6 +59,10 @@ public class GestionUsuarioController {
 
 	@RequestMapping("/gestion_usuario")
 	public ModelAndView listUsuarios(@RequestParam(name="id_bib") int id_bib, Model model, HttpServletRequest request)  throws ServletException, IOException  {
+		if (!funcion.isAdmin(request)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
 		ModelAndView mav = new ModelAndView(Template.GESTION_USUARIO);
 		Usuario user= new Usuario();
 		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());

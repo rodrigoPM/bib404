@@ -30,12 +30,17 @@ import com.bib404.system_bib404.entity.Prestamo;
 import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.PrestamoModel;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
+import com.bib404.system_bib404.service.impl.Functions;
 import com.bib404.system_bib404.service.impl.PrestamoServiceImpl;
 import com.bib404.system_bib404.service.impl.UsuarioServiceImpl;
 
 @Controller
 @RequestMapping("/autorizar")
 public class AutorizarController {
+	@Autowired
+	@Qualifier("Functions")
+	private Functions funcion;
+	
 	@Autowired
 	@Qualifier("prestamoServiceImpl")
 	private PrestamoServiceImpl prestamoServiceImpl;
@@ -50,7 +55,10 @@ public class AutorizarController {
 	
 	@RequestMapping("/listPrestamos")
 	public ModelAndView listPrestamos(Model model, @RequestParam(name="id_bib") int id_bib, HttpServletRequest request)  throws ServletException, IOException  {
-		
+		if (!funcion.isAdmin(request)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
 		ModelAndView mav = new ModelAndView(Template.AUTORIZAR);
 		mav.addObject("name_bib", bibliotecaServiceImpl.findById(id_bib).getNombre_biblioteca());
 		mav.addObject("bib", bibliotecaServiceImpl.findById(id_bib).getId());
