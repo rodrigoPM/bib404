@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
-<title th:text="${titulo}"></title>
-
+<title>Admin-gestion</title>
 <link rel="stylesheet" href="#" />
 </head>
 <body>
@@ -56,14 +55,18 @@
 							<div class="col-8">
 								<div class="row">
 									<div class="col-12">
-											<p th:text="${admin.nombre}"></p>
+											<p th:text="${admin.username}"></p>
+											<p th:text="${admin.biblioteca.nombre_biblioteca}"></p>
 									</div>
 									<div class="col-12">
 										<div class="row">
 											<div class="col-6">
-												<form class="row">
-													<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
-												</form>
+												    <a th:href="@{/bib404/gestion_admin/eliminar_administrador?id=__${admin.id}__}" method="post">
+													<input type="submit" name="" value="Eliminar" class="btn btn-danger col-12"></a>
+											</div>
+											<div class="col-6">
+												    <a th:href="@{/bib404/gestion_admin/editar_administrador?id=__${admin.id}__}" method="post">
+													<input type="submit" name="" value="Editar" class="btn btn-warning col-12"></a>
 											</div>
 										</div>
 									</div>
@@ -82,3 +85,4 @@
 	<div th:replace="fragmentos/plantilla :: login"></div>
 	<div th:replace="fragmentos/plantilla :: scripts"></div>
 </body>
+

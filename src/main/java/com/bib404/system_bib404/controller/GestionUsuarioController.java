@@ -62,12 +62,7 @@ public class GestionUsuarioController {
 		}
 				return mav;
 	}
-	@RequestMapping("/bib404/gestionar_admin")
-	public ModelAndView listAdmin(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = new ModelAndView(Template.GESTION_ADMIN);
-        modelAndView.addObject("administradores", consultas.obtenerAdmins());
-        return modelAndView;
-	}
+
 	
 	@GetMapping("/eliminar_usuario")
 	public ModelAndView eliminarUsuario(@RequestParam(name="id") int id, @RequestParam(name="id_bib") int id_bib, Model model, HttpServletRequest request)  throws ServletException, IOException  {
@@ -110,16 +105,12 @@ public class GestionUsuarioController {
 			@ModelAttribute(name="usuario") Usuario usuario, HttpServletRequest request) throws ServletException, IOException  {
 		Usuario user= new Usuario();
 		if(id!=0) {
-			user=usuarioServiceImpl.findById(id);
-			
-			
+			user=usuarioServiceImpl.findById(id);			
 			model.addAttribute("exito", "Se editó correctamente el usuario");
 		}
 		ModelAndView mav = new ModelAndView(Template.GESTION_USUARIO_PERFIL);
 		model.addAttribute("user", user);
-
 		return mav;
-		
 	}
 	@PostMapping("/adduser")
 	public ModelAndView addUser(Model model, @RequestParam(name="id") int id, @RequestParam(name="id_bib") int id_bib,

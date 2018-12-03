@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head th:replace="fragmentos/plantilla :: head(~{::title},~{::link})">
+	<title>Admin-editar</title>	
+	<link rel="stylesheet" href="#" />
+	<script src="js/deshabilitar.js"></script>
+</head>
+
+<body>
+<nav th:replace="fragmentos/plantilla :: navbar-user"></nav> 
+<h1 class="text-center" >Actualizar informacion de administrador</h1>
+<h3 class="text-center" ><span th:text="${admin.username}">   </span>  </h3>
+<h1 class="text-center"> <img src="#" th:src="@{/imgs/default-avatar.png}"
+															class="picture-src" id="wizardPicturePreview" title="" />
+														     </h1>
+	<div class="container">
+		<div th:if="${error}">
+			<div class="alert alert-danger" role="alert">
+			  <strong th:text="*{valor}" ></strong> 
+			</div>
+		</div>
+				<form th:action="@{/bib404/gestion_admin/actualizar?id=__${admin.id}__}" th:method="post">
+							<div class="form-group">							
+								<label for="user">Nuevo nombre de usuario</label> <input type="text"
+									class="form-control" id="username" name="username"
+									aria-describedby="username" placeholder="username" 
+									th:field="*{admin.username}" th:value="${admin.username}">
+							</div> 
+							<div class="form-group">
+								<label for="password">Nuevo password</label> <input type="password"
+									class="form-control" id="password" name="password"
+									placeholder="Password" required="true">
+							</div> 
+			  	<div class="form-group">
+			  	<label for="bib">Asignar nueva biblioteca</label>
+			      <select id="bib" name="bib"  class="form-control" required="true" >
+			        <option th:each="bib : ${bibliotecas}" 
+			        	th:value="${bib.id}"
+			        	th:text="${bib.nombre_biblioteca}"
+			        	th:selected="${bib.nombre_biblioteca}==*{biblioteca.nombre_biblioteca}"
+			        ></option>
+			      </select>
+			  	</div>
+							<button type="submit" class="btn btn-fill btn-info btn-wd btn-sm">Guardar cambios</button>
+							<a th:href="@{/bib404/gestion_admin/lista_administradores}">
+							<button type="button" class="btn btn-success">Cancelar</button></a>
+						</form>		
+		</div>
+	
+	<div th:replace="fragmentos/plantilla :: login"></div>
+	<div th:replace="fragmentos/plantilla :: scripts"></div>
+</body>
+</html>
