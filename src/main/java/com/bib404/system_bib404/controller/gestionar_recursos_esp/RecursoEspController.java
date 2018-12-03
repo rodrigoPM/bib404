@@ -74,6 +74,10 @@ public class RecursoEspController {
 			ModelAndView mav = new ModelAndView("redirect:/");
 			return mav;
 		}
+		if (!funcion.isAdmin(request)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
 		HttpSession session = request.getSession();
 		ModelAndView mav = new ModelAndView(Template.GESTION_REC_ESP);
 		mav.addObject("titulo", "Recursos Especificos");
@@ -147,6 +151,10 @@ public class RecursoEspController {
 			ModelAndView mav = new ModelAndView("redirect:/");
 			return mav;
 		}
+		if (!funcion.isAdmin(request)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
 		HttpSession session = request.getSession();
 		ModelAndView mav = new ModelAndView(Template.GESTION_REC_ESP);
 		mav.addObject("titulo", "Recursos Especificos");
@@ -200,12 +208,6 @@ public class RecursoEspController {
 			mav.addObject("fracaso", "No hay resultados que coincidan con la busqueda");
 		}
 		
-		if (funcion.isAnyUser(request)) {
-			mav.addObject("isUser", true);
-		} else {
-			mav.addObject("isNoUser", true);
-			System.out.println("No se valida si es usuario");
-		}
 		return mav;
 	}
 
@@ -217,6 +219,7 @@ public class RecursoEspController {
 		if (!biblioteca.existsBibById(id_bib) || !rb.existsById(id_rb)) {
 			return redirect;
 		}
+		
 
 		rec_esp.setFormato_recurso(fr.findById(rec_esp.getIdFormatoRecurso()));
 		System.out.println(rec_esp.getFormato_recurso().getNombre_formato());

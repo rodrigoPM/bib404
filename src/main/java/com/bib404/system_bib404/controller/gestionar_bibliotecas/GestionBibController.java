@@ -38,19 +38,25 @@ public class GestionBibController {
 	@RequestMapping("")
 	public ModelAndView gestionarBibliotecas(HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		if (!funcion.isSuperUser(request)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
 		ModelAndView mav = new ModelAndView(Template.GESTION_BIBS);
+
 		mav.addObject("titulo", "Gestion Bibs");
-		mav.addObject("borrarBiblioteca", "/bib404/gestionar_bibliotecas/borrar"); // action del form eliminar biblioteca
+		mav.addObject("borrarBiblioteca", "/bib404/gestionar_bibliotecas/borrar"); // action del form eliminar
+																					// biblioteca
 		mav.addObject("buscarBiblioteca", "/bib404/gestionar_bibliotecas/buscar"); // action del form buscar biblioteca
 		mav.addObject("editarBiblioteca", "/bib404/gestionar_bibliotecas/editar"); // action del form buscar biblioteca
 		mav.addObject("bibModel", new Biblioteca());
 		mav.addObject("objectAux", new ObjectAux());
 		if (biblioteca.listAllBibliotecas().size() > 0) {
 			mav.addObject("bibliotecas", biblioteca.listAllBibliotecas());
-		}else{
+		} else {
 			mav.addObject("bibCero", "no hay bibs");
 		}
-		
+
 		if (session.getAttribute("deleteBiblioteca") != null) {
 			if ((boolean) session.getAttribute("deleteBiblioteca")) {
 				mav.addObject("exito", "La Biblioteca solicitada fue eliminada con exito");
@@ -68,13 +74,6 @@ public class GestionBibController {
 			}
 			session.removeAttribute("updateBiblioteca");
 		}
-
-		if (funcion.isAnyUser(request)) {
-			mav.addObject("isUser", true);
-		} else {
-			mav.addObject("isNoUser", true);
-			System.out.println("No se valida si es usuario");
-		}
 		return mav;
 	}
 
@@ -82,6 +81,10 @@ public class GestionBibController {
 	public ModelAndView buscar(@RequestParam(name = "str", required = false, defaultValue = "all") String str,
 			HttpServletRequest request) {
 
+		if (!funcion.isSuperUser(request)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
 		ModelAndView mav = new ModelAndView(Template.GESTION_BIBS);
 		mav.addObject("titulo", "Gestion Bibs");
 		mav.addObject("borrarBiblioteca", "/bib404/gestionar_bibliotecas/borrar"); // action del form eliminar categoria
@@ -109,13 +112,6 @@ public class GestionBibController {
 			mav.addObject("exito", "Las bibliotecas encontradas con el termino " + str.toUpperCase() + " son:");
 		} else {
 			mav.addObject("fracaso", "No hay resultados que coincidan con la busqueda");
-		}
-
-		if (funcion.isAnyUser(request)) {
-			mav.addObject("isUser", true);
-		} else {
-			mav.addObject("isNoUser", true);
-			System.out.println("No se valida si es usuario");
 		}
 		return mav;
 	}
@@ -146,7 +142,7 @@ public class GestionBibController {
 	public String editarBib(@ModelAttribute(name = "bib") Biblioteca bib, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String redirect = "redirect:/bib404/gestionar_bibliotecas";
-		Biblioteca bibMod=biblioteca.findBibById(bib.getId());
+		Biblioteca bibMod = biblioteca.findBibById(bib.getId());
 
 		bibMod.setCodigo_biblioteca(bib.getCodigo_biblioteca());
 		bibMod.setNombre_biblioteca(bib.getNombre_biblioteca());

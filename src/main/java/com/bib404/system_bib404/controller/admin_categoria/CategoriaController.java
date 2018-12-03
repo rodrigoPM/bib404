@@ -54,6 +54,10 @@ public class CategoriaController {
 			ModelAndView mav = new ModelAndView("redirect:/");
 			return mav;
 		}
+		if (!funcion.isAdmin(request)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
 		ModelAndView mav = new ModelAndView(Template.CATEGORIA);
 		mav.addObject("titulo", "Categorias");
 		mav.addObject("url_categoria", "/bib404/" + id_bib + "/dashboard/categorias");
@@ -96,13 +100,6 @@ public class CategoriaController {
 			session.removeAttribute("updateCategoria");
 		}
 
-		if (funcion.isAnyUser(request)) {
-			mav.addObject("isUser", true);
-		} else {
-			mav.addObject("isNoUser", true);
-			System.out.println("No se valida si es usuario");
-		}
-
 		mav.addObject("catService", categoria);
 		mav.addObject("id_bib", id_bib);
 
@@ -114,6 +111,10 @@ public class CategoriaController {
 			@RequestParam(name = "str", required = false, defaultValue = "all") String str,
 			HttpServletRequest request) {
 		if (!biblioteca.existsBibById(id_bib)) {
+			ModelAndView mav = new ModelAndView("redirect:/");
+			return mav;
+		}
+		if (!funcion.isAdmin(request)){
 			ModelAndView mav = new ModelAndView("redirect:/");
 			return mav;
 		}
@@ -150,12 +151,6 @@ public class CategoriaController {
 			mav.addObject("fracaso", "No hay resultados que coincidan con la busqueda");
 		}
 
-		if (funcion.isAnyUser(request)) {
-			mav.addObject("isUser", true);
-		} else {
-			mav.addObject("isNoUser", true);
-			System.out.println("No se valida si es usuario");
-		}
 		return mav;
 	}
 
