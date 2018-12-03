@@ -22,7 +22,7 @@ public class CategoriaConverter {
 		categoria.setNombre_categoria(categoriaModel.getNombre_categoria());
 		categoria.setDescripcion_categoria(categoriaModel.getDescripcion_categoria());
 
-		categoria.setCategoria(null);
+		categoria.setCategoria_id(categoriaModel.getCategoria_id());
 
 		categoria.setRecurso_bib(categoriaModel.getRecurso_bib());
 
@@ -34,20 +34,7 @@ public class CategoriaConverter {
 		categoriaModel.setId(categoria.getId());
 		categoriaModel.setNombre_categoria(categoria.getNombre_categoria());
 		categoriaModel.setDescripcion_categoria(categoria.getDescripcion_categoria());
-
-		if(categoria.getCategoria()!= null) {//hay objetos
-			categoriaModel.setCategoria(convertCategoria2CategoriaModel(categoria.getCategoria()));
-		}else {
-			categoriaModel.setCategoria(null);
-		}
-//		try {
-//			categoriaModel.setCategoria(convertCategoria2CategoriaModel(categoria.getCategoria()));
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			categoriaModel.setCategoria(null);
-//		}
-
-
+		categoriaModel.setCategoria_id(categoria.getCategoria_id());
 		categoriaModel.setRecurso_bib(categoria.getRecurso_bib());
 
 		return null;

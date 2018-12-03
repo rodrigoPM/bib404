@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.constant.Url;
 import com.bib404.system_bib404.entity.DetalleRecurso;
+import com.bib404.system_bib404.entity.RecursoBibliotecario;
 import com.bib404.system_bib404.entity.RecursoEspecifico;
 import com.bib404.system_bib404.model.ObjectAux;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
@@ -86,6 +87,7 @@ public class RecursoEspController {
 		mav.addObject("borrarRecEsp", "/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico/borrar");
 		mav.addObject("subirFileRecEsp", "/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico/subir_file");
 		mav.addObject("buscarRecEsp", "/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico/buscar");// buscar
+		mav.addObject("editarRecEsp", "/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico/editar");// editar
 		mav.addObject("recEspModel", new RecursoEspecifico());
 		mav.addObject("objectAux", new ObjectAux());
 
@@ -120,6 +122,14 @@ public class RecursoEspController {
 			}
 			session.removeAttribute("addFile");
 		}
+		if (session.getAttribute("reMod") != null) {
+			if ((boolean) session.getAttribute("reMod")) {
+				mav.addObject("exito", "El recurso especifico se modifico con exito");
+			} else {
+				mav.addObject("fracaso", "No se pudo modificar el recurso especifico");
+			}
+			session.removeAttribute("reMod");
+		}
 
 		if (funcion.isAnyUser(request)) {
 			mav.addObject("isUser", true);
@@ -150,6 +160,7 @@ public class RecursoEspController {
 		mav.addObject("borrarRecEsp", "/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico/borrar"); 
 		mav.addObject("subirFileRecEsp", "/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico/subir_file"); 
 		mav.addObject("buscarRecEsp", "/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico/buscar");// buscar
+		mav.addObject("editarRecEsp", "/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico/editar");// editar
 		mav.addObject("recEspModel", new RecursoEspecifico());
 		mav.addObject("objectAux", new ObjectAux());
 
@@ -219,24 +230,34 @@ public class RecursoEspController {
 		rec_esp.setCodigo_rec_esp("rb" + id_rb + "->re" + re.listAllRecEsp(id_rb).size());
 
 		DetalleRecurso detalleRecurso = new DetalleRecurso();
+		RecursoBibliotecario rec_bib = rb.findById(id_rb);
 		if (re.listAllRecEsp(id_rb).size() > 0) {
-			DetalleRecurso lastRD = dr.getLastDRbyRB(id_rb);
-			detalleRecurso.setTotal_rec_bib(lastRD.getTotal_rec_bib() + 1);
-			if (rec_esp.getFormato_recurso().getId() != 1) {
-				detalleRecurso.setTotal_dig_rec_bib(lastRD.getTotal_dig_rec_bib() + 1);
+			DetalleRecurso lastDR = dr.getLastDRbyRB(id_rb);
+			detalleRecurso.setTotal_rec_bib(lastDR.getTotal_rec_bib() + 1);
+			rec_bib.setTotal_recurso_bib(lastDR.getTotal_rec_bib() + 1);
+			if (rec_esp.getFormato_recurso().getId() != 1) {//diferente de fisico
+				detalleRecurso.setTotal_dig_rec_bib(lastDR.getTotal_dig_rec_bib() + 1);
+				rec_bib.setDigital_recurso_bib(true);
 			} else {
-				detalleRecurso.setTotal_fis_rec_bib(lastRD.getTotal_fis_rec_bib() + 1);
+				detalleRecurso.setTotal_fis_rec_bib(lastDR.getTotal_fis_rec_bib() + 1);
+				rec_bib.setFisico_recurso_bib(true);
 			}
 		} else {
 			detalleRecurso.setTotal_rec_bib(1);
+			rec_bib.setTotal_recurso_bib(1);
 			if (rec_esp.getFormato_recurso().getId() != 1) {
 				detalleRecurso.setTotal_dig_rec_bib(1);
 				detalleRecurso.setTotal_fis_rec_bib(0);
+				rec_bib.setDigital_recurso_bib(true);
 			} else {
 				detalleRecurso.setTotal_fis_rec_bib(1);
 				detalleRecurso.setTotal_dig_rec_bib(0);
+				rec_bib.setFisico_recurso_bib(true);
 			}
 		}
+		//guardando rec_bib
+		rb.updateRB(rec_bib);
+
 		/* DateFormat dateFormat= new SimpleDateFormat("HH:mm:ss"); */
 		detalleRecurso.setCreatedAt(new Date());
 		detalleRecurso.setFecha_ingreso_r_e(new Date());
@@ -273,6 +294,7 @@ public class RecursoEspController {
 		}
 		String nombreLastFile = null;
 		boolean foto = false;
+		RecursoBibliotecario rec_bib = rb.findById(id_rb);
 		if (re.listAllRecEsp(id_rb).size() > 0) {
 			if (re.findById(ox.getId_object()).getArchivo() != "nada") {// hay foto, eliminarla
 				nombreLastFile = re.findById(ox.getId_object()).getArchivo();
@@ -297,6 +319,7 @@ public class RecursoEspController {
 					} else {
 						lastDR.setTotal_fis_rec_bib(lastDR.getTotal_fis_rec_bib() - 1);
 					}
+					rec_bib.setTotal_recurso_bib(rec_bib.getTotal_recurso_bib() - 1);//actualizando total en rb
 					lastDR.setTotal_rec_bib(lastDR.getTotal_dig_rec_bib() + lastDR.getTotal_fis_rec_bib());
 					dr.updateDetalleRecurso(lastDR);
 				} else {
@@ -315,12 +338,14 @@ public class RecursoEspController {
 					}
 					session.setAttribute("deleteRE", true);
 					System.out.println("detalle recurso eliminada con exito");
+					rec_bib.setTotal_recurso_bib(0); //si solo habia uno ya no hay nada
 				} else {
 					session.setAttribute("deleteRE", false);
 					session.setAttribute("deleteError", "No se pudo eliminar el recurso especifico solicitada");
 					System.out.println("El detalle recurso no se pudo eliminar");
 				}
 			}
+			rb.updateRB(rec_bib);
 		} else {
 			return redirect;
 		}
@@ -364,6 +389,35 @@ public class RecursoEspController {
 		dr.updateDetalleRecurso(rec_esp.getDetalle_recurso());
 		System.out.println("todo correctamente");
 		session.setAttribute("addFile", true);
+		return redirect;
+	}
+	@PostMapping("editar")
+	public String editarRe(@ModelAttribute(name = "recEspModel") RecursoEspecifico rec_esp, @PathVariable("id_bib") int id_bib,
+			@PathVariable("id_rb") int id_rb, HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String redirect = "redirect:/bib404/" + id_bib + "/" + id_rb + "/recurso_especifico";
+
+		if (!biblioteca.existsBibById(id_bib) || !rb.existsById(id_rb)) {
+			return redirect;
+		}
+
+		RecursoEspecifico recEsp=re.findRecEspById(rec_esp.getId());
+		recEsp.setVolumen_recurso(rec_esp.getVolumen_recurso());
+		recEsp.setEdicion_recurso(rec_esp.getEdicion_recurso());
+		recEsp.setEditorial(rec_esp.getEditorial());
+		recEsp.setAutores(rec_esp.getAutores());
+
+
+		DetalleRecurso detRec=re.findById(rec_esp.getId()).getDetalle_recurso();
+
+		if (dr.updateDetalleRecurso(detRec) != null) {
+			System.out.println("Recurso Especifico modificado");
+			session.setAttribute("reMod", true);
+		} else {
+			session.setAttribute("reMod", false);
+			System.out.println("fallo modifcar recurso especifico");
+		}
+		
 		return redirect;
 	}
 

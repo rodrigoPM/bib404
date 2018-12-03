@@ -11,6 +11,6 @@ public interface DetalleRecursoService {
     public abstract DetalleRecurso addDetalleRecurso(DetalleRecurso detalleRecurso);
     public abstract boolean deleteDetalleRecurso(int id_dr);
     public abstract DetalleRecurso getLastDRbyRB(int id_rb);
-    public abstract void updateDetalleRecurso(DetalleRecurso detalleRecurso);
+    public abstract DetalleRecurso updateDetalleRecurso(DetalleRecurso detalleRecurso);
 
 }

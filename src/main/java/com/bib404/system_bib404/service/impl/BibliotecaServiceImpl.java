@@ -80,4 +80,9 @@ public boolean existsBibById(int id_bib){
 		return bibliotecaModel;
 	}
 
+	@Override
+	public Biblioteca updateBiblioteca(Biblioteca bib) {
+		return bibliotecaRepository.save(bib);
+	}
+
 }

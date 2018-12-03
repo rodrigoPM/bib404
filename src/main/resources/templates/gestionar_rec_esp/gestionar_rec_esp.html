@@ -171,9 +171,51 @@
 										</div>
 									</div>
 									<div class="col-4">
-										<form class="row">
-											<input type="submit" name="" value="Editar" class="btn btn-warning col-12">
-										</form>
+										<button type="button" class="btn btn-warning w-100" data-toggle="modal" th:data-target="'#rEs'+${recEsp.id}">Editar</button>
+										<div class="modal" th:id="'rEs'+${recEsp.id}" tabindex="-1" role="dialog" aria-hidden="true" th:aria-labelledby="'rEl'+${recEsp.id}">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" th:id="'rEl'+${recEsp.id}">Editando Recurso especifico</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<form action="#" th:action="${editarRecEsp}" th:object="${recEspModel}" method="post" th:id="'form'+${recEsp.id}">
+															<input type="hidden" th:value="${recEsp.id}" th:name="id">
+															<div class="form-group">
+																<label>Nombre: </label>
+																<input type="text" placeholder="" class="form-control" th:value="${name_rb}" disabled readOnly>
+															</div>
+															<div class="form-group">
+																<label>Volumen: </label>
+																<input type="number" placeholder="volumen del recurso" class="form-control" th:value="${recEsp.volumen_recurso}" th:name="volumen_recurso">
+															</div>
+															<div class="form-group">
+																<label>Edicion: </label>
+																<input type="number" placeholder="edicion del recurso" class="form-control" th:value="${recEsp.edicion_recurso}" th:name="edicion_recurso">
+															</div>
+															<div class="form-group">
+																<label>Editorial: </label>
+																<input type="text" placeholder="editorial" class="form-control" th:value="${recEsp.editorial}" required th:name="editorial">
+															</div>
+															<div class="form-group">
+																<label>Autor/es(si son varios separar por punto y coma): </label>
+																<textarea class="form-control" name="" id="" cols="30" rows="3" placeholder="autor/es" th:text="${recEsp.autores}" required th:name="autores"></textarea>
+															</div>
+														</form>
+													</div>
+													<div class="modal-footer">
+														<div class="row">
+															<div class="col-6">
+																<button type="submit" class="btn btn-primary" th:form="'form'+${recEsp.id}">Modificar Recurso Especifico</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

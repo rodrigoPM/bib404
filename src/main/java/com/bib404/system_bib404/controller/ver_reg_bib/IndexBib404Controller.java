@@ -95,6 +95,13 @@ public class IndexBib404Controller {
 		return mav;
 	}
 
+	@GetMapping("prueba")
+	public ModelAndView pruebaPDF(HttpServletRequest request){
+		ModelAndView mav=new ModelAndView(Template.PDF);
+		mav.addObject("nombreFile", "e5ddd80a-17d4-4a4b-a545-c2885713e6c1_crear_usuario_oracle.pdf");
+		return mav;
+	}
+
 	@GetMapping("{id_bib}")
 	public String redirectBib(@PathVariable("id_bib") int id_bib) {
 		return "redirect:/bib404/"+id_bib;

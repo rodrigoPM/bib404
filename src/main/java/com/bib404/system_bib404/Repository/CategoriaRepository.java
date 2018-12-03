@@ -16,6 +16,7 @@ import com.bib404.system_bib404.entity.Categoria;
 public interface CategoriaRepository extends JpaRepository<Categoria, Serializable>{
 
 	List<Categoria> findByBibliotecaId(int bibliotecaId);
+	
 
 	@Modifying
 	@Transactional(readOnly=false)

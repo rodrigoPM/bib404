@@ -52,8 +52,8 @@
 										</div>
 										<div class="form-group">
 											<label>(Opcional)Categoria Padre </label>
-											<select th:field="*{idCatForanea}" class="form-control">
-												<option value="-1">categoria padre</option>
+											<select th:field="*{categoria_id}" class="form-control">
+												<option value="0">categoria padre</option>
 												<div th:each="categoria:${listCategorias}">
 													<option th:value="${categoria.id}" th:text="${categoria.nombre_categoria}"></option>
 												</div>
@@ -113,9 +113,11 @@
 									<span th:text="${categoria.descripcion_categoria}"></span>
 								</p>
 							</div>
-							<!-- <div th:if="${categoria.categoria.nombre_categoria}" class="col-12">
-										<p>Categoria Padre: <span th:text="${categoria.categoria.nombre_categoria}"></span></p>
-									</div> -->
+							<div  class="col-12">
+								<p>categoria padre:
+									<span th:text="${catService.findByID(categoria.categoria_id)!=null} ? ${catService.findByID(categoria.categoria_id).getNombre_categoria()} : 'no tiene categoria padre'"></span>
+								</p>
+							</div>
 							<div class="col-12">
 								<div class="row">
 									<div class="col-6">
@@ -149,14 +151,15 @@
 																<textarea required rows="3" cols="" class="form-control" th:name="descripcion_categoria" th:text="${categoria.descripcion_categoria}"></textarea>
 															</div>
 															<div class="form-group">
-																<!-- <p>categoria padre:</p> -->
-																<!-- <p>id foranea: <span th:text="${categoria.idCatForanea}"></span></p> -->
+																<p>categoria padre:<span th:text="${catService.findByID(categoria.categoria_id)!=null} ? ${catService.findByID(categoria.categoria_id).getNombre_categoria()}:'no tiene categoria padre'"></span></p> 
 																<label>(Opcional)Categoria Padre </label>
-																<select th:field="*{idCatForanea}" class="form-control">
-																	<option value="0">Escoger categoria padre</option>
-																	<div th:each="cat:${listCategorias}">
+																<select th:field="*{categoria_id}" class="form-control">
+																	<option th:value="${catService.findByID(categoria.categoria_id)!=null} ? ${catService.findByID(categoria.categoria_id).getId()}:0"
+																	        th:text="${catService.findByID(categoria.categoria_id)!=null} ? ${catService.findByID(categoria.categoria_id).getNombre_categoria()}:'Escoger Categoria'" selected="selected"></option>
+																	<div th:each="cat:${catService.listAllCategoriasSinCat(id_bib, categoria.id, categoria.categoria_id)}">
 																		<option th:value="${cat.id}" th:text="${cat.nombre_categoria}"></option>
 																	</div>
+																	<option value="0" >Ninguna categoria</option>
 																</select>
 															</div>
 

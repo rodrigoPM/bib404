@@ -11,6 +11,7 @@ public class CategoriaModel {
 	private String descripcion_categoria;
 	private Set<RecursoBibliotecario> recurso_bib;
 	private CategoriaModel categoria;
+	private int categoria_id;
 
 	public int getId() {
 		return id;
@@ -18,6 +19,14 @@ public class CategoriaModel {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public int getCategoria_id() {
+		return categoria_id;
+	}
+
+	public void setCategoria_id(int categoria_id) {
+		this.categoria_id = categoria_id;
 	}
 
 	public String getNombre_categoria() {
@@ -53,13 +62,14 @@ public class CategoriaModel {
 	}
 
 	public CategoriaModel(int id, String nombre_categoria, String descripcion_categoria,
-			Set<RecursoBibliotecario> recurso_bib, CategoriaModel categoria) {
+			Set<RecursoBibliotecario> recurso_bib, CategoriaModel categoria, int categoria_id) {
 		super();
 		this.id = id;
 		this.nombre_categoria = nombre_categoria;
 		this.descripcion_categoria = descripcion_categoria;
 		this.recurso_bib = recurso_bib;
 		this.categoria = categoria;
+		this.categoria_id=categoria_id;
 	}
 
 	public CategoriaModel() {

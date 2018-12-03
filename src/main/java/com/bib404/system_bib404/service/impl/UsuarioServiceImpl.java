@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,7 +132,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return bibRep.findAll();
 	}
 	
-	
+	public Optional<Biblioteca> biblioteca(int id) {
+		Optional<Biblioteca> bib;
+		bib=bibRep.findById(id);
+		return bib;
+	}
 
 	
 	@Override
@@ -400,6 +405,65 @@ public class UsuarioServiceImpl implements UsuarioService{
 				int val = r.getInt(1);
 				int val2 = r.getInt(2);
 				String sql ="select count(id),TO_DATE("+val+",\'YYYYMMDD\') as dias from biblioteca where to_number(to_char(fecha_registro,\'YYYYMMDD\')) > "+val+" and to_number(to_char(fecha_registro,\'YYYYMMDD\')) <= "+val2;
+				Statement sentencia2;
+				sentencia2 = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+				r2= sentencia2.executeQuery(sql);
+				while (r2.next()) {
+					us.add(new Graf(r2.getInt(1), r2.getDate(2)));
+				}
+			}
+			getConexion().commit();
+			sentencia.close();
+		} catch (SQLException e) {
+			System.out.println("Ocurrio una excepcion: "+e.getMessage());
+		}
+		cerrar();
+		return us;
+	}
+	/*Para consultar estadisticas de usuarios*/
+	public ArrayList<Graf> findUserByYear(String id, int multiplicador, int resta, int hasta, Usuario admin) {
+		conectar();
+		ResultSet r = null;
+		ArrayList<Graf> us = new ArrayList<Graf>();
+		try {
+			String sql2="select TO_NUMBER(TO_CHAR((TO_DATE("+id+",\'YYYYMMDD\') + rownum*"+multiplicador+" -1 - "+(resta - 1)+" ),\'YYYYMMDD\')), TO_NUMBER(TO_CHAR((TO_DATE("+id+",\'YYYYMMDD\') + rownum*"+multiplicador+" -1 - "+(resta - 1 -multiplicador)+" ),\'YYYYMMDD\')) from DUAL CONNECT BY LEVEL <= "+hasta;
+			Statement sentencia;
+			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			r= sentencia.executeQuery(sql2);
+			while (r.next()) {
+				ResultSet r2 = null;
+				int val = r.getInt(1);
+				int val2 = r.getInt(2);
+				String sql ="select count(id),TO_DATE("+val+",\'YYYYMMDD\') as dias from usuario where rol='USER_ROLE' and biblioteca_id="+admin.getBiblioteca().getId()+"and to_number(to_char(fecha_registro,\'YYYYMMDD\')) > "+val+" and to_number(to_char(fecha_registro,\'YYYYMMDD\')) <= "+val2;
+				Statement sentencia2;
+				sentencia2 = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+				r2= sentencia2.executeQuery(sql);
+				while (r2.next()) {
+					us.add(new Graf(r2.getInt(1), r2.getDate(2)));
+				}
+			}
+			getConexion().commit();
+			sentencia.close();
+		} catch (SQLException e) {
+			System.out.println("Ocurrio una excepcion: "+e.getMessage());
+		}
+		cerrar();
+		return us;
+	}
+	/*Para consultar estadisticas de usuarios*/
+	public ArrayList<Graf> findUserByDate(String id, int value,Usuario admin) {
+		conectar();
+		ResultSet r = null;
+		ArrayList<Graf> us = new ArrayList<Graf>();
+		try {
+			String sql2="select TO_NUMBER(TO_CHAR((TO_DATE("+id+",\'YYYYMMDD\') +rownum-1 -"+(value - 1)+" ),\'YYYYMMDD\')) from DUAL CONNECT BY LEVEL <= "+value;
+			Statement sentencia;
+			sentencia = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			r= sentencia.executeQuery(sql2);
+			while (r.next()) {
+				ResultSet r2 = null;
+				int val = r.getInt(1);
+				String sql ="SELECT count(id),TO_DATE("+val+",'YYYYMMDD') as dias FROM usuario WHERE rol='USER_ROLE' and biblioteca_id=\"+admin.getBiblioteca().getId()+\"and TO_NUMBER(to_char(fecha_registro,\'YYYYMMDD\')) = "+val;
 				Statement sentencia2;
 				sentencia2 = conexion.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 				r2= sentencia2.executeQuery(sql);

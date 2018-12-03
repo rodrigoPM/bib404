@@ -2,6 +2,9 @@ package com.bib404.system_bib404.constant;
 
 public class Template {
 
+	//ver pdfs
+	public static final String PDF="pdf/pdf";
+
 	//Ver registrar biblioteca
 	public static final String INDEX_BIB404 ="ver_registrar_biblioteca/index_bib404";
 
@@ -37,7 +40,6 @@ public class Template {
 	public static final String DENEGADOS ="denegados";
 	public static final String PERFIL ="perfil";
 	public static final String EDITAR="editar";
-	public static final String RECURSOSESPECIFICOS = "ver_prestar_recurso/recursosespecificos";
 	public static final String DIGITALES = "digitales";
 	
 	//Dasboard
@@ -49,13 +51,13 @@ public class Template {
 	public static final String CONTRA="password";
 	public static final String GESTION="gestionar_recursos_bib/gestionbib";
 
+	//Gestionar administradores
 	public static final String GESTION_ADMIN="gestionar_admin/gestionar_admin";
+	public static final String ADMIN_EDITAR="gestionar_admin/editar";
 	
 	//Solicitar nueva biblioteca
 	public static final String solicitar = "/solicitar/biblioteca";
 	public static final String recibir = "/solicitar/recibir";
 	public static final String aceptar = "/solicitar/aceptar";
-	// Consultar historial de la biblioteca 
-   public static final String CONSULTAR="/consultar_historial_bib/historial.html";
 
 }

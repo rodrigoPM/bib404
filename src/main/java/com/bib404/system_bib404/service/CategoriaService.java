@@ -9,6 +9,7 @@ public interface CategoriaService {
 	public abstract Categoria addCategoria(Categoria categoria);
 	public abstract Categoria updateCategoria(Categoria categoria);
 	public abstract List<Categoria> listAllCategorias(int id_bib);
+	public abstract List<Categoria> listAllCategoriasSinCat(int id_bib, int cat, int cat_id);
 	public abstract Categoria findByID(int id_cat);
 	public abstract boolean deleteCategoria(int id_cat);
 	public abstract boolean existsById(int id_cat);

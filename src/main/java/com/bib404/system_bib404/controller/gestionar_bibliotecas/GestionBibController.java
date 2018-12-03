@@ -42,6 +42,8 @@ public class GestionBibController {
 		mav.addObject("titulo", "Gestion Bibs");
 		mav.addObject("borrarBiblioteca", "/bib404/gestionar_bibliotecas/borrar"); // action del form eliminar biblioteca
 		mav.addObject("buscarBiblioteca", "/bib404/gestionar_bibliotecas/buscar"); // action del form buscar biblioteca
+		mav.addObject("editarBiblioteca", "/bib404/gestionar_bibliotecas/editar"); // action del form buscar biblioteca
+		mav.addObject("bibModel", new Biblioteca());
 		mav.addObject("objectAux", new ObjectAux());
 		if (biblioteca.listAllBibliotecas().size() > 0) {
 			mav.addObject("bibliotecas", biblioteca.listAllBibliotecas());
@@ -57,6 +59,14 @@ public class GestionBibController {
 			}
 			session.removeAttribute("deleteBiblioteca");
 			session.removeAttribute("deleteError");
+		}
+		if (session.getAttribute("updateBiblioteca") != null) {
+			if ((boolean) session.getAttribute("updateBiblioteca")) {
+				mav.addObject("exito", "La Biblioteca solicitada fue modificada con exito");
+			} else {
+				mav.addObject("fracaso", "La biblioteca no se pudo modificar");
+			}
+			session.removeAttribute("updateBiblioteca");
 		}
 
 		if (funcion.isAnyUser(request)) {
@@ -76,6 +86,8 @@ public class GestionBibController {
 		mav.addObject("titulo", "Gestion Bibs");
 		mav.addObject("borrarBiblioteca", "/bib404/gestionar_bibliotecas/borrar"); // action del form eliminar categoria
 		mav.addObject("buscarBiblioteca", "/bib404/gestionar_bibliotecas/buscar"); // action del form buscar biblioteca
+		mav.addObject("editarBiblioteca", "/bib404/gestionar_bibliotecas/editar"); // action del form buscar biblioteca
+		mav.addObject("bibModel", new Biblioteca());
 		mav.addObject("objectAux", new ObjectAux());
 
 		// buscar por nombre o codigo de la biblioteca
@@ -127,6 +139,26 @@ public class GestionBibController {
 			session.setAttribute("deleteError", "No se pudo eliminar la biblioteca solicitada");
 			System.out.println("La biblioteca no se pudo eliminar");
 		}
+		return redirect;
+	}
+
+	@PostMapping("/editar")
+	public String editarBib(@ModelAttribute(name = "bib") Biblioteca bib, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String redirect = "redirect:/bib404/gestionar_bibliotecas";
+		Biblioteca bibMod=biblioteca.findBibById(bib.getId());
+
+		bibMod.setCodigo_biblioteca(bib.getCodigo_biblioteca());
+		bibMod.setNombre_biblioteca(bib.getNombre_biblioteca());
+
+		if (null != biblioteca.updateBiblioteca(bibMod)) {
+			System.out.println("biblioteca modificada");
+			session.setAttribute("updateBiblioteca", true);
+		} else {
+			session.setAttribute("updateBiblioteca", false);
+			System.out.println("fallo biblioteca");
+		}
+
 		return redirect;
 	}
 }

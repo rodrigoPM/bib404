@@ -35,27 +35,19 @@ public class Categoria {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "categoria")
 	private Set<RecursoBibliotecario> recurso_bib = new HashSet<>();
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+
+	@Column(name = "categoria_id")
+	private int categoria_id;
+	
+/* 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "categoria_id", nullable = true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Categoria categoria;
+	private Categoria categoria; */
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "biblioteca_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Biblioteca biblioteca;
-
-//atributos auxiliares
-	private int idCatForanea;
-
-public int getIdCatForanea(){
-	return idCatForanea;
-}
-
-public void setIdCategoriaForanea(int idCat){
-	this.idCatForanea=idCat;
-}
-//fin atributos auxiliares
 
 	public int getId() {
 		return id;
@@ -63,6 +55,14 @@ public void setIdCategoriaForanea(int idCat){
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getCategoria_id() {
+		return categoria_id;
+	}
+
+	public void setCategoria_id(int categoria_id) {
+		this.categoria_id = categoria_id;
 	}
 
 	public String getNombre_categoria() {
@@ -87,15 +87,6 @@ public void setIdCategoriaForanea(int idCat){
 	public void setRecurso_bib(Set<RecursoBibliotecario> recurso_bib) {
 		this.recurso_bib = recurso_bib;
 	}
-
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-
 	public Biblioteca getBiblioteca() {
 		return biblioteca;
 	}
@@ -113,25 +104,14 @@ public void setIdCategoriaForanea(int idCat){
 	}
 
 	public Categoria(int id, String nombre_categoria, String descripcion_categoria,
-			Set<RecursoBibliotecario> recurso_bib, Categoria categoria, Biblioteca biblioteca) {
+			Set<RecursoBibliotecario> recurso_bib, int categoria_id, Biblioteca biblioteca) {
 		super();
 		this.id = id;
 		this.nombre_categoria = nombre_categoria;
 		this.descripcion_categoria = descripcion_categoria;
 		this.recurso_bib = recurso_bib;
-		this.categoria = categoria;
+		this.categoria_id = categoria_id;
 		this.biblioteca=biblioteca;
-	}
-	public Categoria(int id, String nombre_categoria, String descripcion_categoria,
-			Set<RecursoBibliotecario> recurso_bib, Categoria categoria, Biblioteca biblioteca,int idCatForanea) {
-		super();
-		this.id = id;
-		this.nombre_categoria = nombre_categoria;
-		this.descripcion_categoria = descripcion_categoria;
-		this.recurso_bib = recurso_bib;
-		this.categoria = categoria;
-		this.biblioteca=biblioteca;
-		this.idCatForanea=idCatForanea;
 	}
 
 	public Categoria() {

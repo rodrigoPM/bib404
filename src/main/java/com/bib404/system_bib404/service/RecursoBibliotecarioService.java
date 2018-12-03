@@ -9,5 +9,6 @@ public interface RecursoBibliotecarioService {
 	public abstract List<RecursoBibliotecario> listAllRBOfBib(int id_bib); 
 	public abstract boolean existsById(int id_rb);
 	public abstract RecursoBibliotecario findById(int id_rb);
+	public abstract RecursoBibliotecario updateRB(RecursoBibliotecario rb);
 	
 }

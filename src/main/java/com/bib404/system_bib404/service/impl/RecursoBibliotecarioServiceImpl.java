@@ -42,4 +42,9 @@ public class RecursoBibliotecarioServiceImpl implements RecursoBibliotecarioServ
 		return rbRep.findById(id_rb).get();
 	}
 
+	@Override
+	public RecursoBibliotecario updateRB(RecursoBibliotecario rb) {
+		return rbRep.save(rb);
+	}
+
 }
