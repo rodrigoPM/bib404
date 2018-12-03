@@ -38,7 +38,7 @@ public class GestionBibController {
 	@RequestMapping("")
 	public ModelAndView gestionarBibliotecas(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		if (!funcion.isSuperUser(request)) {
+		if (!funcion.isSuperUserBIB404(request)) {
 			ModelAndView mav = new ModelAndView("redirect:/");
 			return mav;
 		}
@@ -81,7 +81,7 @@ public class GestionBibController {
 	public ModelAndView buscar(@RequestParam(name = "str", required = false, defaultValue = "all") String str,
 			HttpServletRequest request) {
 
-		if (!funcion.isSuperUser(request)) {
+		if (!funcion.isSuperUserBIB404(request)) {
 			ModelAndView mav = new ModelAndView("redirect:/");
 			return mav;
 		}

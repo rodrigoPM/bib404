@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.constant.Url;
 import com.bib404.system_bib404.entity.DetalleRecurso;
 import com.bib404.system_bib404.entity.RecursoBibliotecario;
 import com.bib404.system_bib404.entity.RecursoEspecifico;
+import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.model.ObjectAux;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
 import com.bib404.system_bib404.service.impl.DetalleRecursoServiceImpl;
@@ -141,6 +143,9 @@ public class RecursoEspController {
 			mav.addObject("isNoUser", true);
 			System.out.println("No se valida si es usuario");
 		}
+
+		Usuario user = (Usuario) session.getAttribute(Constante.USER);
+		mav.addObject("user", user);
 		return mav;
 	}
 
@@ -208,6 +213,8 @@ public class RecursoEspController {
 			mav.addObject("fracaso", "No hay resultados que coincidan con la busqueda");
 		}
 		
+		Usuario user = (Usuario) session.getAttribute(Constante.USER);
+		mav.addObject("user", user);
 		return mav;
 	}
 
