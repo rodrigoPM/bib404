@@ -65,7 +65,7 @@ public class IndexBib404Controller {
 		mav.addObject("urlHome", "/");
 		HttpSession sesion = request.getSession();
 
-		/* if (sesion.getAttribute(Constante.USER) == null) {
+		if (sesion.getAttribute(Constante.USER) == null) {
 			mav.addObject("anonimo", true);
 		} else {
 			mav.addObject("user2", true);
@@ -78,8 +78,8 @@ public class IndexBib404Controller {
 				mav.addObject("user", sesion.getAttribute("userup"));
 
 			}
-		} */
-		if (funtions.isUser(request)) {
+		}
+		/* if (funtions.isUser(request)) {
 			mav.addObject("isUser", true);
 			System.out.println("Usuario simple");
 		} else {
@@ -96,7 +96,7 @@ public class IndexBib404Controller {
 				}
 
 			}
-		}
+		} */
 		if (bibliotecaService.listAllBibliotecas().size() > 0) {
 			mav.addObject("bib", true);
 			mav.addObject("bibliotecas", bibliotecaService.listAllBibliotecas());

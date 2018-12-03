@@ -63,7 +63,7 @@ public class bibliotecaController {
 		model.addAttribute("urlHome", "/bib404/" + bibliotecaService.findBibById(id_bib).getId()); // url bib
 		model.addAttribute("buscarBiblioteca", "/bib404/"+ bibliotecaService.findBibById(id_bib).getId()+"/buscar");
 
-		if (funcion.isUser(request)) {
+		/* if (funcion.isUser(request)) {
 			model.addAttribute("isUser", true);
 			System.out.println("Usuario simple");
 		} else {
@@ -80,6 +80,13 @@ public class bibliotecaController {
 				}
 
 			}
+		} */
+		if (funcion.isAnyUser(request)) {
+			model.addAttribute("isUser", true);
+			System.out.println("Usuario simple");
+		} else {
+			model.addAttribute("isNoUser", true);
+			System.out.println("No se valida si es usuario");
 		}
 
 		model.addAttribute("rbs", rbService.listAllRBOfBib(id_bib)); // listado de recursos bibliotecarios
@@ -89,6 +96,8 @@ public class bibliotecaController {
 		HttpSession session = request.getSession();
 		Usuario user = (Usuario) session.getAttribute(Constante.USER);
 		model.addAttribute("user", user);
+
+
 		return Template.INDEX_BIB_X;
 	}
 

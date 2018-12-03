@@ -18,6 +18,13 @@
 	<div th:if="${isUser}">
 		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
 	</div>
+	<div th:if="${isNoUser}">
+		<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
+	</div>
+
+	<!-- <div th:if="${isUser}">
+		<nav th:replace="fragmentos/plantilla :: navbar-user"></nav>
+	</div>
 
 	<div th:if="${isAdmin}">
 		<nav th:replace="fragmentos/plantilla :: navbar-admin-local"></nav>
@@ -27,7 +34,7 @@
 	</div>
 	<div th:if="${isNoUser}">
 		<nav th:replace="fragmentos/plantilla :: navbar-anonimo"></nav>
-	</div>
+	</div> -->
 
 	<div class="">
 		<div id="carouselBIBX" class="carousel slide" data-ride="carousel">
