@@ -108,6 +108,9 @@ public class PrestamoServiceImpl implements PrestamoService{
 			if(fech.before(prestamo.getFecha_devolucion()) || fech.equals(prestamo.getFecha_devolucion())) {
 				variable.add(prestamo);
 			}
+			else {
+				prestamo.setEstado(3);
+			}
 		}
 		return variable;
 	}

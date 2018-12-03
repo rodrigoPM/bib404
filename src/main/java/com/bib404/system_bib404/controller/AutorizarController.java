@@ -2,6 +2,7 @@ package com.bib404.system_bib404.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -151,6 +152,12 @@ public class AutorizarController {
 		if(id!=0) {
 			prestamo=prestamoServiceImpl.findPrestamoByIdModel(id);
 			prestamo.setEstado(val);
+			Date fecha = new Date();
+			Calendar cal = Calendar.getInstance(); 
+            cal.setTime(fecha); 
+            cal.add(Calendar.DATE, 3);
+            Date nuevaFecha = cal.getTime();
+			prestamo.setFecha_devolucion(nuevaFecha);
 			prestamoServiceImpl.addPrestamo(prestamo);
 			model.addAttribute("mensaje", 0);
 			model.addAttribute("prestado", 1);
