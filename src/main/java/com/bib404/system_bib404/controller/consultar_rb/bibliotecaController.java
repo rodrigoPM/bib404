@@ -24,7 +24,7 @@ import com.bib404.system_bib404.service.impl.Functions;
 import com.bib404.system_bib404.service.impl.RecursoBibliotecarioServiceImpl;
 
 @Controller
-@RequestMapping(Url.INDEX_BIB_X) // -->  /bib404
+@RequestMapping(Url.INDEX_BIB_X) // --> /bib404
 public class bibliotecaController {
 
 	@Autowired
@@ -40,32 +40,44 @@ public class bibliotecaController {
 	private Functions funcion;
 
 	@RequestMapping("/{id}")
-	public String inicioBibX(@PathVariable("id") int id_bib, HttpServletRequest request, Model model)  throws ServletException, IOException {
-		if(!bibliotecaService.existsBibById(id_bib)){
+	public String inicioBibX(@PathVariable("id") int id_bib, HttpServletRequest request, Model model)
+			throws ServletException, IOException {
+		if (!bibliotecaService.existsBibById(id_bib)) {
 			System.out.println("No se encontro biblioteca");
 			return "redirect:/";
 		}
-		model.addAttribute("biblioteca",bibliotecaService.findBibById(id_bib));
-		model.addAttribute("name_bib", bibliotecaService.findBibById(id_bib).getNombre_biblioteca()); //nombre de la biblioteca
-		model.addAttribute("urlHome", "/bib404/"+bibliotecaService.findBibById(id_bib).getId());  //url de la biblioteca
 
-		if(funcion.isAnyUser(request)) {
+		model.addAttribute("biblioteca", bibliotecaService.findBibById(id_bib));
+		model.addAttribute("name_bib", bibliotecaService.findBibById(id_bib).getNombre_biblioteca()); // nombre de la
+																										// biblioteca
+		model.addAttribute("urlHome", "/bib404/" + bibliotecaService.findBibById(id_bib).getId()); // url de la
+																									// biblioteca
+
+		if (funcion.isUser(request)) {
 			model.addAttribute("isUser", true);
 			System.out.println("Usuario simple");
-		}else {
-			model.addAttribute("isNoUser", true);
-			System.out.println("No se valida si es usuario");
+		} else {
+			if (funcion.isAdmin(request)) {
+				model.addAttribute("isAdmin", true);
+				System.out.println("admin local");
+			}else {
+				if(funcion.isSuperUserBIB404(request)) {
+					model.addAttribute("isSuperAdmin", true);
+					System.out.println("super admin");
+				}else{
+					model.addAttribute("isNoUser", true);
+					System.out.println("no se valida usuario");
+				}
+
+			}
 		}
 
-
-		model.addAttribute("rbs", rbService.listAllRBOfBib(id_bib));  //listado de recursos bibliotecarios
-		if(rbService.listAllRBOfBib(id_bib).size()==0) {
-			model.addAttribute("vacio","No se encontraron Recursos bibliotecarios");
+		model.addAttribute("rbs", rbService.listAllRBOfBib(id_bib)); // listado de recursos bibliotecarios
+		if (rbService.listAllRBOfBib(id_bib).size() == 0) {
+			model.addAttribute("vacio", "No se encontraron Recursos bibliotecarios");
 		}
 
 		return Template.INDEX_BIB_X;
 	}
-
-
 
 }

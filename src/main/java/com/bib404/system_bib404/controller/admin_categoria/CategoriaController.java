@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bib404.system_bib404.constant.Constante;
 import com.bib404.system_bib404.constant.Template;
 import com.bib404.system_bib404.constant.Url;
 import com.bib404.system_bib404.model.CategoriaModel;
 import com.bib404.system_bib404.model.ObjectAux;
 import com.bib404.system_bib404.entity.Categoria;
+import com.bib404.system_bib404.entity.Usuario;
 import com.bib404.system_bib404.service.impl.BibliotecaServiceImpl;
 import com.bib404.system_bib404.service.impl.CategoriaServiceImpl;
 import com.bib404.system_bib404.service.impl.Functions;
@@ -103,6 +105,8 @@ public class CategoriaController {
 		mav.addObject("catService", categoria);
 		mav.addObject("id_bib", id_bib);
 
+		Usuario user = (Usuario) session.getAttribute(Constante.USER);
+		mav.addObject("user", user);
 		return mav;
 	}
 
@@ -110,6 +114,7 @@ public class CategoriaController {
 	public ModelAndView buscar(@PathVariable("id_bib") int id_bib,
 			@RequestParam(name = "str", required = false, defaultValue = "all") String str,
 			HttpServletRequest request) {
+
 		if (!biblioteca.existsBibById(id_bib)) {
 			ModelAndView mav = new ModelAndView("redirect:/");
 			return mav;
@@ -150,7 +155,9 @@ public class CategoriaController {
 		} else {
 			mav.addObject("fracaso", "No hay resultados que coincidan con la busqueda");
 		}
-
+		HttpSession session = request.getSession();
+		Usuario user = (Usuario) session.getAttribute(Constante.USER);
+		mav.addObject("user", user);
 		return mav;
 	}
 

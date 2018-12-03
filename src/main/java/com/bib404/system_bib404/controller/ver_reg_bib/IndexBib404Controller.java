@@ -1,4 +1,4 @@
-	package com.bib404.system_bib404.controller.ver_reg_bib;
+package com.bib404.system_bib404.controller.ver_reg_bib;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -58,64 +58,74 @@ public class IndexBib404Controller {
 	@Qualifier("encriptadoPass")
 	private EncriptadoPass encriptado;
 
-
 	@GetMapping("/")
-	public ModelAndView indexAnonimo(HttpServletRequest request)  throws ServletException, IOException  {
+	public ModelAndView indexAnonimo(HttpServletRequest request) throws ServletException, IOException {
 		ModelAndView mav = new ModelAndView(Template.INDEX_BIB404);
 		mav.addObject("titulo", "System BIB404");
 		mav.addObject("urlHome", "/");
 		HttpSession sesion = request.getSession();
 
-		if(sesion.getAttribute(Constante.USER)==null) {
+		/* if (sesion.getAttribute(Constante.USER) == null) {
 			mav.addObject("anonimo", true);
-		}else {
+		} else {
 			mav.addObject("user2", true);
 
-			if (sesion.getAttribute("userup")==null)
-			{
+			if (sesion.getAttribute("userup") == null) {
 
-			mav.addObject("user", sesion.getAttribute(Constante.USER));
-			}
-			else {
+				mav.addObject("user", sesion.getAttribute(Constante.USER));
+			} else {
 
 				mav.addObject("user", sesion.getAttribute("userup"));
 
 			}
+		} */
+		if (funtions.isUser(request)) {
+			mav.addObject("isUser", true);
+			System.out.println("Usuario simple");
+		} else {
+			if (funtions.isAdmin(request)) {
+				mav.addObject("isAdmin", true);
+				System.out.println("admin local");
+			} else {
+				if (funtions.isSuperUserBIB404(request)) {
+					mav.addObject("isSuperAdmin", true);
+					System.out.println("super admin");
+				} else {
+					mav.addObject("isNoUser", true);
+					System.out.println("no se valida usuario");
+				}
 
-
+			}
 		}
-		if(bibliotecaService.listAllBibliotecas().size() >0) {
+		if (bibliotecaService.listAllBibliotecas().size() > 0) {
 			mav.addObject("bib", true);
 			mav.addObject("bibliotecas", bibliotecaService.listAllBibliotecas());
-		}else {
+		} else {
 			mav.addObject("bib", false);
 		}
-
 
 		return mav;
 	}
 
 	@GetMapping("prueba")
-	public ModelAndView pruebaPDF(HttpServletRequest request){
-		ModelAndView mav=new ModelAndView(Template.PDF);
+	public ModelAndView pruebaPDF(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(Template.PDF);
 		mav.addObject("nombreFile", "e5ddd80a-17d4-4a4b-a545-c2885713e6c1_crear_usuario_oracle.pdf");
 		return mav;
 	}
 
 	@GetMapping("{id_bib}")
 	public String redirectBib(@PathVariable("id_bib") int id_bib) {
-		return "redirect:/bib404/"+id_bib;
+		return "redirect:/bib404/" + id_bib;
 	}
 
-
-
 	@GetMapping("/index")
-	public String indexUsuario(HttpServletRequest request, Model model)  throws ServletException, IOException  {
+	public String indexUsuario(HttpServletRequest request, Model model) throws ServletException, IOException {
 		HttpSession sesion = request.getSession();
-		model.addAttribute("titulo","BIB404");
-		if(sesion.getAttribute(Constante.USER)==null) {
+		model.addAttribute("titulo", "BIB404");
+		if (sesion.getAttribute(Constante.USER) == null) {
 			return "redirect:/";
-		}else {
+		} else {
 
 			model.addAttribute("user", sesion.getAttribute(Constante.USER));
 			return "redirect:/";
@@ -123,21 +133,19 @@ public class IndexBib404Controller {
 
 	}
 
-
 	@GetMapping("/biblioteca")
-	public String biblioteca(HttpServletRequest request, Model model)  throws ServletException, IOException  {
-		String bib ="biblioteca";
-		if(funtions.isSuperUserBIB404(request)){
+	public String biblioteca(HttpServletRequest request, Model model) throws ServletException, IOException {
+		String bib = "biblioteca";
+		if (funtions.isSuperUserBIB404(request)) {
 			bib = "redirect:/solicitar/recibir";
-		}else {
+		} else {
 			if (funtions.isAdmin(request)) {
 				bib = "redirect:/solicitar/biblioteca";
-			}else {
+			} else {
 				bib = "redirect:/solicitar/biblioteca";
 			}
 		}
 		return bib;
 	}
-
 
 }
