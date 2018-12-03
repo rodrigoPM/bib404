@@ -38,18 +38,81 @@
 					<a class="btn btn-info" th:href="@{/semana}">Esta Semana</a>
 				</div>
 				<div class="col-sm-3">
-					<a class="btn btn-info" th:href="@{/personalizar}">Esta Semana</a>
+					<a class="btn btn-info" th:href="@{/personalizar}">Personalizar</a>
 				</div>
 			</div>
 
 		</div>
 
 
-<div class ="container"> 
-
-
-</div>
-
+<div class="container" th:if="${exito}">
+	<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${mensaje}"></p>
+	<table class="table table-condensed" id="tblCuentasBD" style="text-align: center;" >
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">ID</th>
+							<th scope="col">Username</th>
+							<th scope="col">fecha de registro</th>
+							
+							
+						</tr>
+						</thead>
+					
+					<tbody>
+						
+								<tr th:each="usuarioList : ${usuarios}">
+									<td th:text="${usuarioList.id}"></td>
+									<td th:text="${usuarioList.username}"></td>
+									<td th:text="${usuarioList.fecha_registro}"></td>
+								
+									
+									
+		
+									
+			
+								</tr>
+		
+								
+			
+						</tbody>
+						</table>
+						<hr>
+												
+						<p class="m-0 alert alert-success text-center font-weight-bold"
+					th:text="${mensaje2}"></p>
+						
+							<table class="table table-condensed" id="tblCuentasBD" style="text-align: center;" >
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">ID</th>
+							<th scope="col">nombre de la categoria</th>
+							<th scope="col">fecha de registro</th>
+							
+							
+						</tr>
+						</thead>
+					
+					<tbody>
+						
+								<tr th:each="categoriaList : ${categorias}">
+									<td th:text="${categoriaList.id}"></td>
+									<td th:text="${categoriaList.nombre_categoria}"></td>
+									<td th:text="${categoriaList.createdAt}"></td>
+								
+									
+									
+		
+									
+			
+								</tr>
+		
+								
+			
+						</tbody>
+						</table>
+						
+						</div>
 
 
 

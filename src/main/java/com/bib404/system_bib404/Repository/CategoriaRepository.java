@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bib404.system_bib404.entity.Categoria;
+import com.bib404.system_bib404.entity.Usuario;
 
 @Repository("categoriaRepository")
 public interface CategoriaRepository extends JpaRepository<Categoria, Serializable>{
@@ -30,4 +31,9 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Serializab
 
 
 
+	@Query(value = "select * from categoria where trunc(categoria.created_at)=? and categoria.biblioteca_id=?  ", 
+			  nativeQuery = true)
+			List<Categoria> obtenerCategoria(String created_at,int biblioteca_id);
+	
+	
 }
