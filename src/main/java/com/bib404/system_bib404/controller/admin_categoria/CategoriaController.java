@@ -1,6 +1,7 @@
 package com.bib404.system_bib404.controller.admin_categoria;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -163,6 +164,7 @@ public class CategoriaController {
 			@PathVariable("id_bib") int id_bib, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		cat.setBiblioteca(bibCon.convertBibliotecaModel2Biblioteca(biblioteca.findById(id_bib)));
+		cat.setCreatedAt(new Date());
 		System.out.println("foranea:" + cat.getCategoria_id());
 
 		if (null != categoria.addCategoria(cat)) {
